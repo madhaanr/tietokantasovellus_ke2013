@@ -1,2 +1,7 @@
 /tsoha/*
 /UimariHarjoitus/*
+/ProjTyoAikaSeur/nbproject/private/
+/ProjTyoAikaSeur/target/*
+*.log
+*.tex
+*.aux
