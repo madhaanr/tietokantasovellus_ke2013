@@ -4,8 +4,11 @@
  */
 package servlet;
 
+import database.Kayttaja;
+import database.KayttajaRekisteri;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class KirjauduServlet extends HttpServlet {
 
+    private KayttajaRekisteri kayttajaRekisteri = new KayttajaRekisteri();
+    private Kayttaja admin;
+    private Kayttaja marko;
+    
+    public KirjauduServlet() {
+        admin = new Kayttaja("admin","123456","admin",true);
+        kayttajaRekisteri.lisaaKayttaja(admin);
+        
+        marko = new Kayttaja("marko","marko","marko",false);
+        kayttajaRekisteri.lisaaKayttaja(marko);
+    }
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -30,6 +44,21 @@ public class KirjauduServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        String kayttajatunnus = request.getParameter("kayttajatunnus");
+        String salasana = request.getParameter("salasana");
+        Kayttaja kayttaja = new Kayttaja(kayttajatunnus,salasana); 
+        
+        if(kayttaja.getKayttajatunnus().equals(marko.getKayttajatunnus())&&
+                kayttaja.getSalasana().equals(marko.getSalasana())) {      
+            request.setAttribute("viesti", "Tervetuloa "+ marko.getNimi() + "\nKirjautuminen onnistui!");     
+        }
+        else {
+            request.setAttribute("viesti", "Väärä käyttätunnus tai salasana!");
+        }
+        RequestDispatcher dispatcher = 
+                request.getRequestDispatcher("kirjaudu.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
