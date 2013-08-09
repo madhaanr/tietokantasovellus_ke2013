@@ -10,12 +10,8 @@ import javax.persistence.Id;
 /* @author mhaanran */
 @Entity
 public class Kayttaja implements Serializable {
-    
+       
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    
-    @Column
     private String kayttajatunnus;
     
     @Column
