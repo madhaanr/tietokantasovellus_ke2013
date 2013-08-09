@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Tervetuloa Projektin työaikaseuranta järjestelmään!</h1>
+        <h2><a href="kirjaudu.jsp">Sisään kirjautuminen</a></h2>
     </body>
 </html>

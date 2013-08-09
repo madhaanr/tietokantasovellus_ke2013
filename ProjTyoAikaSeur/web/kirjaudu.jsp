@@ -13,5 +13,12 @@
     </head>
     <body>
         <h1>Kirjaudu projektin työaikaseuranta järjestelmään!</h1>
+        <form name="kirjautuminen" 
+              action="${pageContext.request.contextPath}/Kirjaudu"
+              method="post">
+            Käyttäjätunnus: <input type="text" name="nimi" /> <br>
+            Salasana: <input type="password" name="salasana" /> <br>
+            <input type="submit" value="Kirjaudu" />
+        </form>
     </body>
 </html>
