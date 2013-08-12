@@ -4,9 +4,17 @@
         <servlet-name>KirjauduServlet</servlet-name>
         <servlet-class>servlet.KirjauduServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProjektitServlet</servlet-name>
+        <servlet-class>servlet.ProjektitServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProjektitServlet</servlet-name>
+        <url-pattern>/Projektit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
