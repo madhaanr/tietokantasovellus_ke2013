@@ -56,7 +56,7 @@ public class KirjauduServlet extends HttpServlet {
         if(rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
             HttpSession session = request.getSession();
             session.setAttribute("ktunnus", kayttajatunnus);
-            request.setAttribute("ktunnus", kayttajatunnus);
+//            request.setAttribute("ktunnus", kayttajatunnus);
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");
 //            dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
 //            dispatcher.forward(request, response);

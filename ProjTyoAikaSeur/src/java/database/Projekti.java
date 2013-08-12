@@ -27,6 +27,18 @@ public class Projekti implements Serializable{
 
     public Projekti() {
     }
+
+    public Projekti(String projektinNimi) {
+        this.projektinNimi = projektinNimi;
+    }
+
+    public Projekti(String projektinNimi, Date alkamisPaivaMaara, Date loppumisPaivaMaara, float budjetoidutTyotunnit) {
+        this.projektinNimi = projektinNimi;
+        this.alkamisPaivaMaara = alkamisPaivaMaara;
+        this.loppumisPaivaMaara = loppumisPaivaMaara;
+        this.budjetoidutTyotunnit = budjetoidutTyotunnit;
+    }
+    
     
     public String getProjektinNimi() {
         return projektinNimi;
