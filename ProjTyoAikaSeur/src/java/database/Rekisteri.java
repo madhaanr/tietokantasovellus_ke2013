@@ -21,9 +21,11 @@ public class Rekisteri {
 
     public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) {
         EntityManager em = getEntityManager(); 
-        Kayttaja kayttaja = em.find(Kayttaja.class,kayttajatunnus);
-        if(kayttaja!=null&&kayttaja.getSalasana().equals(salasana)) {          
-            return true;
+        if(!kayttajatunnus.isEmpty()) {
+            Kayttaja kayttaja = em.find(Kayttaja.class,kayttajatunnus);
+            if(kayttaja!=null&&kayttaja.getSalasana().equals(salasana)) {          
+                return true;
+            }
         }
         return false;
     }

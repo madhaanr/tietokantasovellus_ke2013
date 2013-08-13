@@ -4,37 +4,19 @@
  */
 package servlet;
 
-import database.Kayttaja;
-import database.Rekisteri;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author mhaanran
  */
-public class KirjauduServlet extends HttpServlet {
+public class KirjauduUlosServlet extends HttpServlet {
 
-    private Rekisteri rekisteri = new Rekisteri();
-    private Kayttaja admin;
-    private Kayttaja marko;
-    private Kayttaja m;
-    
-    public KirjauduServlet() {
-        admin = new Kayttaja("admin","123456","admin",true);
-        rekisteri.lisaaKayttaja(admin);
-        
-        marko = new Kayttaja("marko","marko","marko",false);
-        rekisteri.lisaaKayttaja(marko);
-        
-        m = new Kayttaja("m","","",false);
-        rekisteri.lisaaKayttaja(m);
-    }
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -47,37 +29,8 @@ public class KirjauduServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session;         
-        RequestDispatcher dispatcher;
-        
-        String kayttajatunnus = request.getParameter("kayttajatunnus");
-        String salasana = request.getParameter("salasana");
-        Kayttaja kayttaja;
-        
-        if(kayttajatunnus!=null) {
-            kayttaja = new Kayttaja(kayttajatunnus,salasana); 
-        }
-        else {
-            kayttaja=null;
-        }
-        
-        if(kayttaja!=null&&rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
-            session = request.getSession(true);
-            session.setAttribute("ktunnus", kayttajatunnus);
-//            request.setAttribute("ktunnus", kayttajatunnus);
-            response.sendRedirect("/ProjTyoAikaSeur/Projektit");
-//            dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
-//            dispatcher.forward(request, response);
-        }
-        else if(kayttaja!=null&&!rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
-            request.setAttribute("viesti", "Väärä käyttäjätunnus tai salasana!");
-            dispatcher = request.getRequestDispatcher("kirjaudu.jsp");        
-            dispatcher.forward(request, response);
-        }
-        else {
-            dispatcher = request.getRequestDispatcher("kirjaudu.jsp");        
-            dispatcher.forward(request, response);
-        }     
+            request.getSession(false).invalidate();
+            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

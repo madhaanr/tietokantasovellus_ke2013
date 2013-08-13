@@ -14,17 +14,20 @@
     <body>
         <h1>Hello World!</h1>
         <h2>Tervetuloa ${ktunnus}</h2>
+        <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
+            <input type="submit" value="Kirjaudu ulos" />
+        </form>
         <h3>Lisää projekti</h3>
-         <form name="projektin_lisaaminen" 
+        <form name="projektin_lisaaminen" 
               action="${pageContext.request.contextPath}/Projektit"
               method="post">
             Projektin nimi: <input type="text" name="projektin_nimi" /> <br>
             <input type="submit" value="Lisää projekti" />
-            
+
             <h2>${viesti}</h2>
         </form>
         <c:forEach var="projekti" items="${projektit}">
-            ${projekti.projektinNimi} <br>
+            <a href=""> ${projekti.projektinNimi} </a> <br>
         </c:forEach>
     </body>
 </html>

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author mhaanran
  */
 public class ProjektitServlet extends HttpServlet {
-
+    
     private Rekisteri rekisteri = new Rekisteri();
     private Projekti proj;
     
@@ -33,6 +33,7 @@ public class ProjektitServlet extends HttpServlet {
         proj.setProjektinNimi("Testi projekti");
         rekisteri.lisaaProjekti(proj);
     }
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -45,17 +46,22 @@ public class ProjektitServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher;      
-        if(request.getParameter("projektin_nimi")!=null) {
-            String projektinNimi = request.getParameter("projektin_nimi");
-            Projekti lisattava = new Projekti();
-            lisattava.setProjektinNimi(projektinNimi);
-            rekisteri.lisaaProjekti(lisattava); 
-        }      
-        List<Projekti> projektit = rekisteri.getProjektit();
-        request.setAttribute("projektit", projektit);
-        dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher;
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("ktunnus")!=null) {
+            if (request.getParameter("projektin_nimi") != null) {
+                String projektinNimi = request.getParameter("projektin_nimi");
+                Projekti lisattava = new Projekti();
+                lisattava.setProjektinNimi(projektinNimi);
+                rekisteri.lisaaProjekti(lisattava);                
+            }            
+            List<Projekti> projektit = rekisteri.getProjektit();
+            request.setAttribute("projektit", projektit);
+            dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
