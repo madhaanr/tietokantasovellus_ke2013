@@ -74,9 +74,21 @@ public class Rekisteri {
         em.getTransaction().begin();
         em.persist(projekti);
         em.getTransaction().commit();
+        
     }
-    public void poistaProjekti(Projekti projekti) {
+    public boolean onkoProjektiOlemassa(String projektinNimi) {
+        EntityManager em = getEntityManager(); 
+        if(!projektinNimi.isEmpty()) {
+            Projekti projekti = em.find(Projekti.class,projektinNimi);
+            if(projekti!=null) {          
+                return false;
+            }
+        }
+        return true;
+    }
+    public void poistaProjekti(String projektinNimi) {
         EntityManager em = getEntityManager();
+        Projekti projekti = em.find(Projekti.class, projektinNimi);
         em.getTransaction().begin();
         em.remove(projekti);
         em.getTransaction().commit();

@@ -12,6 +12,10 @@
         <servlet-name>KirjauduUlosServlet</servlet-name>
         <servlet-class>servlet.KirjauduUlosServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PoistaProjektiServlet</servlet-name>
+        <servlet-class>servlet.PoistaProjektiServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>KirjauduUlosServlet</servlet-name>
         <url-pattern>/KirjauduUlos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PoistaProjektiServlet</servlet-name>
+        <url-pattern>/PoistaProjekti</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

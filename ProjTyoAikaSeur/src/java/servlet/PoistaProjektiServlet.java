@@ -4,15 +4,9 @@
  */
 package servlet;
 
-import database.Kayttaja;
-import database.Projekti;
 import database.Rekisteri;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,17 +17,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author mhaanran
  */
-public class ProjektitServlet extends HttpServlet {
-    
-    private Rekisteri rekisteri = new Rekisteri();
-    private Projekti proj;
-    
-    public ProjektitServlet() {
-        proj = new Projekti();
-        proj.setProjektinNimi("Testi projekti");
-        rekisteri.lisaaProjekti(proj);
-    }
+public class PoistaProjektiServlet extends HttpServlet {
 
+    Rekisteri rekisteri = new Rekisteri();
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -46,26 +32,13 @@ public class ProjektitServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("ktunnus")!=null) {
-            if (request.getParameter("projektin_nimi") != null) {
-                String projektinNimi = request.getParameter("projektin_nimi");
-                if(rekisteri.onkoProjektiOlemassa(projektinNimi)) {
-                    Projekti lisattava = new Projekti();
-                    lisattava.setProjektinNimi(projektinNimi);
-                    rekisteri.lisaaProjekti(lisattava);                
-                }
-                else {
-                    request.setAttribute("viesti", "Projekti nimellä "+projektinNimi+" on jo olemassa!");
-                }
-            }            
-            List<Projekti> projektit = rekisteri.getProjektit();
-            request.setAttribute("projektit", projektit);
-            dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
+        if(session.getAttribute("ktunnus")!=null) {
+            String projektinNimi = request.getParameter("poistettava_projekti");
+            if(projektinNimi!=null) {
+                rekisteri.poistaProjekti(projektinNimi);
+                response.sendRedirect("/ProjTyoAikaSeur/Projekti");
+            }
         }
     }
 

@@ -28,11 +28,10 @@
                 <h2>${viesti}</h2>
             </form>
             <h3>Poista projekti</h3>
-            <select name="poistettava_projekti">
-                <c:forEach var="projekti" items="${projektit}" >
-                    <option value="${projekti.projektinNimi}">${projekti.projektinNimi}</option>
-                </c:forEach>
-            </select> <br>
+            <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
+                <input type="text" name="projektin_nimi" />
+                <input type="submit" value="Poista projekti" />
+            </form>
         </c:if>
         <h3>Projektit</h3>
         <c:forEach var="projekti" items="${projektit}">
