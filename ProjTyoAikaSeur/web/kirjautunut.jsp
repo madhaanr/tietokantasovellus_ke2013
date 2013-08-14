@@ -17,15 +17,24 @@
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
-        <h3>Lisää projekti</h3>
-        <form name="projektin_lisaaminen" 
-              action="${pageContext.request.contextPath}/Projektit"
-              method="post">
-            Projektin nimi: <input type="text" name="projektin_nimi" /> <br>
-            <input type="submit" value="Lisää projekti" />
+        <c:if test="${rooli}">
+            <h3>Lisää projekti</h3>
+            <form name="projektin_lisaaminen" 
+                  action="${pageContext.request.contextPath}/Projektit"
+                  method="post">
+                Projektin nimi: <input type="text" name="projektin_nimi" /> <br>
+                <input type="submit" value="Lisää projekti" />
 
-            <h2>${viesti}</h2>
-        </form>
+                <h2>${viesti}</h2>
+            </form>
+            <h3>Poista projekti</h3>
+            <select name="poistettava_projekti">
+                <c:forEach var="projekti" items="${projektit}" >
+                    <option value="${projekti.projektinNimi}">${projekti.projektinNimi}</option>
+                </c:forEach>
+            </select> <br>
+        </c:if>
+        <h3>Projektit</h3>
         <c:forEach var="projekti" items="${projektit}">
             <a href=""> ${projekti.projektinNimi} </a> <br>
         </c:forEach>

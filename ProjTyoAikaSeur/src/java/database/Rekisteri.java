@@ -19,6 +19,13 @@ public class Rekisteri {
         return emf.createEntityManager();
     }
 
+    /**
+     * Tarkistus onko käyttäjä joka yrittää kirjautua sisään olemassa 
+     * tietokannassa.
+     * @param kayttajatunnus 
+     * @param salasana
+     * @return palautetaan true jos käyttäjä on olemassa ja salasana on oikein.
+     */
     public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) {
         EntityManager em = getEntityManager(); 
         if(!kayttajatunnus.isEmpty()) {
@@ -26,6 +33,22 @@ public class Rekisteri {
             if(kayttaja!=null&&kayttaja.getSalasana().equals(salasana)) {          
                 return true;
             }
+        }
+        return false;
+    }
+    
+    /**
+     * Tarkistetaan onko käyttäjällä rooli projektipäällikkö vai työnte-
+     * kijä. Vain projektipäällikkö voi lisätä projekteja ja työtehtäviä.
+     * @param kayttajatunnus 
+     * @return palautetaan true jos rooli on projektipäällikkö muuten false.
+     */
+    public boolean mikaRooli(String kayttajatunnus) {
+        EntityManager em = getEntityManager();
+        Kayttaja kayttaja = em.find(Kayttaja.class, kayttajatunnus);
+        boolean rooli = kayttaja.isRooli();
+        if(rooli) {
+            return true;
         }
         return false;
     }
@@ -50,6 +73,18 @@ public class Rekisteri {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         em.persist(projekti);
+        em.getTransaction().commit();
+    }
+    public void poistaProjekti(Projekti projekti) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.remove(projekti);
+        em.getTransaction().commit();
+    }
+    public void poistaKayttaja(Kayttaja kayttaja) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.remove(kayttaja);
         em.getTransaction().commit();
     }
        
