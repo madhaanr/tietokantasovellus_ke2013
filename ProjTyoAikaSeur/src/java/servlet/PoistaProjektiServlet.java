@@ -6,7 +6,6 @@ package servlet;
 
 import database.Rekisteri;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +33,11 @@ public class PoistaProjektiServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if(session.getAttribute("ktunnus")!=null) {
-            String projektinNimi = request.getParameter("poistettava_projekti");
-            if(projektinNimi!=null) {
-                rekisteri.poistaProjekti(projektinNimi);
-                response.sendRedirect("/ProjTyoAikaSeur/Projekti");
+            String projektinNimi = request.getParameter("projektin_nimi");
+            if(projektinNimi!=null&&!rekisteri.onkoProjektiOlemassa(projektinNimi)) {
+                rekisteri.poistaProjekti(projektinNimi);       
             }
+            response.sendRedirect("/ProjTyoAikaSeur/Projektit");
         }
     }
 
