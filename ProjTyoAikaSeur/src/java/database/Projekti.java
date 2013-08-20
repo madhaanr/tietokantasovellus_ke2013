@@ -8,21 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 
 /* @author mhaanran */
-@Entity
-public class Projekti implements Serializable{
+//@Entity
+public class Projekti{
 
-    @Id
+    //@Id
     private String projektinNimi;
     
-    @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Column
+    //@Temporal(javax.persistence.TemporalType.DATE)
     private Date alkamisPaivaMaara;
     
-    @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Column
+    //@Temporal(javax.persistence.TemporalType.DATE)
     private Date loppumisPaivaMaara;
     
-    @Column
+    //@Column
     private float budjetoidutTyotunnit;
 
     public Projekti() {
