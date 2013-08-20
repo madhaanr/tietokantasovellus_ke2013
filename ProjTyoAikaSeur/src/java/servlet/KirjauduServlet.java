@@ -26,19 +26,8 @@ public class KirjauduServlet extends HttpServlet {
 
 //    private Rekisteri rekisteri = new Rekisteri();
     private TietokantaYhteys rekisteri = new TietokantaYhteys();
-    private Kayttaja admin;
-    private Kayttaja marko;
-    private Kayttaja m;
     
     public KirjauduServlet() {
-//        admin = new Kayttaja("admin","123456","admin",true);
-//        rekisteri.lisaaKayttaja(admin);
-//        
-//        marko = new Kayttaja("marko","marko","marko",false);
-//        rekisteri.lisaaKayttaja(marko);
-//        
-//        m = new Kayttaja("m","","",false);
-//        rekisteri.lisaaKayttaja(m);
     }
     /**
      * Processes requests for both HTTP

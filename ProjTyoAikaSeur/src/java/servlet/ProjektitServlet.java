@@ -7,10 +7,14 @@ package servlet;
 import database.Kayttaja;
 import database.Projekti;
 import database.Rekisteri;
+import database.TietokantaYhteys;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,13 +29,9 @@ import javax.servlet.http.HttpSession;
  */
 public class ProjektitServlet extends HttpServlet {
     
-    private Rekisteri rekisteri = new Rekisteri();
-    private Projekti proj;
+    private TietokantaYhteys rekisteri = new TietokantaYhteys();
     
-    public ProjektitServlet() {
-        proj = new Projekti();
-        proj.setProjektinNimi("Testi projekti");
-        rekisteri.lisaaProjekti(proj);
+    public ProjektitServlet() {   
     }
 
     /**
@@ -45,7 +45,7 @@ public class ProjektitServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
         if (session.getAttribute("ktunnus")!=null) {
@@ -82,7 +82,11 @@ public class ProjektitServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjektitServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -97,7 +101,11 @@ public class ProjektitServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjektitServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

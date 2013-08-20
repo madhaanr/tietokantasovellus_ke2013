@@ -19,39 +19,39 @@ public class Rekisteri {
         return emf.createEntityManager();
     }
 
-    /**
-     * Tarkistus onko käyttäjä joka yrittää kirjautua sisään olemassa 
-     * tietokannassa.
-     * @param kayttajatunnus 
-     * @param salasana
-     * @return palautetaan true jos käyttäjä on olemassa ja salasana on oikein.
-     */
-    public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) {
-        EntityManager em = getEntityManager(); 
-        if(!kayttajatunnus.isEmpty()) {
-            Kayttaja kayttaja = em.find(Kayttaja.class,kayttajatunnus);
-            if(kayttaja!=null&&kayttaja.getSalasana().equals(salasana)) {          
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Tarkistetaan onko käyttäjällä rooli projektipäällikkö vai työnte-
-     * kijä. Vain projektipäällikkö voi lisätä projekteja ja työtehtäviä.
-     * @param kayttajatunnus 
-     * @return palautetaan true jos rooli on projektipäällikkö muuten false.
-     */
-    public boolean mikaRooli(String kayttajatunnus) {
-        EntityManager em = getEntityManager();
-        Kayttaja kayttaja = em.find(Kayttaja.class, kayttajatunnus);
-        boolean rooli = kayttaja.isRooli();
-        if(rooli) {
-            return true;
-        }
-        return false;
-    }
+//    /**
+//     * Tarkistus onko käyttäjä joka yrittää kirjautua sisään olemassa 
+//     * tietokannassa.
+//     * @param kayttajatunnus 
+//     * @param salasana
+//     * @return palautetaan true jos käyttäjä on olemassa ja salasana on oikein.
+//     */
+//    public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) {
+//        EntityManager em = getEntityManager(); 
+//        if(!kayttajatunnus.isEmpty()) {
+//            Kayttaja kayttaja = em.find(Kayttaja.class,kayttajatunnus);
+//            if(kayttaja!=null&&kayttaja.getSalasana().equals(salasana)) {          
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//    
+//    /**
+//     * Tarkistetaan onko käyttäjällä rooli projektipäällikkö vai työnte-
+//     * kijä. Vain projektipäällikkö voi lisätä projekteja ja työtehtäviä.
+//     * @param kayttajatunnus 
+//     * @return palautetaan true jos rooli on projektipäällikkö muuten false.
+//     */
+//    public boolean mikaRooli(String kayttajatunnus) {
+//        EntityManager em = getEntityManager();
+//        Kayttaja kayttaja = em.find(Kayttaja.class, kayttajatunnus);
+//        boolean rooli = kayttaja.isRooli();
+//        if(rooli) {
+//            return true;
+//        }
+//        return false;
+//    }
     
     public List<Kayttaja> getKayttajat() {
         EntityManager em = getEntityManager();
@@ -65,34 +65,34 @@ public class Rekisteri {
         em.getTransaction().commit();
     }
     
-    public List<Projekti> getProjektit() {
-        EntityManager em = getEntityManager();
-        return em.createQuery("SELECT u FROM Projekti u").getResultList();
-    }
-    public void lisaaProjekti(Projekti projekti) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.persist(projekti);
-        em.getTransaction().commit();
-        
-    }
-    public boolean onkoProjektiOlemassa(String projektinNimi) {
-        EntityManager em = getEntityManager(); 
-        if(!projektinNimi.isEmpty()) {
-            Projekti projekti = em.find(Projekti.class,projektinNimi);
-            if(projekti!=null) {          
-                return false;
-            }
-        }
-        return true;
-    }
-    public void poistaProjekti(String projektinNimi) {
-        EntityManager em = getEntityManager();
-        Projekti projekti = em.find(Projekti.class, projektinNimi);
-        em.getTransaction().begin();
-        em.remove(projekti);
-        em.getTransaction().commit();
-    }
+//    public List<Projekti> getProjektit() {
+//        EntityManager em = getEntityManager();
+//        return em.createQuery("SELECT u FROM Projekti u").getResultList();
+//    }
+//    public void lisaaProjekti(Projekti projekti) {
+//        EntityManager em = getEntityManager();
+//        em.getTransaction().begin();
+//        em.persist(projekti);
+//        em.getTransaction().commit();
+//        
+//    }
+//    public boolean onkoProjektiOlemassa(String projektinNimi) {
+//        EntityManager em = getEntityManager(); 
+//        if(!projektinNimi.isEmpty()) {
+//            Projekti projekti = em.find(Projekti.class,projektinNimi);
+//            if(projekti!=null) {          
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//    public void poistaProjekti(String projektinNimi) {
+//        EntityManager em = getEntityManager();
+//        Projekti projekti = em.find(Projekti.class, projektinNimi);
+//        em.getTransaction().begin();
+//        em.remove(projekti);
+//        em.getTransaction().commit();
+//    }
     public void poistaKayttaja(Kayttaja kayttaja) {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();

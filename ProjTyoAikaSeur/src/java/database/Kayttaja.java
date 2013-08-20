@@ -8,19 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /* @author mhaanran */
-@Entity
-public class Kayttaja implements Serializable {
+//@Entity
+public class Kayttaja {
        
-    @Id
+//    @Id
     private String kayttajatunnus;
     
-    @Column
+//    @Column
     private String salasana;
     
-    @Column
+//    @Column
     private String nimi;
     
-    @Column
+//    @Column
     private boolean rooli;
 
     public Kayttaja() {  

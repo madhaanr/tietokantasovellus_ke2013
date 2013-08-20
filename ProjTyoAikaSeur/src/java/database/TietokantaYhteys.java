@@ -1,19 +1,24 @@
 package database;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /* @author mhaanran */
 public class TietokantaYhteys {
 
+    //users postgresql parametrit
+    
+    //java db parametrit
     static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
     static final String DB_URL = "jdbc:derby://localhost:1527/projtyoaika;create=true";
     static final String kayttaja = "marko";
     static final String salasana = "marko";
     
-
     public TietokantaYhteys() {
         
     }
+    
     public Connection luoTietokantaYhteys() throws SQLException {
         
         try {
@@ -23,6 +28,7 @@ public class TietokantaYhteys {
         }      
         return DriverManager.getConnection(DB_URL, kayttaja, salasana);
     }
+    
     public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) throws SQLException {
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
@@ -58,11 +64,12 @@ public class TietokantaYhteys {
             prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
             prep.setString(1, kayttajatunnus);
             ResultSet resultset = prep.executeQuery();
+            prep.close();
+            conn.close();
             if(resultset.next()) {
                 int rooli = resultset.getInt("ROOLI");
-                if(rooli>=1) {
-                    conn.close();
-                    return true;
+                if(rooli>=1) {                
+                    return false;
                 }
             }   
         } catch (SQLException ex) {
@@ -73,6 +80,83 @@ public class TietokantaYhteys {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return false;
+        return true;
     }
+    
+    public List<Projekti> getProjektit() throws SQLException {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        ArrayList<Projekti> lista = new ArrayList();
+        try {
+           prep = conn.prepareStatement("SELECT * FROM PROJEKTI");
+           ResultSet resultset = prep.executeQuery();
+           while(resultset.next()) {
+               String projektinNimi=resultset.getString("PROJEKTIN_NIMI");
+               Projekti projekti = new Projekti(projektinNimi);
+               lista.add(projekti);
+               System.out.println("taa");
+           }       
+           prep.close();
+           conn.close();
+           System.out.println("täällä");
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+
+    public void lisaaProjekti(Projekti projekti) throws SQLException {
+        Connection conn=luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        try {
+            prep = conn.prepareStatement("INSERT INTO PROJEKTI VALUES (?,?,?,?)");
+            prep.setString(1, projekti.getProjektinNimi());
+            prep.setInt(2, 0);
+            prep.setDate(3, null);
+            prep.setDate(4, null);
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public boolean onkoProjektiOlemassa(String projektinNimi) throws SQLException {
+        Connection conn=luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        if(!projektinNimi.isEmpty()) {      
+            try {
+                prep = conn.prepareStatement("SELECT * FROM PROJEKTI WHERE PROJEKTIN_NIMI=?");
+                prep.setString(1, projektinNimi);
+                ResultSet resultset = prep.executeQuery();            
+                if(resultset.next()) {
+                    prep.close();
+                    conn.close();
+                    return false;
+                }
+            } catch(SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if(prep!=null) {
+            prep.close();
+        }
+        conn.close();
+        return true;
+    }
+
+    public void poistaProjekti(String projektinNimi) throws SQLException {
+        Connection conn=luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        try {
+            prep=conn.prepareStatement("DELETE FROM PROJEKTI WHERE PROJEKTIN_NIMI=?");
+            prep.setString(1, projektinNimi);
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
