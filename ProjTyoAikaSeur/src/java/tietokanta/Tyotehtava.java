@@ -1,4 +1,4 @@
-package database;
+package tietokanta;
 
 import java.io.Serializable;
 import javax.persistence.Column;

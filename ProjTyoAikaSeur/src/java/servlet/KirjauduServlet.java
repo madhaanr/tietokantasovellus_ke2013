@@ -4,9 +4,9 @@
  */
 package servlet;
 
-import database.Kayttaja;
-import database.Rekisteri;
-import database.TietokantaYhteys;
+import tietokanta.Kayttaja;
+import tietokanta.Rekisteri;
+import tietokanta.TietokantaYhteys;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;

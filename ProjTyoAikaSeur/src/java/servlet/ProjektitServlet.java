@@ -4,13 +4,14 @@
  */
 package servlet;
 
-import database.Kayttaja;
-import database.Projekti;
-import database.Rekisteri;
-import database.TietokantaYhteys;
+import tietokanta.Kayttaja;
+import tietokanta.Projekti;
+import tietokanta.Rekisteri;
+import tietokanta.TietokantaYhteys;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,19 +52,25 @@ public class ProjektitServlet extends HttpServlet {
         if (session.getAttribute("ktunnus")!=null) {
             if (request.getParameter("projektin_nimi") != null) {
                 String projektinNimi = request.getParameter("projektin_nimi");
+                float tyoTuntiBudjetti = Float.parseFloat(request.getParameter("tyoTuntiBudjetti"));
+                SimpleDateFormat formatter = new SimpleDateFormat("mm-dd-yyyy");
+                String alkamisPaivaMaara = request.getParameter("alkamisPaivaMaara");
+                
+                String loppumisPaivaMaara = request.getParameter("loppumisPaivaMaara");
                 if(rekisteri.onkoProjektiOlemassa(projektinNimi)) {
-                    Projekti lisattava = new Projekti();
-                    lisattava.setProjektinNimi(projektinNimi);
+                    Projekti lisattava = new Projekti(projektinNimi);
                     rekisteri.lisaaProjekti(lisattava);                
                 }
                 else {
                     request.setAttribute("viesti", "Projekti nimellä "+projektinNimi+" on jo olemassa!");
                 }
-            }            
+            }
+            
             List<Projekti> projektit = rekisteri.getProjektit();
             request.setAttribute("projektit", projektit);
             dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
             dispatcher.forward(request, response);
+            
         } else {
             response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
         }

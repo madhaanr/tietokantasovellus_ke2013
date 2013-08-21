@@ -1,4 +1,4 @@
-package database;
+package tietokanta;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,7 +116,8 @@ public class TietokantaYhteys {
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {
-            prep = conn.prepareStatement("INSERT INTO PROJEKTI (PROJEKTIN_NIMI,TYOTUNTIBUDJETTI,ALKAMISPAIVAMAARA,LOPPUMISPAIVAMAARA) "
+            prep = conn.prepareStatement("INSERT INTO PROJEKTI (PROJEKTIN_NIMI,"
+                    + "TYOTUNTIBUDJETTI,ALKAMISPAIVAMAARA,LOPPUMISPAIVAMAARA) "
                     + "VALUES (?,?,?,?)");
             prep.setString(1, projekti.getProjektinNimi());
             prep.setInt(2, 0);

@@ -1,4 +1,4 @@
-package database;
+package tietokanta;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,7 +32,7 @@ public class Projekti{
         this.projektinNimi = projektinNimi;
     }
 
-    public Projekti(String projektinNimi, Date alkamisPaivaMaara, Date loppumisPaivaMaara, float budjetoidutTyotunnit) {
+    public Projekti(String projektinNimi, float budjetoidutTyotunnit, Date alkamisPaivaMaara, Date loppumisPaivaMaara) {
         this.projektinNimi = projektinNimi;
         this.alkamisPaivaMaara = alkamisPaivaMaara;
         this.loppumisPaivaMaara = loppumisPaivaMaara;
