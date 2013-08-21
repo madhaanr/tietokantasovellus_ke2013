@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ProjektitServlet extends HttpServlet {
     
-    private TietokantaYhteys rekisteri = new TietokantaYhteys();
+    private TietokantaYhteys db = new TietokantaYhteys();
     
     public ProjektitServlet() {   
     }
@@ -56,25 +56,30 @@ public class ProjektitServlet extends HttpServlet {
                 float tyoTuntiBudjetti = Float.parseFloat(request.getParameter("tyoTuntiBudjetti"));      
                 String alkamisPaivaMaara = request.getParameter("alkamisPaivaMaara");
                 Calendar aCalendar = Calendar.getInstance();
-                aCalendar.set(Calendar.YEAR, Integer.parseInt(alkamisPaivaMaara.substring(4, alkamisPaivaMaara.length()-1)));
-                aCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(alkamisPaivaMaara.substring(2, alkamisPaivaMaara.length()-5)));
-                aCalendar.set(Calendar.MONTH, Integer.parseInt(alkamisPaivaMaara.substring(0, alkamisPaivaMaara.length()-7)));
+                if(!alkamisPaivaMaara.isEmpty()) {
+                    aCalendar.set(Calendar.YEAR, Integer.parseInt(alkamisPaivaMaara.substring(4, alkamisPaivaMaara.length()-1)));
+                    aCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(alkamisPaivaMaara.substring(2, alkamisPaivaMaara.length()-5)));
+                    aCalendar.set(Calendar.MONTH, Integer.parseInt(alkamisPaivaMaara.substring(0, alkamisPaivaMaara.length()-7)));            
+                }
                 java.sql.Date dateA = new java.sql.Date(aCalendar.getTime().getTime());
                 String loppumisPaivaMaara = request.getParameter("loppumisPaivaMaara");
                 Calendar lCalendar = Calendar.getInstance();
-                lCalendar.set(Calendar.YEAR, Integer.parseInt(loppumisPaivaMaara.substring(4, alkamisPaivaMaara.length()-1)));
-                lCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(loppumisPaivaMaara.substring(4, alkamisPaivaMaara.length()-5)));
-                lCalendar.set(Calendar.MONTH, Integer.parseInt(loppumisPaivaMaara.substring(4, alkamisPaivaMaara.length()-7)));
-                if(rekisteri.onkoProjektiOlemassa(projektinNimi)) {
-                    Projekti lisattava = new Projekti(projektinNimi,tyoTuntiBudjetti,dateA,lCalendar);
-                    rekisteri.lisaaProjekti(lisattava);                
+                if(!loppumisPaivaMaara.isEmpty()) {
+                    lCalendar.set(Calendar.YEAR, Integer.parseInt(loppumisPaivaMaara.substring(4, loppumisPaivaMaara.length()-1)));
+                    lCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(loppumisPaivaMaara.substring(2, loppumisPaivaMaara.length()-5)));
+                    lCalendar.set(Calendar.MONTH, Integer.parseInt(loppumisPaivaMaara.substring(0, loppumisPaivaMaara.length()-7)));
+                }
+                java.sql.Date dateB = new java.sql.Date(aCalendar.getTime().getTime());
+                if(db.onkoProjektiOlemassa(projektinNimi)) {
+                    Projekti lisattava = new Projekti(projektinNimi,tyoTuntiBudjetti,dateA,dateB);
+                    db.lisaaProjekti(lisattava);                
                 }
                 else {
                     request.setAttribute("viesti", "Projekti nimellä "+projektinNimi+" on jo olemassa!");
                 }
             }
             
-            List<Projekti> projektit = rekisteri.getProjektit();
+            List<Projekti> projektit = db.getProjektit();
             request.setAttribute("projektit", projektit);
             dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
             dispatcher.forward(request, response);

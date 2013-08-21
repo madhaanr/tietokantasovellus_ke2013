@@ -1,13 +1,14 @@
 package tietokanta;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 /* @author mhaanran */
 public class Projekti{
 
     private String projektinNimi;
-    private Calendar alkamisPaivaMaara;
-    private Calendar loppumisPaivaMaara;
+    private Date alkamisPaivaMaara;
+    private Date loppumisPaivaMaara;
     private float budjetoidutTyotunnit;
 
     public Projekti() {
@@ -17,7 +18,7 @@ public class Projekti{
         this.projektinNimi = projektinNimi;
     }
 
-    public Projekti(String projektinNimi, float budjetoidutTyotunnit, Calendar alkamisPaivaMaara, Calendar loppumisPaivaMaara) {
+    public Projekti(String projektinNimi, float budjetoidutTyotunnit, Date alkamisPaivaMaara, Date loppumisPaivaMaara) {
         this.projektinNimi = projektinNimi;
         this.alkamisPaivaMaara = alkamisPaivaMaara;
         this.loppumisPaivaMaara = loppumisPaivaMaara;
@@ -32,19 +33,19 @@ public class Projekti{
         this.projektinNimi = projektinNimi;
     }
 
-    public Calendar getAlkamisPaivaMaara() {
+    public Date getAlkamisPaivaMaara() {
         return alkamisPaivaMaara;
     }
 
-    public void setAlkamisPaivaMaara(Calendar alkamisPaivaMaara) {
+    public void setAlkamisPaivaMaara(Date alkamisPaivaMaara) {
         this.alkamisPaivaMaara = alkamisPaivaMaara;
     }
 
-    public Calendar getLoppumisPaivaMaara() {
+    public Date getLoppumisPaivaMaara() {
         return loppumisPaivaMaara;
     }
 
-    public void setLoppumisPaivaMaara(Calendar loppumisPaivaMaara) {
+    public void setLoppumisPaivaMaara(Date loppumisPaivaMaara) {
         this.loppumisPaivaMaara = loppumisPaivaMaara;
     }
 

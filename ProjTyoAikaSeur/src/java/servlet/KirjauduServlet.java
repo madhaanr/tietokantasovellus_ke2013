@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  */
 public class KirjauduServlet extends HttpServlet {
 
-//    private Rekisteri rekisteri = new Rekisteri();
-    private TietokantaYhteys rekisteri = new TietokantaYhteys();
+//    private Rekisteri db = new Rekisteri();
+    private TietokantaYhteys db = new TietokantaYhteys();
     
     public KirjauduServlet() {
     }
@@ -55,19 +55,19 @@ public class KirjauduServlet extends HttpServlet {
         else {
             kayttaja=null;
         }
-        if(rekisteri.haeKayttajanNimi(kayttajatunnus)!=null) {
-            knimi=rekisteri.haeKayttajanNimi(kayttajatunnus);
+        if(db.haeKayttajanNimi(kayttajatunnus)!=null) {
+            knimi=db.haeKayttajanNimi(kayttajatunnus);
         }
-        if(kayttaja!=null&&rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
+        if(kayttaja!=null&&db.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
             session = request.getSession(true);
             session.setAttribute("ktunnus", kayttajatunnus);
             session.setAttribute("knimi", knimi);
-            if(rekisteri.mikaRooli(kayttajatunnus)) {
+            if(db.mikaRooli(kayttajatunnus)) {
                 session.setAttribute("rooli", true);
             }
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");
         }
-        else if(kayttaja!=null&&!rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
+        else if(kayttaja!=null&&!db.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
             request.setAttribute("viesti", "Väärä käyttäjätunnus tai salasana!");
             dispatcher = request.getRequestDispatcher("kirjaudu.jsp");        
             dispatcher.forward(request, response);
