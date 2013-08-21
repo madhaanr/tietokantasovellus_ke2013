@@ -12,8 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <h2>Tervetuloa ${ktunnus}</h2>
+        <h1>Projektit</h1>
+        <h2>Tervetuloa ${knimi}</h2>
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
@@ -22,8 +22,11 @@
             <form name="projektin_lisaaminen" 
                   action="${pageContext.request.contextPath}/Projektit"
                   method="post">
-                Projektin nimi: <input type="text" name="projektin_nimi" /> <br>
-                <input type="submit" value="Lisää projekti" />
+                Projektin nimi: <input type="text" name="projektin_nimi" /> 
+                Työtunti budjetti: <input type="text" name="tyoTuntiBudjetti" />
+                Alkamispäivämäärä: <input type="text" name ="alkamisPaivaMaara" />
+                Loppumispäivämäärä: <input type="text" name ="loppumisPaivaMaara" />
+                <br><input type="submit" value="Lisää projekti" />
 
                 <h2>${viesti}</h2>
             </form>

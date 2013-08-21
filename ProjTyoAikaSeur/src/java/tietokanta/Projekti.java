@@ -1,28 +1,13 @@
 package tietokanta;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
+import java.util.Calendar;
 
 /* @author mhaanran */
-//@Entity
 public class Projekti{
 
-    //@Id
     private String projektinNimi;
-    
-    //@Column
-    //@Temporal(javax.persistence.TemporalType.DATE)
-    private Date alkamisPaivaMaara;
-    
-    //@Column
-    //@Temporal(javax.persistence.TemporalType.DATE)
-    private Date loppumisPaivaMaara;
-    
-    //@Column
+    private Calendar alkamisPaivaMaara;
+    private Calendar loppumisPaivaMaara;
     private float budjetoidutTyotunnit;
 
     public Projekti() {
@@ -32,13 +17,12 @@ public class Projekti{
         this.projektinNimi = projektinNimi;
     }
 
-    public Projekti(String projektinNimi, float budjetoidutTyotunnit, Date alkamisPaivaMaara, Date loppumisPaivaMaara) {
+    public Projekti(String projektinNimi, float budjetoidutTyotunnit, Calendar alkamisPaivaMaara, Calendar loppumisPaivaMaara) {
         this.projektinNimi = projektinNimi;
         this.alkamisPaivaMaara = alkamisPaivaMaara;
         this.loppumisPaivaMaara = loppumisPaivaMaara;
         this.budjetoidutTyotunnit = budjetoidutTyotunnit;
-    }
-    
+    }  
     
     public String getProjektinNimi() {
         return projektinNimi;
@@ -48,19 +32,19 @@ public class Projekti{
         this.projektinNimi = projektinNimi;
     }
 
-    public Date getAlkamisPaivaMaara() {
+    public Calendar getAlkamisPaivaMaara() {
         return alkamisPaivaMaara;
     }
 
-    public void setAlkamisPaivaMaara(Date alkamisPaivaMaara) {
+    public void setAlkamisPaivaMaara(Calendar alkamisPaivaMaara) {
         this.alkamisPaivaMaara = alkamisPaivaMaara;
     }
 
-    public Date getLoppumisPaivaMaara() {
+    public Calendar getLoppumisPaivaMaara() {
         return loppumisPaivaMaara;
     }
 
-    public void setLoppumisPaivaMaara(Date loppumisPaivaMaara) {
+    public void setLoppumisPaivaMaara(Calendar loppumisPaivaMaara) {
         this.loppumisPaivaMaara = loppumisPaivaMaara;
     }
 

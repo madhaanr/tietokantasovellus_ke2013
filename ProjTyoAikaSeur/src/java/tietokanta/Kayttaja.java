@@ -8,19 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /* @author mhaanran */
-//@Entity
 public class Kayttaja {
        
-//    @Id
-    private String kayttajatunnus;
-    
-//    @Column
+    private String kayttajatunnus;    
     private String salasana;
-    
-//    @Column
-    private String nimi;
-    
-//    @Column
+    private String nimi;  
     private boolean rooli;
 
     public Kayttaja() {  

@@ -46,6 +46,7 @@ public class KirjauduServlet extends HttpServlet {
         
         String kayttajatunnus = request.getParameter("kayttajatunnus");
         String salasana = request.getParameter("salasana");
+        String knimi="";
         Kayttaja kayttaja;
         
         if(kayttajatunnus!=null) {
@@ -54,17 +55,17 @@ public class KirjauduServlet extends HttpServlet {
         else {
             kayttaja=null;
         }
-        
+        if(rekisteri.haeKayttajanNimi(kayttajatunnus)!=null) {
+            knimi=rekisteri.haeKayttajanNimi(kayttajatunnus);
+        }
         if(kayttaja!=null&&rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
             session = request.getSession(true);
             session.setAttribute("ktunnus", kayttajatunnus);
+            session.setAttribute("knimi", knimi);
             if(rekisteri.mikaRooli(kayttajatunnus)) {
                 session.setAttribute("rooli", true);
             }
-//            request.setAttribute("ktunnus", kayttajatunnus);
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");
-//            dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
-//            dispatcher.forward(request, response);
         }
         else if(kayttaja!=null&&!rekisteri.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
             request.setAttribute("viesti", "Väärä käyttäjätunnus tai salasana!");

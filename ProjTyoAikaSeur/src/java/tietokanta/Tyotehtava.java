@@ -1,43 +1,16 @@
 package tietokanta;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /* @author mhaanran */
-@Entity
-public class Tyotehtava implements Serializable{
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    
-    @Column
+public class Tyotehtava{
+  
     private String tyotehtavanNimi;
+    private float budjetoidutTyotunnit;
+    private String projektinNimi;
     
-    @Column
-    private float tehdytTunnit;
-    
-    @Column
-    private float budjetoidutTunnit;
-    
-    @Column
-    private String selitys;
-
     public Tyotehtava() {
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    
     public String getTyotehtavanNimi() {
         return tyotehtavanNimi;
     }
@@ -45,30 +18,22 @@ public class Tyotehtava implements Serializable{
     public void setTyotehtavanNimi(String tyotehtavanNimi) {
         this.tyotehtavanNimi = tyotehtavanNimi;
     }
-
-    public float getTehdytTunnit() {
-        return tehdytTunnit;
+    
+    public float getBudjetoidutTyotunnit() {
+        return budjetoidutTyotunnit;
     }
 
-    public void setTehdytTunnit(float tehdytTunnit) {
-        this.tehdytTunnit = tehdytTunnit;
+    public void setBudjetoidutTyotunnit(float budjetoidutTyotunnit) {
+        this.budjetoidutTyotunnit = budjetoidutTyotunnit;
     }
 
-    public float getBudjetoidutTunnit() {
-        return budjetoidutTunnit;
+    public String getProjektinNimi() {
+        return projektinNimi;
     }
 
-    public void setBudjetoidutTunnit(float budjetoidutTunnit) {
-        this.budjetoidutTunnit = budjetoidutTunnit;
-    }
-
-    public String getSelitys() {
-        return selitys;
-    }
-
-    public void setSelitys(String selitys) {
-        this.selitys = selitys;
+    public void setProjektinNimi(String projektinNimi) {
+        this.projektinNimi = projektinNimi;
     }
     
-    
+   
 }

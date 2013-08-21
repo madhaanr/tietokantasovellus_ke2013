@@ -18,8 +18,7 @@ public class TietokantaYhteys {
 //    static final String kayttaja = "marko";
 //    static final String salasana = "marko";
     
-    public TietokantaYhteys() {
-        
+    public TietokantaYhteys() {       
     }
     
     public Connection luoTietokantaYhteys() throws SQLException {
@@ -32,6 +31,27 @@ public class TietokantaYhteys {
         
         return DriverManager.getConnection(DB_URL, kayttaja, salasana);
     }
+    public String haeKayttajanNimi(String kayttajatunnus) throws SQLException {
+        Connection conn=luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        Kayttaja kayttaja = null;
+        try {  
+            prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
+            prep.setString(1, kayttajatunnus);
+            ResultSet resultset = prep.executeQuery();
+            if(resultset.next()) {
+                String knimi = resultset.getString("NIMI");
+                resultset.close();
+                prep.close();
+                conn.close();
+                return knimi;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
     
     public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) throws SQLException {
         Connection conn=luoTietokantaYhteys();
@@ -120,9 +140,9 @@ public class TietokantaYhteys {
                     + "TYOTUNTIBUDJETTI,ALKAMISPAIVAMAARA,LOPPUMISPAIVAMAARA) "
                     + "VALUES (?,?,?,?)");
             prep.setString(1, projekti.getProjektinNimi());
-            prep.setInt(2, 0);
-            prep.setDate(3, null);
-            prep.setDate(4, null);
+            prep.setFloat(2, projekti.getBudjetoidutTyotunnit());
+            prep.setDate(3, projekti.getAlkamisPaivaMaara());
+            prep.setDate(4, projekti.getLoppumisPaivaMaara());
             prep.executeUpdate();
             prep.close();
             conn.close();
