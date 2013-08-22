@@ -20,8 +20,7 @@
               method="post">
             Käyttäjätunnus: <input type="text" name="kayttajatunnus" /> <br>
             Salasana: <input type="password" name="salasana" /> <br>
-            <input type="submit" value="Kirjaudu" />
-            
+            <input type="submit" value="Kirjaudu" />          
             <h2>${viesti}</h2>
         </form>
     </body>

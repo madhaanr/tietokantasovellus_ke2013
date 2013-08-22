@@ -16,6 +16,14 @@
         <servlet-name>PoistaProjektiServlet</servlet-name>
         <servlet-class>servlet.PoistaProjektiServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LisaaTyotehtavaServlet</servlet-name>
+        <servlet-class>servlet.LisaaTyotehtavaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LisaaTyontekijaServlet</servlet-name>
+        <servlet-class>servlet.LisaaTyontekijaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>PoistaProjektiServlet</servlet-name>
         <url-pattern>/PoistaProjekti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LisaaTyotehtavaServlet</servlet-name>
+        <url-pattern>/LisaaTyotehtava</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LisaaTyontekijaServlet</servlet-name>
+        <url-pattern>/LisaaTyontekija</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

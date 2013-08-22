@@ -38,12 +38,12 @@
         </c:if>
         <h3>Projektit</h3>
         <c:forEach var="projekti" items="${projektit}">
-            <a href=""> ${projekti.projektinNimi}</a> ${projekti.budjetoidutTyotunnit} ${projekti.alkamisPaivaMaara} ${projekti.loppumisPaivaMaara} <br>
+            <a href="${pageContext.request.contextPath}/LisaaTyotehtava?${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäär: ${projekti.alkamisPaivaMaara} Loppumispäivämäärä: ${projekti.loppumisPaivaMaara} <br>
         </c:forEach>
         <h3>Kayttajat</h3>
         <c:forEach var="kayttaja" items="${kayttajat}">
             <c:if test="${kayttaja.rooli==false}">
-             Kayttaja: ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>
+                ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>
             </c:if>
         </c:forEach>
     </body>
