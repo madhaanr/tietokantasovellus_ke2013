@@ -18,7 +18,7 @@
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="89.0" width="156.0" x="177.5" y="39.0"/>
+          <y:Geometry height="89.0" width="156.0" x="123.83333333333334" y="-69.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="65.75" x="45.125" y="3.0">Kayttaja<y:LabelModel>
@@ -42,7 +42,7 @@
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="103.39999999999998" width="156.0" x="177.5" y="360.0"/>
+          <y:Geometry height="103.39999999999998" width="156.0" x="123.83333333333334" y="360.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="61.458984375" x="47.2705078125" y="3.0">Projekti<y:LabelModel>
@@ -68,10 +68,10 @@ tyotunnit
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="103.39999999999998" width="227.0" x="445.1666666666666" y="360.0"/>
+          <y:Geometry height="116.39999999999998" width="235.0" x="445.1666666666665" y="360.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="86.79248046875" x="70.103759765625" y="3.0">Tyotehtava<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="86.79248046875" x="74.103759765625" y="3.0">Tyotehtava<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -82,7 +82,8 @@ tyotunnit
             <y:AttributeLabel>-tyotehtavan nimi
 -työtehtavalle budjetoi-
 dut tyotunnit
-foreign key (projektin_nimi) 
+-projektin_nimi
+-foreign key (projektin_nimi) 
 references projekti(projektin_nimi)</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
@@ -91,13 +92,12 @@ references projekti(projektin_nimi)</y:AttributeLabel>
     </node>
     <node id="n3">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="175.0" width="263.33333333333326" x="426.9999999999999" y="39.0"/>
+          <y:Geometry height="214.0" width="263.33333333333337" x="445.1666666666666" y="44.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="55.162109375" x="104.08561197916663" y="3.0">Kirjaus<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="55.162109375" x="104.08561197916669" y="3.0">Kirjaus<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -109,12 +109,45 @@ references projekti(projektin_nimi)</y:AttributeLabel>
 -paivamaara
 -tehdyt tyotunnit
 -selvitys
-foreign key (kayttajatunnus)
+-kayttajatunnus
+-projektin_nimi
+-tyotehtavan_nimi
+-foreign key (kayttajatunnus)
 references kayttaja (kayttajatunnus)
-foreign key (projektin_nimi)
+-foreign key (projektin_nimi)
 references projekti (projektin_nimi)
-foreign key (tyotehtavan_nimi)
+-foreign key (tyotehtavan_nimi)
 references tyotehtava (tyotehtavan_nimi)</y:AttributeLabel>
+            <y:MethodLabel/>
+          </y:UML>
+        </y:UMLClassNode>
+      </data>
+    </node>
+    <node id="n4">
+      <data key="d4"/>
+      <data key="d5"/>
+      <data key="d6">
+        <y:UMLClassNode>
+          <y:Geometry height="147.0" width="263.3333333333333" x="70.16666666666669" y="77.5"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="144.9560546875" x="59.18863932291666" y="3.0">Kayttajan_projektit
+<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="-0.03703090122767855" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
+            <y:AttributeLabel>-projektin_nimi
+-kayttajatunnus
+-primary key (kayttajatunnus,
+projektin_nimi)
+-foreign key (projektin_nimi) references
+projekti (projektin_nimi)
+-foreign key (kayttajatunnus) references
+kayttaja (kayttajatunnus)</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
         </y:UMLClassNode>
@@ -130,7 +163,7 @@ references tyotehtava (tyotehtavan_nimi)</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n3" target="n0">
+    <edge id="e1" source="n0" target="n4">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
@@ -141,7 +174,7 @@ references tyotehtava (tyotehtavan_nimi)</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n2" target="n3">
+    <edge id="e2" source="n1" target="n4">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
@@ -152,13 +185,28 @@ references tyotehtava (tyotehtavan_nimi)</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e3" source="n1" target="n3">
+    <edge id="e3" source="n3" target="n4">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e4" source="n3" target="n0">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="422.5875000000002" y="136.00000000000023"/>
+            <y:Point x="351.5875000000002" y="-24.5"/>
+            <y:Point x="287.5875000000002" y="-32.99999999999977"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="standard" target="none"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>

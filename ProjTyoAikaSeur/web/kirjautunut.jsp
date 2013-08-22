@@ -38,7 +38,13 @@
         </c:if>
         <h3>Projektit</h3>
         <c:forEach var="projekti" items="${projektit}">
-            <a href=""> ${projekti.projektinNimi} </a> <br>
+            <a href=""> ${projekti.projektinNimi}</a> ${projekti.budjetoidutTyotunnit} ${projekti.alkamisPaivaMaara} ${projekti.loppumisPaivaMaara} <br>
+        </c:forEach>
+        <h3>Kayttajat</h3>
+        <c:forEach var="kayttaja" items="${kayttajat}">
+            <c:if test="${kayttaja.rooli==false}">
+             Kayttaja: ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>
+            </c:if>
         </c:forEach>
     </body>
 </html>

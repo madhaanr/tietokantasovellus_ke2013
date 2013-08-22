@@ -3,6 +3,8 @@ package tietokanta;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /* @author mhaanran */
 public class TietokantaYhteys {
@@ -10,31 +12,30 @@ public class TietokantaYhteys {
     //users postgresql parametrit
     static final String JDBC_DRIVER = "org.postgresql.Driver";
     static final String DB_URL = "jdbc:postgresql://localhost:5432/mhaanran";
-    static final String kayttaja = "mhaanran";
-    static final String salasana = "955ef66881899b2c";
+    static final String tietokantaKayttaja = "mhaanran";
+    static final String tietokantaSalasana = "955ef66881899b2c";
     //java db parametrit
 //    static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
 //    static final String DB_URL = "jdbc:derby://localhost:1527/projtyoaika;create=true";
-//    static final String kayttaja = "marko";
-//    static final String salasana = "marko";
+//    static final String tietokantaKayttaja = "marko";
+//    static final String tietokantaSalasana = "marko";
     
     public TietokantaYhteys() {       
     }
     
-    public Connection luoTietokantaYhteys() throws SQLException {
+    public Connection luoTietokantaYhteys() {
         
         try {
-            Class.forName(JDBC_DRIVER).newInstance();              
+            Class.forName(JDBC_DRIVER).newInstance();  
+            return DriverManager.getConnection(DB_URL, tietokantaKayttaja, tietokantaSalasana);
         } catch (Exception e) {
             e.printStackTrace();
-        }      
-        
-        return DriverManager.getConnection(DB_URL, kayttaja, salasana);
+            return null;
+        }             
     }
-    public String haeKayttajanNimi(String kayttajatunnus) throws SQLException {
+    public String haeKayttajanNimi(String kayttajatunnus)  {
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
-        Kayttaja kayttaja = null;
         try {  
             prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
             prep.setString(1, kayttajatunnus);
@@ -53,7 +54,7 @@ public class TietokantaYhteys {
     }
     
     
-    public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana) throws SQLException {
+    public boolean onkoKayttajaOlemassa(String kayttajatunnus,String salasana){
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {           
@@ -83,7 +84,7 @@ public class TietokantaYhteys {
      * @param kayttajatunnus 
      * @return palautetaan true jos rooli on projektipäällikkö muuten false.
      */
-    public boolean mikaRooli(String kayttajatunnus) throws SQLException {
+    public boolean mikaRooli(String kayttajatunnus)  {
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {           
@@ -111,7 +112,7 @@ public class TietokantaYhteys {
         return false;
     }
     
-    public List<Projekti> getProjektit() throws SQLException {
+    public List<Projekti> getProjektit()  {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep = null;
         ArrayList<Projekti> lista = new ArrayList();
@@ -119,8 +120,11 @@ public class TietokantaYhteys {
            prep = conn.prepareStatement("SELECT * FROM PROJEKTI");
            ResultSet resultset = prep.executeQuery();
            while(resultset.next()) {
-               String projektinNimi=resultset.getString("PROJEKTIN_NIMI");
-               Projekti projekti = new Projekti(projektinNimi);
+               String projektinnimi=resultset.getString("PROJEKTIN_NIMI");
+               Float budjetoidutTyotunnit=resultset.getFloat("TYOTUNTIBUDJETTI");
+               Date alkamisPaivaMaara=resultset.getDate("ALKAMISPAIVAMAARA");
+               Date loppumisPaivaMaara=resultset.getDate("LOPPUMISPAIVAMAARA");
+               Projekti projekti = new Projekti(projektinnimi,budjetoidutTyotunnit,alkamisPaivaMaara,loppumisPaivaMaara);
                lista.add(projekti);
            }       
            resultset.close();
@@ -131,8 +135,35 @@ public class TietokantaYhteys {
         }
         return lista;
     }
+    public List<Kayttaja> getKayttajat() {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        ArrayList<Kayttaja> lista = new ArrayList();
+        try {
+           prep = conn.prepareStatement("SELECT * FROM KAYTTAJA");
+           ResultSet resultset = prep.executeQuery();
+           while(resultset.next()) {
+               String kayttajatunnus=resultset.getString("KAYTTAJATUNNUS");
+               String salasana=resultset.getString("SALASANA");
+               String nimi=resultset.getString("NIMI");
+               int rooli=resultset.getInt("ROOLI");
+               boolean rooliBoolean=false;
+               if(rooli>=1) {
+                   rooliBoolean=true;
+               }
+               Kayttaja kayttaja = new Kayttaja(kayttajatunnus,salasana,nimi,rooliBoolean);
+               lista.add(kayttaja);
+           }       
+           resultset.close();
+           prep.close();
+           conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
 
-    public void lisaaProjekti(Projekti projekti) throws SQLException {
+    public void lisaaProjekti(Projekti projekti) {
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {
@@ -150,8 +181,11 @@ public class TietokantaYhteys {
             ex.printStackTrace();
         }
     }
-    public boolean onkoProjektiOlemassa(String projektinNimi) throws SQLException {
+    public boolean onkoProjektiOlemassa(String projektinNimi) {
         Connection conn=luoTietokantaYhteys();
+        if(conn==null) {
+            return false;
+        }
         PreparedStatement prep = null;
         if(!projektinNimi.isEmpty()) {      
             try {
@@ -169,13 +203,18 @@ public class TietokantaYhteys {
             }
         }
         if(prep!=null) {
-            prep.close();
+            try {
+                prep.close();
+                conn.close();
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(TietokantaYhteys.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        conn.close();
-        return true;
+        return false;    
     }
 
-    public void poistaProjekti(String projektinNimi) throws SQLException {
+    public void poistaProjekti(String projektinNimi) {
         Connection conn=luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {
