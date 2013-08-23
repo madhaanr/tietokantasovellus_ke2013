@@ -10,6 +10,13 @@ public class Tyotehtava{
     
     public Tyotehtava() {
     }
+
+    public Tyotehtava(String tyotehtavanNimi, float budjetoidutTyotunnit, String projektinNimi) {
+        this.tyotehtavanNimi = tyotehtavanNimi;
+        this.budjetoidutTyotunnit = budjetoidutTyotunnit;
+        this.projektinNimi = projektinNimi;
+    }
+    
     
     public String getTyotehtavanNimi() {
         return tyotehtavanNimi;

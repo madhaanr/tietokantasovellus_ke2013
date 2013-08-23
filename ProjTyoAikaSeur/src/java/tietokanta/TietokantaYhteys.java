@@ -162,6 +162,28 @@ public class TietokantaYhteys {
         }
         return lista;
     }
+    public List<Tyotehtava> getTyotehtavat(String projektinNimi)  {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        ArrayList<Tyotehtava> lista = new ArrayList();
+        try {
+           prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE PROJEKTIN_NIMI=?");
+           prep.setString(1, projektinNimi);
+           ResultSet resultset = prep.executeQuery();
+           while(resultset.next()) {
+               String tyotehtavanNimi=resultset.getString("TYOTEHTAVAN_NIMI");
+               Float budjetoidutTyotunnit=resultset.getFloat("BUDJETOIDUT_TYOTUNNIT");
+               Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi,budjetoidutTyotunnit,projektinNimi);
+               lista.add(tyotehtava);
+           }       
+           resultset.close();
+           prep.close();
+           conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
 
     public void lisaaProjekti(Projekti projekti) {
         Connection conn=luoTietokantaYhteys();
@@ -226,6 +248,56 @@ public class TietokantaYhteys {
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public void lisaaTyotehtava(Tyotehtava tyotehtava) {
+        Connection conn=luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        try {
+            prep = conn.prepareStatement("INSERT INTO TYOTEHTAVA (TYOTEHTAVAN_NIMI,"
+                    + "BUDJETOIDUT_TYOTUNNIT,PROJEKTIN_NIMI) "
+                    + "VALUES (?,?,?)");
+            prep.setString(1, tyotehtava.getTyotehtavanNimi());
+            prep.setFloat(2, tyotehtava.getBudjetoidutTyotunnit());
+            prep.setString(3, tyotehtava.getProjektinNimi());      
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public boolean onkoTyotehtavaOlemassa(String tyotehtavanNimi) {
+        Connection conn=luoTietokantaYhteys();
+        if(conn==null) {
+            return false;
+        }
+        PreparedStatement prep = null;
+        if(!tyotehtavanNimi.isEmpty()) {      
+            try {
+                prep = conn.prepareStatement("SELECT * FROM PROJEKTI WHERE PROJEKTIN_NIMI=?");
+                prep.setString(1, tyotehtavanNimi);
+                ResultSet resultset = prep.executeQuery();            
+                if(resultset.next()) {
+                    resultset.close();
+                    prep.close();
+                    conn.close();
+                    return false;
+                }
+            } catch(SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if(prep!=null) {
+            try {
+                prep.close();
+                conn.close();
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(TietokantaYhteys.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;    
     }
 
 }

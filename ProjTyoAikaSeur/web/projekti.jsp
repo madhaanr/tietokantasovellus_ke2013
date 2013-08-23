@@ -4,6 +4,7 @@
     Author     : mhaanran
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,23 @@
         <title>Projektin työaikaseuranta</title>
     </head>
     <body>
-        <h1>Lisää työtehtäviä ja työntekijöitä projektiin ${projekti.projektinNimi}</h1>
+        <h1>Lisää työtehtäviä ja työntekijöitä projektiin ${projektinNimi}</h1>
+        <h2>Lisää työtehtävä</h2>
+        <form name="projektin_lisaaminen" 
+                  action="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projektinNimi}"
+                  method="post">
+                Työtehtävän nimi <input type="text" name="tyotehtavanNimi" /> 
+                Budjetoidut työtunnit <input type="text" name="budjetoidutTyotunnit" />
+                <br><input type="submit" value="Lisää työtehtävä" />
+                <h2>${viesti}</h2>
+        </form>
+        <h3>Projektin ${projektinNimi} työtehtävät</h3>
+        <c:forEach var="tyotehtava" items="${tyotehtavat}">    
+                ${tyotehtava.tyotehtavanNimi} ${tyotehtava.budjetoidutTyotunnit}<br>      
+        </c:forEach>
+        <h3>Kayttajat</h3>
+        <c:forEach var="kayttaja" items="${kayttajat}">    
+                ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
+        </c:forEach>
     </body>
 </html>

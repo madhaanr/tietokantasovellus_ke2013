@@ -6,17 +6,24 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import tietokanta.Kayttaja;
+import tietokanta.TietokantaYhteys;
+import tietokanta.Tyotehtava;
 
 /**
  *
  * @author mhaanran
  */
 public class LisaaTyotehtavaServlet extends HttpServlet {
+
+    private TietokantaYhteys db = new TietokantaYhteys();
 
     /**
      * Processes requests for both HTTP
@@ -31,6 +38,24 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        String projektinNimi = request.getParameter("name");
+        request.setAttribute("projektinNimi", projektinNimi);
+        String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
+        if (tyotehtavanNimi != null) {
+            float budjetoidutTyotunnit = Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
+            if (db.onkoTyotehtavaOlemassa(tyotehtavanNimi)) {
+                Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi, budjetoidutTyotunnit, projektinNimi);
+                db.lisaaTyotehtava(tyotehtava);
+            } else {
+                request.setAttribute("viesti", "Tyotehtava nimellä " + tyotehtavanNimi + " on jo olemassa!");
+            }
+        }
+        List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
+        request.setAttribute("tyotehtavat", tyotehtavat);
+        List<Kayttaja> kayttajat = db.getKayttajat();
+        request.setAttribute("kayttajat", kayttajat);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("projekti.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

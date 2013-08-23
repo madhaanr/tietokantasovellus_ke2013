@@ -78,8 +78,7 @@ public class ProjektitServlet extends HttpServlet {
                     request.setAttribute("viesti", "Projekti nimellä "+projektinNimi+" on jo olemassa!");
                 }
             }
-            List<Kayttaja> kayttajat = db.getKayttajat();
-            request.setAttribute("kayttajat", kayttajat);
+            
             List<Projekti> projektit = db.getProjektit();
             request.setAttribute("projektit", projektit);
             dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
