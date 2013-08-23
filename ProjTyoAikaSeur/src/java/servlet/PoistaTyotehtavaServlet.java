@@ -4,24 +4,25 @@
  */
 package servlet;
 
-import tietokanta.TietokantaYhteys;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import tietokanta.TietokantaYhteys;
 
 /**
  *
  * @author mhaanran
  */
-public class PoistaProjektiServlet extends HttpServlet {
+public class PoistaTyotehtavaServlet extends HttpServlet {
 
-    TietokantaYhteys db = new TietokantaYhteys();
+    private TietokantaYhteys db = new TietokantaYhteys();
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -33,15 +34,16 @@ public class PoistaProjektiServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        String projektinNimi =  request.getParameter("name");
+        request.setAttribute("projektinNimi", projektinNimi);
         if(session.getAttribute("ktunnus")!=null) {
-            String projektinNimi = request.getParameter("projektin_nimi");
-            if(projektinNimi!=null&&!db.onkoProjektiOlemassa(projektinNimi)) {
-                db.poistaProjekti(projektinNimi);       
-            }
-            response.sendRedirect("/ProjTyoAikaSeur/Projektit");
+            String tyotehtavanNimi = request.getParameter("tyotehtavan_nimi");
+            db.poistaTyotehtava(tyotehtavanNimi);       
+                                  
         }
+        response.sendRedirect("/ProjTyoAikaSeur/LisaaTyotehtava?name="+projektinNimi); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,11 +59,7 @@ public class PoistaProjektiServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(PoistaProjektiServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -76,11 +74,7 @@ public class PoistaProjektiServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(PoistaProjektiServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

@@ -27,9 +27,16 @@
         <c:forEach var="tyotehtava" items="${tyotehtavat}">    
                 ${tyotehtava.tyotehtavanNimi} ${tyotehtava.budjetoidutTyotunnit}<br>      
         </c:forEach>
+        <h3>Poista tyotehtava</h3>
+            <form action="${pageContext.request.contextPath}/PoistaTyotehtava?name=${projektinNimi}" method="post">
+                <input type="text" name="tyotehtavan_nimi" /> <br>
+                <input type="submit" value="Poista tyotehtava" />
+            </form>
         <h3>Kayttajat</h3>
         <c:forEach var="kayttaja" items="${kayttajat}">    
                 ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
         </c:forEach>
+        
+        <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
     </body>
 </html>

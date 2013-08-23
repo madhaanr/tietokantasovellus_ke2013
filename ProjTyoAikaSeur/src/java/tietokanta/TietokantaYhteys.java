@@ -267,6 +267,19 @@ public class TietokantaYhteys {
             ex.printStackTrace();
         }
     }
+    public void poistaTyotehtava(String tyotehtavanNimi) {
+        Connection conn=luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        try {
+            prep=conn.prepareStatement("DELETE FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=?");
+            prep.setString(1, tyotehtavanNimi);
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     public boolean onkoTyotehtavaOlemassa(String tyotehtavanNimi) {
         Connection conn=luoTietokantaYhteys();
         if(conn==null) {
