@@ -48,6 +48,7 @@ public class ProjektitServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        request.setCharacterEncoding("UTF-8");
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
         if (session.getAttribute("ktunnus")!=null) {

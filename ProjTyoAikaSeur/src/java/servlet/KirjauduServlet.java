@@ -41,14 +41,16 @@ public class KirjauduServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        HttpSession session;         
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session=request.getSession(false);
+        session.invalidate();    
         RequestDispatcher dispatcher;
         
         String kayttajatunnus = request.getParameter("kayttajatunnus");
         String salasana = request.getParameter("salasana");
         String knimi="";
         Kayttaja kayttaja;
-        
+        session = request.getSession(true);
         if(kayttajatunnus!=null) {
             kayttaja = new Kayttaja(kayttajatunnus,salasana); 
         }
@@ -59,7 +61,6 @@ public class KirjauduServlet extends HttpServlet {
             knimi=db.haeKayttajanNimi(kayttajatunnus);
         }
         if(kayttaja!=null&&db.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
-            session = request.getSession(true);
             session.setAttribute("ktunnus", kayttajatunnus);
             session.setAttribute("knimi", knimi);
             if(db.mikaRooli(kayttajatunnus)) {
