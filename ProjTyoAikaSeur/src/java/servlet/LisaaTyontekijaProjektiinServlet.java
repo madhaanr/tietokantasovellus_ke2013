@@ -10,13 +10,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import tietokanta.TietokantaYhteys;
 
 /**
  *
  * @author mhaanran
  */
-public class LisaaTyontekijaServlet extends HttpServlet {
+public class LisaaTyontekijaProjektiinServlet extends HttpServlet {
 
+    private TietokantaYhteys db = new TietokantaYhteys();
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -29,21 +32,16 @@ public class LisaaTyontekijaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LisaaTyontekijaServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LisaaTyontekijaServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("ktunnus")!=null) {
+            String projektin_nimi = request.getParameter("projektin_nimi");
+            String tyontekijan_nimi=request.getParameter("tyontekija_nimi");
+            System.out.println(projektin_nimi+tyontekijan_nimi);
+            if(projektin_nimi!=null&db.onkoProjektiOlemassa(projektin_nimi)&&db.onkoKayttajaOlemassa(tyontekijan_nimi)) {
+                  db.lisaaTyontekijaProjektiin(projektin_nimi,tyontekijan_nimi);
+            }
+            response.sendRedirect("/ProjTyoAikaSeur/Projektit");
         }
     }
 

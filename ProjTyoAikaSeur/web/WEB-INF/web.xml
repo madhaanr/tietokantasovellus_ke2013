@@ -21,12 +21,12 @@
         <servlet-class>servlet.LisaaTyotehtavaServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LisaaTyontekijaServlet</servlet-name>
-        <servlet-class>servlet.LisaaTyontekijaServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>PoistaTyotehtavaServlet</servlet-name>
         <servlet-class>servlet.PoistaTyotehtavaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LisaaTyontekijaProjektiinServlet</servlet-name>
+        <servlet-class>servlet.LisaaTyontekijaProjektiinServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
@@ -49,12 +49,12 @@
         <url-pattern>/LisaaTyotehtava</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LisaaTyontekijaServlet</servlet-name>
-        <url-pattern>/LisaaTyontekija</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PoistaTyotehtavaServlet</servlet-name>
         <url-pattern>/PoistaTyotehtava</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LisaaTyontekijaProjektiinServlet</servlet-name>
+        <url-pattern>/LisaaTyontekijaProjektiin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

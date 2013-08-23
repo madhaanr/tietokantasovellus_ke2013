@@ -38,7 +38,7 @@ public class PoistaProjektiServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if(session.getAttribute("ktunnus")!=null) {
             String projektinNimi = request.getParameter("projektin_nimi");
-            if(projektinNimi!=null&&!db.onkoProjektiOlemassa(projektinNimi)) {
+            if(projektinNimi!=null&&db.onkoProjektiOlemassa(projektinNimi)) {
                 db.poistaProjekti(projektinNimi);       
             }
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");

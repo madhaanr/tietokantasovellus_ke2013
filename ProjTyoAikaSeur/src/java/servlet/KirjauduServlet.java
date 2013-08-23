@@ -60,7 +60,7 @@ public class KirjauduServlet extends HttpServlet {
         if(db.haeKayttajanNimi(kayttajatunnus)!=null) {
             knimi=db.haeKayttajanNimi(kayttajatunnus);
         }
-        if(kayttaja!=null&&db.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
+        if(kayttaja!=null&&db.onkoKayttajaJaSalasanaOikein(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
             session.setAttribute("ktunnus", kayttajatunnus);
             session.setAttribute("knimi", knimi);
             if(db.mikaRooli(kayttajatunnus)) {
@@ -68,7 +68,7 @@ public class KirjauduServlet extends HttpServlet {
             }
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");
         }
-        else if(kayttaja!=null&&!db.onkoKayttajaOlemassa(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
+        else if(kayttaja!=null&&!db.onkoKayttajaJaSalasanaOikein(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
             request.setAttribute("viesti", "Väärä käyttäjätunnus tai salasana!");
             dispatcher = request.getRequestDispatcher("kirjaudu.jsp");        
             dispatcher.forward(request, response);

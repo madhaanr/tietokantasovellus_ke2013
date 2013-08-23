@@ -40,5 +40,19 @@
         <c:forEach var="projekti" items="${projektit}">
             <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäär: ${projekti.alkamisPaivaMaara} Loppumispäivämäärä: ${projekti.loppumisPaivaMaara} <br>
         </c:forEach>
+            
+        <h3>Kayttajat</h3>
+        <c:forEach var="kayttaja" items="${kayttajat}">    
+                ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
+        </c:forEach>
+                
+        <h3>Lisää työntekijä projektiin</h3>
+        <form name="tyontekijan_lisaaminen_projektiin" action="${pageContext.request.contextPath}/LisaaTyontekijaProjektiin"
+              method="post">
+            <input type="text" name="tyontekija_nimi"/> <br>
+            <input type="text" name="projektin_nimi"/> <br>
+            <input type="submit" value="Lisää työntekijä projektiin"/>
+        </form>
+        
     </body>
 </html>

@@ -53,8 +53,6 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         }
         List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
         request.setAttribute("tyotehtavat", tyotehtavat);
-        List<Kayttaja> kayttajat = db.getKayttajat();
-        request.setAttribute("kayttajat", kayttajat);
         RequestDispatcher dispatcher = request.getRequestDispatcher("projekti.jsp");
         dispatcher.forward(request, response);
     }
