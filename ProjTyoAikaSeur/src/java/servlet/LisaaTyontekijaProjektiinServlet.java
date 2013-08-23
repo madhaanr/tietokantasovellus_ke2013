@@ -37,7 +37,6 @@ public class LisaaTyontekijaProjektiinServlet extends HttpServlet {
         if(session.getAttribute("ktunnus")!=null) {
             String projektin_nimi = request.getParameter("projektin_nimi");
             String tyontekijan_nimi=request.getParameter("tyontekija_nimi");
-            System.out.println(projektin_nimi+tyontekijan_nimi);
             if(projektin_nimi!=null&db.onkoProjektiOlemassa(projektin_nimi)&&db.onkoKayttajaOlemassa(tyontekijan_nimi)) {
                   db.lisaaTyontekijaProjektiin(projektin_nimi,tyontekijan_nimi);
             }
