@@ -34,7 +34,7 @@
         <c:forEach var="tyotehtava" items="${tyotehtavat}">    
                 ${tyotehtava.tyotehtavanNimi} ${tyotehtava.budjetoidutTyotunnit}<br>      
         </c:forEach>
-                
+        <c:if test="${rooli}">
         <h3>Lisää työntekijä projektiin</h3>
         <form name="tyontekijan_lisaaminen_projektiin" action="${pageContext.request.contextPath}/LisaaTyontekijaProjektiin"
               method="post">
@@ -42,10 +42,18 @@
             <input type="hidden" name="projektinNimi" value="${projektinNimi}"/> <br>
             <input type="submit" value="Lisää työntekijä projektiin"/>
         </form>
+        <h3>Kaikki työntekijät</h3>
+        <c:forEach var="kayttaja" items="${kayttajat}">    
+                ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
+        </c:forEach>
+        </c:if>
+        
         <h3>Projektin ${projektinNimi} työntekijät</h3>
         <c:forEach var="tyontekija" items="${tyontekijat}">    
                 ${tyontekija} <br>      
         </c:forEach>
+        <h3>Kirjaa tunteja</h3>
+        
         <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
     </body>
 </html>

@@ -43,7 +43,9 @@ public class KirjauduServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         request.setCharacterEncoding("UTF-8");
         HttpSession session=request.getSession(false);
-        session.invalidate();    
+        if(session!=null) {
+            session.invalidate();    
+        }
         RequestDispatcher dispatcher;
         
         String kayttajatunnus = request.getParameter("kayttajatunnus");

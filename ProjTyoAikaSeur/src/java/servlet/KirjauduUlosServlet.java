@@ -28,7 +28,9 @@ public class KirjauduUlosServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            request.getSession(false).invalidate();
+            if(request.getSession(false)!=null) {
+                request.getSession(false).invalidate();
+            }
             response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
     }
 

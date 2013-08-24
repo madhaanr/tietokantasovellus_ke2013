@@ -28,6 +28,10 @@
         <servlet-name>LisaaTyontekijaProjektiinServlet</servlet-name>
         <servlet-class>servlet.LisaaTyontekijaProjektiinServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KirjaaTuntejaServlet</servlet-name>
+        <servlet-class>servlet.KirjaaTuntejaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>LisaaTyontekijaProjektiinServlet</servlet-name>
         <url-pattern>/LisaaTyontekijaProjektiin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KirjaaTuntejaServlet</servlet-name>
+        <url-pattern>/KirjaaTunteja</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

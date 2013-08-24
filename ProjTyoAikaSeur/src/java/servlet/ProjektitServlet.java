@@ -83,6 +83,8 @@ public class ProjektitServlet extends HttpServlet {
             request.setAttribute("kayttajat", kayttajat);
             List<Projekti> projektit = db.getProjektit();
             request.setAttribute("projektit", projektit);
+            List<String> kayttajanProjektit =db.getKayttajanProjektit((String)session.getAttribute("ktunnus"));
+            request.setAttribute("kayttajanProjektit", kayttajanProjektit);
             dispatcher = request.getRequestDispatcher("kirjautunut.jsp");
             dispatcher.forward(request, response);
             

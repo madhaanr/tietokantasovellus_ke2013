@@ -365,4 +365,25 @@ public class TietokantaYhteys {
         }
         return lista;
     }
+    public List<String> getKayttajanProjektit(String kayttajatunnus) {
+        Connection conn = luoTietokantaYhteys();
+        ArrayList<String> lista = new ArrayList();
+        try {
+            if (onkoKayttajaOlemassa(kayttajatunnus)) {
+                PreparedStatement prep = conn.prepareStatement("SELECT * FROM KAYTTAJAN_PROJEKTIT WHERE KAYTTAJATUNNUS=?");
+                prep.setString(1, kayttajatunnus);
+                ResultSet resultset = prep.executeQuery();
+                while (resultset.next()) {
+                     String projektinNimi=resultset.getString("PROJEKTIN_NIMI");
+                     lista.add(projektinNimi);
+                }
+                resultset.close();
+                prep.close();
+                conn.close();  
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
 }

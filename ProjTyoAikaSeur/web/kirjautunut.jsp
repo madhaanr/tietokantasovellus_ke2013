@@ -35,7 +35,7 @@
                 <input type="text" name="projektin_nimi" /> <br>
                 <input type="submit" value="Poista projekti" />
             </form>
-        </c:if>
+        
         <h3>Projektit</h3>
         <c:forEach var="projekti" items="${projektit}">
             <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäär: ${projekti.alkamisPaivaMaara} Loppumispäivämäärä: ${projekti.loppumisPaivaMaara} <br>
@@ -45,8 +45,10 @@
         <c:forEach var="kayttaja" items="${kayttajat}">    
                 ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
         </c:forEach>
-                
-        
-        
+        </c:if>   
+        <h3>Kayttajan ${knimi} projektit: </h3>
+        <c:forEach var="kayttajanProjekti" items="${kayttajanProjektit}">    
+            <a href="${pageContext.request.contextPath}/KirjaaTunteja=name=${kayttajanProjekti}">${kayttajanProjekti}</a><br>      
+        </c:forEach>
     </body>
 </html>
