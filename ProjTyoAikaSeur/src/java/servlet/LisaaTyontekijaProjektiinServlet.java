@@ -35,12 +35,12 @@ public class LisaaTyontekijaProjektiinServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(false);
         if(session.getAttribute("ktunnus")!=null) {
-            String projektin_nimi = request.getParameter("projektin_nimi");
-            String tyontekijan_nimi=request.getParameter("tyontekija_nimi");
-            if(projektin_nimi!=null&db.onkoProjektiOlemassa(projektin_nimi)&&db.onkoKayttajaOlemassa(tyontekijan_nimi)) {
-                  db.lisaaTyontekijaProjektiin(projektin_nimi,tyontekijan_nimi);
+            String projektinNimi = request.getParameter("projektinNimi");
+            String tyontekijanNimi = request.getParameter("tyontekijanNimi");
+            if(projektinNimi!=null&db.onkoProjektiOlemassa(projektinNimi)&&db.onkoKayttajaOlemassa(tyontekijanNimi)) {
+                  db.lisaaTyontekijaProjektiin(projektinNimi,tyontekijanNimi);
             }
-            response.sendRedirect("/ProjTyoAikaSeur/Projektit");
+            response.sendRedirect("/ProjTyoAikaSeur/LisaaTyotehtava?name="+projektinNimi); 
         }
     }
 

@@ -44,7 +44,7 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
         if (tyotehtavanNimi != null) {
             float budjetoidutTyotunnit = Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
-            if (db.onkoTyotehtavaOlemassa(tyotehtavanNimi)) {
+            if (!db.onkoTyotehtavaOlemassa(tyotehtavanNimi,projektinNimi)) {
                 Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi, budjetoidutTyotunnit, projektinNimi);
                 db.lisaaTyotehtava(tyotehtava);
             } else {
@@ -53,6 +53,8 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         }
         List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
         request.setAttribute("tyotehtavat", tyotehtavat);
+        List<String> tyontekijat = db.getProjektinTyontekijat(projektinNimi);
+        request.setAttribute("tyontekijat", tyontekijat);
         RequestDispatcher dispatcher = request.getRequestDispatcher("projekti.jsp");
         dispatcher.forward(request, response);
     }

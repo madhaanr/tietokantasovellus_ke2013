@@ -46,13 +46,7 @@
                 ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
         </c:forEach>
                 
-        <h3>Lisää työntekijä projektiin</h3>
-        <form name="tyontekijan_lisaaminen_projektiin" action="${pageContext.request.contextPath}/LisaaTyontekijaProjektiin"
-              method="post">
-            <input type="text" name="tyontekija_nimi"/> <br>
-            <input type="text" name="projektin_nimi"/> <br>
-            <input type="submit" value="Lisää työntekijä projektiin"/>
-        </form>
+        
         
     </body>
 </html>

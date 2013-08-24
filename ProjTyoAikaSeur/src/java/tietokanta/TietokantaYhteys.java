@@ -3,8 +3,6 @@ package tietokanta;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /* @author mhaanran */
 public class TietokantaYhteys {
@@ -36,7 +34,7 @@ public class TietokantaYhteys {
 
     public String haeKayttajanNimi(String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
-        PreparedStatement prep = null;
+        PreparedStatement prep;
         try {
             prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
             prep.setString(1, kayttajatunnus);
@@ -48,6 +46,9 @@ public class TietokantaYhteys {
                 conn.close();
                 return knimi;
             }
+            resultset.close();
+            prep.close();
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -67,11 +68,10 @@ public class TietokantaYhteys {
                 prep.close();
                 conn.close();
                 return true;
-            } else {
-                resultset.close();
-                prep.close();
-                conn.close();
             }
+            resultset.close();
+            prep.close();
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -90,11 +90,10 @@ public class TietokantaYhteys {
                 prep.close();
                 conn.close();
                 return true;
-            } else {
-                resultset.close();
-                prep.close();
-                conn.close();
-            }
+            } 
+            resultset.close();
+            prep.close();
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -302,12 +301,13 @@ public class TietokantaYhteys {
         }
     }
 
-    public boolean onkoTyotehtavaOlemassa(String tyotehtavanNimi) {
+    public boolean onkoTyotehtavaOlemassa(String tyotehtavanNimi,String projektinNimi) {
         Connection conn = luoTietokantaYhteys();
         if (tyotehtavanNimi!=null) {
             try {
-                PreparedStatement prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=?");
+                PreparedStatement prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=? AND PROJEKTIN_NIMI=?");
                 prep.setString(1, tyotehtavanNimi);
+                prep.setString(2, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 if (resultset.next()) {
                     resultset.close();
@@ -342,5 +342,27 @@ public class TietokantaYhteys {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public List<String> getProjektinTyontekijat(String projektinNimi) {
+        Connection conn = luoTietokantaYhteys();
+        ArrayList<String> lista = new ArrayList();
+        try {
+            if (onkoProjektiOlemassa(projektinNimi)) {
+                PreparedStatement prep = conn.prepareStatement("SELECT * FROM KAYTTAJAN_PROJEKTIT WHERE PROJEKTIN_NIMI=?");
+                prep.setString(1, projektinNimi);
+                ResultSet resultset = prep.executeQuery();
+                while (resultset.next()) {
+                     String kayttajatunnus=resultset.getString("KAYTTAJATUNNUS");
+                     lista.add(kayttajatunnus);
+                }
+                 resultset.close();
+                 prep.close();
+                 conn.close();  
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
     }
 }
