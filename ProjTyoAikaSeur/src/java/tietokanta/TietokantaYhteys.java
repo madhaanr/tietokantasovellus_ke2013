@@ -2,6 +2,8 @@ package tietokanta;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /* @author mhaanran */
@@ -41,14 +43,10 @@ public class TietokantaYhteys {
             ResultSet resultset = prep.executeQuery();
             if (resultset.next()) {
                 String knimi = resultset.getString("NIMI");
-                resultset.close();
-                prep.close();
-                conn.close();
+                suljeYhteydet(resultset, prep, conn);
                 return knimi;
             }
-            resultset.close();
-            prep.close();
-            conn.close();
+            suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -64,14 +62,10 @@ public class TietokantaYhteys {
             prep.setString(2, salasana);
             ResultSet resultset = prep.executeQuery();
             if (resultset.next()) {
-                resultset.close();
-                prep.close();
-                conn.close();
+                suljeYhteydet(resultset, prep, conn);
                 return true;
             }
-            resultset.close();
-            prep.close();
-            conn.close();
+            suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -86,14 +80,10 @@ public class TietokantaYhteys {
             prep.setString(1, kayttajatunnus);
             ResultSet resultset = prep.executeQuery();
             if (resultset.next()) {
-                resultset.close();
-                prep.close();
-                conn.close();
+                suljeYhteydet(resultset, prep, conn);
                 return true;
             } 
-            resultset.close();
-            prep.close();
-            conn.close();
+            suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -120,9 +110,7 @@ public class TietokantaYhteys {
                 if (rooli >= 1) {
                     return true;
                 }
-                resultset.close();
-                prep.close();
-                conn.close();
+                suljeYhteydet(resultset, prep, conn);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -150,9 +138,7 @@ public class TietokantaYhteys {
                 Projekti projekti = new Projekti(projektinnimi, budjetoidutTyotunnit, alkamisPaivaMaara, loppumisPaivaMaara);
                 lista.add(projekti);
             }
-            resultset.close();
-            prep.close();
-            conn.close();
+            suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -178,9 +164,7 @@ public class TietokantaYhteys {
                 Kayttaja kayttaja = new Kayttaja(kayttajatunnus, salasana, nimi, rooliBoolean);
                 lista.add(kayttaja);
             }
-            resultset.close();
-            prep.close();
-            conn.close();
+            suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -201,9 +185,34 @@ public class TietokantaYhteys {
                 Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi, budjetoidutTyotunnit, projektinNimi);
                 lista.add(tyotehtava);
             }
-            resultset.close();
-            prep.close();
-            conn.close();
+            suljeYhteydet(resultset, prep, conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+    
+     public ArrayList<Kirjaus> getKirjaukset(String kayttajatunnus,String projektinNimi) {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        ArrayList<Kirjaus> lista = new ArrayList();
+        try {
+            prep = conn.prepareStatement("SELECT * FROM KIRJAUS WHERE KAYTTAJATUNNUS=? AND PROJEKTIN_NIMI=?");
+            prep.setString(1, kayttajatunnus);
+            prep.setString(2, projektinNimi);
+            ResultSet resultset = prep.executeQuery();
+            while (resultset.next()) {
+                String tyotehtavanNimi = resultset.getString("TYOTEHTAVAN_NIMI");
+                String selitys = resultset.getString("SELITYS");
+                float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
+                Date db_paivamaara = resultset.getDate("PAIVAMAARA");
+                Calendar paivamaara = new GregorianCalendar();
+                paivamaara.setTime(db_paivamaara);
+                System.out.println(tyotehtavanNimi);
+                Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
+                lista.add(kirjaus);
+            }
+            suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -238,15 +247,11 @@ public class TietokantaYhteys {
                 prep.setString(1, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 if (resultset.next()) {
-                    resultset.close();
-                    prep.close();
-                    conn.close();
+                    suljeYhteydet(resultset, prep, conn);
                     return true;
                 }
                 else {
-                    resultset.close();
-                    prep.close();
-                    conn.close();
+                    suljeYhteydet(resultset, prep, conn);
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -310,14 +315,10 @@ public class TietokantaYhteys {
                 prep.setString(2, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 if (resultset.next()) {
-                    resultset.close();
-                    prep.close();
-                    conn.close();
+                    suljeYhteydet(resultset, prep, conn);
                     return true;
                 }      
-                resultset.close();
-                prep.close();
-                conn.close();  
+                suljeYhteydet(resultset, prep, conn);  
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -356,9 +357,7 @@ public class TietokantaYhteys {
                      String kayttajatunnus=resultset.getString("KAYTTAJATUNNUS");
                      lista.add(kayttajatunnus);
                 }
-                 resultset.close();
-                 prep.close();
-                 conn.close();  
+                 suljeYhteydet(resultset, prep, conn);  
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -377,13 +376,17 @@ public class TietokantaYhteys {
                      String projektinNimi=resultset.getString("PROJEKTIN_NIMI");
                      lista.add(projektinNimi);
                 }
-                resultset.close();
-                prep.close();
-                conn.close();  
+                suljeYhteydet(resultset, prep, conn);  
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return lista;
+    }
+
+    private void suljeYhteydet(ResultSet resultset, PreparedStatement prep, Connection conn) throws SQLException {
+        resultset.close();
+        prep.close();
+        conn.close();
     }
 }

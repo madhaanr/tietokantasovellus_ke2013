@@ -5,11 +5,16 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import tietokanta.Kirjaus;
+import tietokanta.TietokantaYhteys;
 
 /**
  *
@@ -17,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class KirjaaTuntejaServlet extends HttpServlet {
 
+    private TietokantaYhteys db = new TietokantaYhteys();
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -29,7 +35,20 @@ public class KirjaaTuntejaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        RequestDispatcher dispatcher;
+        HttpSession session = request.getSession(false);
+        
+        String projektinNimi=request.getParameter("name");
+        String kayttajatunnus =(String) session.getAttribute("ktunnus");
+        request.setAttribute("projektinNimi", projektinNimi);  
+        System.out.println(kayttajatunnus+projektinNimi);
+        ArrayList<Kirjaus> kirjaukset = db.getKirjaukset(kayttajatunnus, projektinNimi);
+        System.out.println(kirjaukset);
+        request.setAttribute("kirjaukset", kirjaukset);
+        
+        dispatcher = request.getRequestDispatcher("kirjaatunteja.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

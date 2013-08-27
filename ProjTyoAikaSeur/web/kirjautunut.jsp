@@ -48,7 +48,7 @@
         </c:if>   
         <h3>Kayttajan ${knimi} projektit: </h3>
         <c:forEach var="kayttajanProjekti" items="${kayttajanProjektit}">    
-            <a href="${pageContext.request.contextPath}/KirjaaTunteja=name=${kayttajanProjekti}">${kayttajanProjekti}</a><br>      
+            <a href="${pageContext.request.contextPath}/KirjaaTunteja?name=${kayttajanProjekti}">${kayttajanProjekti}</a><br>      
         </c:forEach>
     </body>
 </html>

@@ -9,9 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Projektin työtuntien kirjaaminen</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Projektin ${projektinNimi} työtuntien kirjaaminen</h1>
+        <h3>Käyttäjän ${knimi} aiemmat kirjaukset projektiin ${projektinNimi}</h3>
+        <c:forEach var="kirjaus" items="${kirjaukset}">
+            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} ${kirjaus.selitys} ${kirjaus.kayttajatunnus} <br>
+        </c:forEach>
+        <h3>Kirjaa työtunteja</h3>
     </body>
 </html>

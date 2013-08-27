@@ -5,7 +5,6 @@ import java.util.Calendar;
 /* @author mhaanran */
 public class Kirjaus {
 
-    private long id;
     private String selitys;
     private float tehdytTunnit;
     private Calendar paivamaara;
@@ -16,22 +15,14 @@ public class Kirjaus {
     public Kirjaus() {
     }
 
-    public Kirjaus(long id, String selitys, float tehdytTunnit, Calendar paivamaara, String kayttajatunnus, String projektinNimi, String tyotehtavanNimi) {
-        this.id = id;
+    public Kirjaus(Calendar paivamaara, float tehdytTunnit, String selitys, String kayttajatunnus, String projektinNimi, String tyotehtavanNimi) {
+        
         this.selitys = selitys;
         this.tehdytTunnit = tehdytTunnit;
         this.paivamaara = paivamaara;
         this.kayttajatunnus = kayttajatunnus;
         this.projektinNimi = projektinNimi;
         this.tyotehtavanNimi = tyotehtavanNimi;
-    }
-   
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getSelitys() {
