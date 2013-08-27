@@ -38,6 +38,10 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("ktunnus")==null) {
+            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
+        }
         String projektinNimi = request.getParameter("name");
         request.setAttribute("projektinNimi", projektinNimi);
         String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");

@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
 
@@ -37,7 +38,10 @@ public class RaportitServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher dispatcher;
-        
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("ktunnus")==null) {
+            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
+        }
         String projektinNimi = request.getParameter("name");
         String alkamisPaiva = request.getParameter("alkamisPaiva");
         Calendar alkamisPaivaCalender = Calendar.getInstance();

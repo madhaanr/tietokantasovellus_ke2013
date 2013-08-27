@@ -42,6 +42,9 @@ public class KirjaaTuntejaServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
+        if(session.getAttribute("ktunnus")==null) {
+            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
+        }
         String projektinNimi = request.getParameter("name");
         String kayttajatunnus = (String) session.getAttribute("ktunnus");
         String paivamaara = request.getParameter("paivamaara");

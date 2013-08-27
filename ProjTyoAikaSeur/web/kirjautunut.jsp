@@ -34,17 +34,22 @@
 
                 <h2>${viesti}</h2>
             </form>
-            
-            <h3>Poista projekti</h3>
-            <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
-                <input type="text" name="projektin_nimi" /> <br>
-                <input type="submit" value="Poista projekti" />
-            </form>
 
             <h3>Projektit</h3>
             <c:forEach var="projekti" items="${projektit}">
                 <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäärä: <fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="dd-MM-yyyy"/> Loppumispäivämäärä: <fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="dd-MM-yyyy"/> <br>
             </c:forEach>
+                
+            <h3>Poista projekti</h3>
+            <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
+                <select name="projektin_nimi">
+                        <c:forEach var="projekti" items="${projektit}">
+                           <option> <c:out value="${projekti.projektinNimi}"/> </option>
+                        </c:forEach>          
+                </select>
+                <br>
+                <input type="submit" value="Poista projekti" />
+            </form>
 
             <h3>Kayttajat</h3>
             <c:forEach var="kayttaja" items="${kayttajat}">    
