@@ -206,7 +206,7 @@ public class TietokantaYhteys {
                 String selitys = resultset.getString("SELITYS");
                 float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
                 Date db_paivamaara = resultset.getDate("PAIVAMAARA");
-                Calendar paivamaara = new GregorianCalendar();
+                Calendar paivamaara = Calendar.getInstance();
                 paivamaara.setTime(db_paivamaara);
                 System.out.println(tyotehtavanNimi);
                 Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
@@ -355,6 +355,25 @@ public class TietokantaYhteys {
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {
                      String kayttajatunnus=resultset.getString("KAYTTAJATUNNUS");
+                     lista.add(kayttajatunnus);
+                }
+                 suljeYhteydet(resultset, prep, conn);  
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+    public List<String> getProjektinTyotehtavat(String projektinNimi) {
+        Connection conn = luoTietokantaYhteys();
+        ArrayList<String> lista = new ArrayList();
+        try {
+            if (onkoProjektiOlemassa(projektinNimi)) {
+                PreparedStatement prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE PROJEKTIN_NIMI=?");
+                prep.setString(1, projektinNimi);
+                ResultSet resultset = prep.executeQuery();
+                while (resultset.next()) {
+                     String kayttajatunnus=resultset.getString("TYOTEHTAVAN_NIMI");
                      lista.add(kayttajatunnus);
                 }
                  suljeYhteydet(resultset, prep, conn);  

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
+import tietokanta.Tyotehtava;
 
 /**
  *
@@ -41,12 +42,11 @@ public class KirjaaTuntejaServlet extends HttpServlet {
         
         String projektinNimi=request.getParameter("name");
         String kayttajatunnus =(String) session.getAttribute("ktunnus");
-        request.setAttribute("projektinNimi", projektinNimi);  
-        System.out.println(kayttajatunnus+projektinNimi);
+        request.setAttribute("projektinNimi", projektinNimi);      
         ArrayList<Kirjaus> kirjaukset = db.getKirjaukset(kayttajatunnus, projektinNimi);
-        System.out.println(kirjaukset);
         request.setAttribute("kirjaukset", kirjaukset);
-        
+        List<String> tyotehtavat = db.getProjektinTyotehtavat(projektinNimi);
+        request.setAttribute("tyotehtavat", tyotehtavat);
         dispatcher = request.getRequestDispatcher("kirjaatunteja.jsp");
         dispatcher.forward(request, response);
     }
