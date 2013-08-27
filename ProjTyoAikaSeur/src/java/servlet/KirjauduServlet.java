@@ -5,7 +5,6 @@
 package servlet;
 
 import tietokanta.Kayttaja;
-import tietokanta.Rekisteri;
 import tietokanta.TietokantaYhteys;
 import java.io.IOException;
 import java.sql.SQLException;

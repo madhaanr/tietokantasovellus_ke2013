@@ -34,6 +34,7 @@
 
                 <h2>${viesti}</h2>
             </form>
+            
             <h3>Poista projekti</h3>
             <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
                 <input type="text" name="projektin_nimi" /> <br>

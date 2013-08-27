@@ -16,7 +16,9 @@
         <h1>Projektin ${projektinNimi} työtuntien kirjaaminen</h1>
         <h3>Käyttäjän ${knimi} kirjaukset projektiin ${projektinNimi}</h3>
         <c:forEach var="kirjaus" items="${kirjaukset}">
-            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} <fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /> ${kirjaus.selitys} <br>
+            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} 
+            <fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /> 
+            ${kirjaus.selitys} <br>
         </c:forEach>
         <h3>Kirjaa työtunteja</h3>
         <form name="tuntien_kirjaaminen" 

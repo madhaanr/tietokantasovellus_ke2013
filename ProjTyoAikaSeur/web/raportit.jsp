@@ -27,7 +27,9 @@
         </form>
             
             <c:forEach var="viikkor" items="${viikkoraportti}">
-                ${viikkor.kayttajatunnus} ${viikkor.projektinNimi} ${viikkor.tyotehtavanNimi} ${viikkor.tehdytTunnit} <fmt:formatDate value="${viikkor.paivamaara}" pattern="dd-MM-yyyy"/> ${viikkor.selitys} <br>
+                ${viikkor.kayttajatunnus} ${viikkor.projektinNimi} ${viikkor.tyotehtavanNimi} 
+                ${viikkor.tehdytTunnit} <fmt:formatDate value="${viikkor.paivamaara}" pattern="dd-MM-yyyy"/> 
+                ${viikkor.selitys} <br>
             </c:forEach>
             <h3>Yksityiskohtainen raportti</h3>
         </c:if>
