@@ -35,6 +35,7 @@ public class PoistaProjektiServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
         if(session.getAttribute("ktunnus")!=null) {
             String projektinNimi = request.getParameter("projektin_nimi");

@@ -4,6 +4,7 @@
     Author     : mhaanran
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,9 +14,9 @@
     </head>
     <body>
         <h1>Projektin ${projektinNimi} työtuntien kirjaaminen</h1>
-        <h3>Käyttäjän ${knimi} aiemmat kirjaukset projektiin ${projektinNimi}</h3>
+        <h3>Käyttäjän ${knimi} kirjaukset projektiin ${projektinNimi}</h3>
         <c:forEach var="kirjaus" items="${kirjaukset}">
-            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} ${kirjaus.paivamaara} ${kirjaus.selitys} <br>
+            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} <fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /> ${kirjaus.selitys} <br>
         </c:forEach>
         <h3>Kirjaa työtunteja</h3>
         <form name="tuntien_kirjaaminen" 
@@ -34,7 +35,7 @@
 
             <h2>${viesti}</h2>
 
-            <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
         </form>
+        <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
     </body>
 </html>

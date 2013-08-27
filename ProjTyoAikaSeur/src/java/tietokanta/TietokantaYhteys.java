@@ -72,6 +72,7 @@ public class TietokantaYhteys {
         return false;
 
     }
+
     public boolean onkoKayttajaOlemassa(String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
@@ -82,7 +83,7 @@ public class TietokantaYhteys {
             if (resultset.next()) {
                 suljeYhteydet(resultset, prep, conn);
                 return true;
-            } 
+            }
             suljeYhteydet(resultset, prep, conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -191,8 +192,8 @@ public class TietokantaYhteys {
         }
         return lista;
     }
-    
-     public ArrayList<Kirjaus> getKirjaukset(String kayttajatunnus,String projektinNimi) {
+
+    public ArrayList<Kirjaus> getKirjaukset(String kayttajatunnus, String projektinNimi) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep = null;
         ArrayList<Kirjaus> lista = new ArrayList();
@@ -207,6 +208,31 @@ public class TietokantaYhteys {
                 float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
                 Date paivamaara = resultset.getDate("PAIVAMAARA");
                 System.out.println(tyotehtavanNimi);
+                Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
+                lista.add(kirjaus);
+            }
+            suljeYhteydet(resultset, prep, conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+     public ArrayList<Kirjaus> viikkoRaportti(Date alkamisPaivamaara, Date loppumisPaivamaara) {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        ArrayList<Kirjaus> lista = new ArrayList();
+        try {
+            prep = conn.prepareStatement("SELECT * FROM KIRJAUS WHERE paivamaara between ? and ?");
+            prep.setDate(1, alkamisPaivamaara);
+            prep.setDate(2, loppumisPaivamaara);
+            ResultSet resultset = prep.executeQuery();
+            while (resultset.next()) {
+                String tyotehtavanNimi = resultset.getString("TYOTEHTAVAN_NIMI");
+                String selitys = resultset.getString("SELITYS");
+                float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
+                Date paivamaara = resultset.getDate("PAIVAMAARA");
+                String kayttajatunnus = resultset.getString("KAYTTAJATUNNUS");
+                String projektinNimi = resultset.getString("PROJEKTIN_NIMI");
                 Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
                 lista.add(kirjaus);
             }
@@ -247,8 +273,7 @@ public class TietokantaYhteys {
                 if (resultset.next()) {
                     suljeYhteydet(resultset, prep, conn);
                     return true;
-                }
-                else {
+                } else {
                     suljeYhteydet(resultset, prep, conn);
                 }
             } catch (SQLException ex) {
@@ -304,9 +329,9 @@ public class TietokantaYhteys {
         }
     }
 
-    public boolean onkoTyotehtavaOlemassa(String tyotehtavanNimi,String projektinNimi) {
+    public boolean onkoTyotehtavaOlemassa(String tyotehtavanNimi, String projektinNimi) {
         Connection conn = luoTietokantaYhteys();
-        if (tyotehtavanNimi!=null) {
+        if (tyotehtavanNimi != null) {
             try {
                 PreparedStatement prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=? AND PROJEKTIN_NIMI=?");
                 prep.setString(1, tyotehtavanNimi);
@@ -315,8 +340,8 @@ public class TietokantaYhteys {
                 if (resultset.next()) {
                     suljeYhteydet(resultset, prep, conn);
                     return true;
-                }      
-                suljeYhteydet(resultset, prep, conn);  
+                }
+                suljeYhteydet(resultset, prep, conn);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -324,7 +349,7 @@ public class TietokantaYhteys {
         return false;
     }
 
-    public void lisaaTyontekijaProjektiin(String projektinNimi,String kayttajatunnus) {
+    public void lisaaTyontekijaProjektiin(String projektinNimi, String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
         try {
             if (onkoProjektiOlemassa(projektinNimi) && onkoKayttajaOlemassa(kayttajatunnus)) {
@@ -334,34 +359,33 @@ public class TietokantaYhteys {
                 prep.executeUpdate();
                 prep.close();
                 conn.close();
-            }
-            else {
+            } else {
                 conn.close();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-     public void lisaaTyotuntiKirjaus(Kirjaus kirjaus) {
+
+    public void lisaaTyotuntiKirjaus(Kirjaus kirjaus) {
         Connection conn = luoTietokantaYhteys();
-        try {       
-                PreparedStatement prep = conn.prepareStatement("INSERT INTO KIRJAUS VALUES (?,?,?,?,?,?)");
-                prep.setDate(1, kirjaus.getPaivamaara());
-                prep.setFloat(2, kirjaus.getTehdytTunnit());
-                prep.setString(3, kirjaus.getSelitys());
-                prep.setString(4, kirjaus.getKayttajatunnus());
-                prep.setString(5, kirjaus.getProjektinNimi());
-                prep.setString(6, kirjaus.getTyotehtavanNimi());
-                prep.executeUpdate();
-                prep.close();
-                conn.close();         
-            
+        try {
+            PreparedStatement prep = conn.prepareStatement("INSERT INTO KIRJAUS VALUES (?,?,?,?,?,?)");
+            prep.setDate(1, kirjaus.getPaivamaara());
+            prep.setFloat(2, kirjaus.getTehdytTunnit());
+            prep.setString(3, kirjaus.getSelitys());
+            prep.setString(4, kirjaus.getKayttajatunnus());
+            prep.setString(5, kirjaus.getProjektinNimi());
+            prep.setString(6, kirjaus.getTyotehtavanNimi());
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
+
     public List<String> getProjektinTyontekijat(String projektinNimi) {
         Connection conn = luoTietokantaYhteys();
         ArrayList<String> lista = new ArrayList();
@@ -371,16 +395,17 @@ public class TietokantaYhteys {
                 prep.setString(1, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {
-                     String kayttajatunnus=resultset.getString("KAYTTAJATUNNUS");
-                     lista.add(kayttajatunnus);
+                    String kayttajatunnus = resultset.getString("KAYTTAJATUNNUS");
+                    lista.add(kayttajatunnus);
                 }
-                 suljeYhteydet(resultset, prep, conn);  
+                suljeYhteydet(resultset, prep, conn);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return lista;
     }
+
     public List<String> getProjektinTyotehtavat(String projektinNimi) {
         Connection conn = luoTietokantaYhteys();
         ArrayList<String> lista = new ArrayList();
@@ -390,16 +415,17 @@ public class TietokantaYhteys {
                 prep.setString(1, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {
-                     String kayttajatunnus=resultset.getString("TYOTEHTAVAN_NIMI");
-                     lista.add(kayttajatunnus);
+                    String kayttajatunnus = resultset.getString("TYOTEHTAVAN_NIMI");
+                    lista.add(kayttajatunnus);
                 }
-                 suljeYhteydet(resultset, prep, conn);  
+                suljeYhteydet(resultset, prep, conn);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return lista;
     }
+
     public List<String> getKayttajanProjektit(String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
         ArrayList<String> lista = new ArrayList();
@@ -409,10 +435,10 @@ public class TietokantaYhteys {
                 prep.setString(1, kayttajatunnus);
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {
-                     String projektinNimi=resultset.getString("PROJEKTIN_NIMI");
-                     lista.add(projektinNimi);
+                    String projektinNimi = resultset.getString("PROJEKTIN_NIMI");
+                    lista.add(projektinNimi);
                 }
-                suljeYhteydet(resultset, prep, conn);  
+                suljeYhteydet(resultset, prep, conn);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

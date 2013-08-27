@@ -32,6 +32,10 @@
         <servlet-name>KirjaaTuntejaServlet</servlet-name>
         <servlet-class>servlet.KirjaaTuntejaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RaportitServlet</servlet-name>
+        <servlet-class>servlet.RaportitServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>KirjaaTuntejaServlet</servlet-name>
         <url-pattern>/KirjaaTunteja</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RaportitServlet</servlet-name>
+        <url-pattern>/Raportit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,25 +5,26 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import tietokanta.Kayttaja;
+import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
-import tietokanta.Tyotehtava;
 
 /**
  *
  * @author mhaanran
  */
-public class LisaaTyotehtavaServlet extends HttpServlet {
+public class RaportitServlet extends HttpServlet {
 
     private TietokantaYhteys db = new TietokantaYhteys();
-
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -38,25 +39,31 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        RequestDispatcher dispatcher;
+        
         String projektinNimi = request.getParameter("name");
-        request.setAttribute("projektinNimi", projektinNimi);
-        String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
-        if (tyotehtavanNimi != null) {
-            float budjetoidutTyotunnit = Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
-            if (!db.onkoTyotehtavaOlemassa(tyotehtavanNimi,projektinNimi)) {
-                Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi, budjetoidutTyotunnit, projektinNimi);
-                db.lisaaTyotehtava(tyotehtava);
-            } else {
-                request.setAttribute("viesti", "Tyotehtava nimellä " + tyotehtavanNimi + " on jo olemassa!");
-            }
+        String alkamisPaiva = request.getParameter("alkamisPaiva");
+        Calendar alkamisPaivaCalender = Calendar.getInstance();
+        if (alkamisPaiva!=null) {
+            alkamisPaivaCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(alkamisPaiva.substring(0, alkamisPaiva.length() - 6)));
+            alkamisPaivaCalender.set(Calendar.MONTH, Integer.parseInt(alkamisPaiva.substring(2, alkamisPaiva.length() - 4)) - 1);
+            alkamisPaivaCalender.set(Calendar.YEAR, Integer.parseInt(alkamisPaiva.substring(4, alkamisPaiva.length())));
         }
-        List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
-        request.setAttribute("tyotehtavat", tyotehtavat);
-        List<String> tyontekijat = db.getProjektinTyontekijat(projektinNimi);
-        request.setAttribute("tyontekijat", tyontekijat);
-        List<Kayttaja> kayttajat = db.getKayttajat();
-        request.setAttribute("kayttajat", kayttajat);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("projekti.jsp");
+        java.sql.Date alkamisPaivaDate = new java.sql.Date(alkamisPaivaCalender.getTime().getTime());
+        
+        String loppumisPaiva = request.getParameter("loppumisPaiva");
+        Calendar loppumisPaivaCalender = Calendar.getInstance();
+        if (loppumisPaiva!=null) {
+            loppumisPaivaCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(loppumisPaiva.substring(0, loppumisPaiva.length() - 6)));
+            loppumisPaivaCalender.set(Calendar.MONTH, Integer.parseInt(loppumisPaiva.substring(2, loppumisPaiva.length() - 4)) - 1);
+            loppumisPaivaCalender.set(Calendar.YEAR, Integer.parseInt(loppumisPaiva.substring(4, loppumisPaiva.length())));
+        }
+        java.sql.Date loppumisPaivaDate = new java.sql.Date(loppumisPaivaCalender.getTime().getTime());
+        
+        request.setAttribute("projektinNimi", projektinNimi);
+        ArrayList<Kirjaus> viikkoRaportti = db.viikkoRaportti(alkamisPaivaDate, loppumisPaivaDate);
+        request.setAttribute("viikkoraportti", viikkoRaportti);
+        dispatcher = request.getRequestDispatcher("raportit.jsp");
         dispatcher.forward(request, response);
     }
 

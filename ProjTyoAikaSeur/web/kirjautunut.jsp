@@ -4,6 +4,7 @@
     Author     : mhaanran
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,9 @@
             <input type="submit" value="Kirjaudu ulos" />
         </form>
         <c:if test="${rooli}">
+            <h3>Raportit</h3>
+            <a href="${pageContext.request.contextPath}/Raportit">Raportit</a>
+               
             <h3>Lisää projekti</h3>
             <form name="projektin_lisaaminen" 
                   action="${pageContext.request.contextPath}/Projektit"
@@ -35,20 +39,23 @@
                 <input type="text" name="projektin_nimi" /> <br>
                 <input type="submit" value="Poista projekti" />
             </form>
-        
-        <h3>Projektit</h3>
-        <c:forEach var="projekti" items="${projektit}">
-            <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäär: ${projekti.alkamisPaivaMaara} Loppumispäivämäärä: ${projekti.loppumisPaivaMaara} <br>
-        </c:forEach>
-            
-        <h3>Kayttajat</h3>
-        <c:forEach var="kayttaja" items="${kayttajat}">    
+
+            <h3>Projektit</h3>
+            <c:forEach var="projekti" items="${projektit}">
+                <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäärä: <fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="dd-MM-yyyy"/> Loppumispäivämäärä: <fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="dd-MM-yyyy"/> <br>
+            </c:forEach>
+
+            <h3>Kayttajat</h3>
+            <c:forEach var="kayttaja" items="${kayttajat}">    
                 ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
-        </c:forEach>
-        </c:if>   
-        <h3>Kayttajan ${knimi} projektit: </h3>
-        <c:forEach var="kayttajanProjekti" items="${kayttajanProjektit}">    
-            <a href="${pageContext.request.contextPath}/KirjaaTunteja?name=${kayttajanProjekti}">${kayttajanProjekti}</a><br>      
-        </c:forEach>
+            </c:forEach>
+        </c:if> 
+
+        <c:if test="${!rooli}">
+            <h3>Kayttajan ${knimi} projektit: </h3>
+            <c:forEach var="kayttajanProjekti" items="${kayttajanProjektit}">    
+                <a href="${pageContext.request.contextPath}/KirjaaTunteja?name=${kayttajanProjekti}">${kayttajanProjekti}</a><br>      
+            </c:forEach>
+        </c:if>
     </body>
 </html>

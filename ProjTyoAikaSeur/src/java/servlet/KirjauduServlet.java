@@ -42,6 +42,7 @@ public class KirjauduServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession(false);
         if(session!=null) {
             session.invalidate();    
