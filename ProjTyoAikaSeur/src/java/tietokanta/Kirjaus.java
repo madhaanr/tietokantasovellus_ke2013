@@ -1,13 +1,13 @@
 package tietokanta;
 
-import java.util.Calendar;
+import java.sql.Date;
 
 /* @author mhaanran */
 public class Kirjaus {
 
     private String selitys;
     private float tehdytTunnit;
-    private Calendar paivamaara;
+    private Date paivamaara;
     private String kayttajatunnus;
     private String projektinNimi;
     private String tyotehtavanNimi;
@@ -15,7 +15,7 @@ public class Kirjaus {
     public Kirjaus() {
     }
 
-    public Kirjaus(Calendar paivamaara, float tehdytTunnit, String selitys, String kayttajatunnus, String projektinNimi, String tyotehtavanNimi) {
+    public Kirjaus(Date paivamaara, float tehdytTunnit, String selitys, String kayttajatunnus, String projektinNimi, String tyotehtavanNimi) {
         
         this.selitys = selitys;
         this.tehdytTunnit = tehdytTunnit;
@@ -41,11 +41,11 @@ public class Kirjaus {
         this.tehdytTunnit = tehdytTunnit;
     }
 
-    public Calendar getPaivamaara() {
+    public Date getPaivamaara() {
         return paivamaara;
     }
 
-    public void setPaivamaara(Calendar paivamaara) {
+    public void setPaivamaara(Date paivamaara) {
         this.paivamaara = paivamaara;
     }
 

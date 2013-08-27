@@ -6,6 +6,7 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import tietokanta.Tyotehtava;
 public class KirjaaTuntejaServlet extends HttpServlet {
 
     private TietokantaYhteys db = new TietokantaYhteys();
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -39,14 +41,30 @@ public class KirjaaTuntejaServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
-        
-        String projektinNimi=request.getParameter("name");
-        String kayttajatunnus =(String) session.getAttribute("ktunnus");
-        request.setAttribute("projektinNimi", projektinNimi);      
+        String projektinNimi = request.getParameter("name");
+        String kayttajatunnus = (String) session.getAttribute("ktunnus");
+        String paivamaara = request.getParameter("paivamaara");
+        float tehdytTunnit = 0;
+        if (request.getParameter("tehdytTunnit") != null) {
+            tehdytTunnit = Float.parseFloat(request.getParameter("tehdytTunnit"));
+            String selitys = request.getParameter("selitys");
+            String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
+            Calendar paivamaaraCalender = Calendar.getInstance();
+            if (!paivamaara.isEmpty()) {
+                paivamaaraCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(paivamaara.substring(0, paivamaara.length() - 6)));
+                paivamaaraCalender.set(Calendar.MONTH, Integer.parseInt(paivamaara.substring(2, paivamaara.length() - 4)) - 1);
+                paivamaaraCalender.set(Calendar.YEAR, Integer.parseInt(paivamaara.substring(4, paivamaara.length())));
+            }
+            java.sql.Date paivamaaraDate = new java.sql.Date(paivamaaraCalender.getTime().getTime());
+            Kirjaus kirjaus = new Kirjaus(paivamaaraDate, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
+            db.lisaaTyotuntiKirjaus(kirjaus);
+        }
+        request.setAttribute("projektinNimi", projektinNimi);
         ArrayList<Kirjaus> kirjaukset = db.getKirjaukset(kayttajatunnus, projektinNimi);
         request.setAttribute("kirjaukset", kirjaukset);
         List<String> tyotehtavat = db.getProjektinTyotehtavat(projektinNimi);
         request.setAttribute("tyotehtavat", tyotehtavat);
+
         dispatcher = request.getRequestDispatcher("kirjaatunteja.jsp");
         dispatcher.forward(request, response);
     }

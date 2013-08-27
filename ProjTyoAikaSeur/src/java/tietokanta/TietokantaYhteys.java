@@ -205,9 +205,7 @@ public class TietokantaYhteys {
                 String tyotehtavanNimi = resultset.getString("TYOTEHTAVAN_NIMI");
                 String selitys = resultset.getString("SELITYS");
                 float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
-                Date db_paivamaara = resultset.getDate("PAIVAMAARA");
-                Calendar paivamaara = Calendar.getInstance();
-                paivamaara.setTime(db_paivamaara);
+                Date paivamaara = resultset.getDate("PAIVAMAARA");
                 System.out.println(tyotehtavanNimi);
                 Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
                 lista.add(kirjaus);
@@ -340,6 +338,25 @@ public class TietokantaYhteys {
             else {
                 conn.close();
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+     public void lisaaTyotuntiKirjaus(Kirjaus kirjaus) {
+        Connection conn = luoTietokantaYhteys();
+        try {       
+                PreparedStatement prep = conn.prepareStatement("INSERT INTO KIRJAUS VALUES (?,?,?,?,?,?)");
+                prep.setDate(1, kirjaus.getPaivamaara());
+                prep.setFloat(2, kirjaus.getTehdytTunnit());
+                prep.setString(3, kirjaus.getSelitys());
+                prep.setString(4, kirjaus.getKayttajatunnus());
+                prep.setString(5, kirjaus.getProjektinNimi());
+                prep.setString(6, kirjaus.getTyotehtavanNimi());
+                prep.executeUpdate();
+                prep.close();
+                conn.close();         
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

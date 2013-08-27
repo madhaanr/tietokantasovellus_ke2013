@@ -15,7 +15,7 @@
         <h1>Projektin ${projektinNimi} työtuntien kirjaaminen</h1>
         <h3>Käyttäjän ${knimi} aiemmat kirjaukset projektiin ${projektinNimi}</h3>
         <c:forEach var="kirjaus" items="${kirjaukset}">
-            ${kirjaus.tyotehtavanNimi} ${kirjaus.paivamaara} ${kirjaus.tehdytTunnit} ${kirjaus.selitys} <br>
+            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} ${kirjaus.paivamaara} ${kirjaus.selitys} <br>
         </c:forEach>
         <h3>Kirjaa työtunteja</h3>
         <form name="tuntien_kirjaaminen" 
@@ -27,13 +27,14 @@
                     <option><c:out value="${tyotehtava}"/></option>
                 </c:forEach>
             </select>
-            Tehdyt työtunnit <input type="text" name="tehdytTyotunnit" />
+            Tehdyt työtunnit <input type="text" name="tehdytTunnit" />
             Päivämäärä <input type="text" name ="paivamaara" />
             Selitys <input type="text" name="selitys"/>
             <br><input type="submit" value="Kirjaa työtunnit" />
 
             <h2>${viesti}</h2>
 
+            <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
         </form>
     </body>
 </html>
