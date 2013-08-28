@@ -217,12 +217,13 @@ public class TietokantaYhteys {
         }
         return lista;
     }
-     public ArrayList<Kirjaus> viikkoRaportti(Date alkamisPaivamaara, Date loppumisPaivamaara) {
+
+    public ArrayList<Kirjaus> viikkoRaportti(Date alkamisPaivamaara, Date loppumisPaivamaara) {
         Connection conn = luoTietokantaYhteys();
-        PreparedStatement prep = null;
+        PreparedStatement prep;
         ArrayList<Kirjaus> lista = new ArrayList();
         try {
-            prep = conn.prepareStatement("SELECT * FROM KIRJAUS WHERE paivamaara between ? and ? ");
+            prep = conn.prepareStatement("SELECT * FROM KIRJAUS WHERE paivamaara between ? and ? ORDER BY PROJEKTIN_NIMI,PAIVAMAARA,TYOTEHTAVAN_NIMI");
             prep.setDate(1, alkamisPaivamaara);
             prep.setDate(2, loppumisPaivamaara);
             ResultSet resultset = prep.executeQuery();
@@ -242,7 +243,15 @@ public class TietokantaYhteys {
         }
         return lista;
     }
-
+    
+    public ArrayList<Kirjaus> yksityisKohtainenRaportti() {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep;
+        ArrayList<Kirjaus> lista = new ArrayList();
+        
+        return lista;
+    }
+    
     public void lisaaProjekti(Projekti projekti) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep = null;
@@ -357,14 +366,15 @@ public class TietokantaYhteys {
                 prep.setString(1, projektinNimi);
                 prep.setString(2, kayttajatunnus);
                 prep.executeUpdate();
-                prep.close();          
-            } 
+                prep.close();
+            }
             conn.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
     public void poistaTyontekijaProjektista(String projektinNimi, String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
         try {
@@ -373,9 +383,9 @@ public class TietokantaYhteys {
                 prep.setString(1, projektinNimi);
                 prep.setString(2, kayttajatunnus);
                 prep.executeUpdate();
-                prep.close();            
-            } 
-            conn.close();      
+                prep.close();
+            }
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

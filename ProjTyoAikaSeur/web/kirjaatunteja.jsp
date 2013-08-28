@@ -14,14 +14,14 @@
         <title>Projektin työaikaseuranta</title>
     </head>
     <body>
-        <h1>Projektin ${projektinNimi} työtuntien kirjaaminen</h1>
-        <h2>Olet kirjautunut sisään käyttäjänä ${knimi}</h2>
+        <h1>Projektiin ${projektinNimi} tehtyjen työtuntien kirjaaminen</h1>
+        <h2>Olet kirjautuneena sisään käyttäjänä: ${knimi}</h2>
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
         <h3>Käyttäjän ${knimi} kirjaukset projektiin ${projektinNimi}</h3>
         <table>
-            <th>Työtehtävä</th><th>Tunnit</th><th>Päivämäärä</th>
+            <th>Työtehtävä</th><th>Tunnit</th><th>Päivämäärä</th><th>Selitys</th>
         <c:forEach var="kirjaus" items="${kirjaukset}">
             <tr>
                 <td>${kirjaus.tyotehtavanNimi}</td> 
@@ -29,7 +29,10 @@
                 <td><fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /></td>
                 <td>${kirjaus.selitys}</td>
             </tr> 
-        </c:forEach>
+        </c:forEach>        
+            <tr>         
+                <td>Tehtyjen tuntien summa</td><td id="summa">${tehtyjenTuntienSumma}</td>
+            </tr>
         </table>
         <h3>Kirjaa työtunteja</h3>
         <form name="tuntien_kirjaaminen" 

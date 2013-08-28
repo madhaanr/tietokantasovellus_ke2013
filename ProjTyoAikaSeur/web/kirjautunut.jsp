@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Projektien hallinta</h1>
-        <h2>Olet kirjautunut sisään käyttäjänä ${knimi}</h2>
+        <h2>Olet kirjautuneena sisään käyttäjänä: ${knimi}</h2>
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
@@ -81,9 +81,13 @@
 
         <c:if test="${!rooli}">
             <h3>Kayttajan ${knimi} projektit: </h3>
+            <table>
             <c:forEach var="kayttajanProjekti" items="${kayttajanProjektit}">    
-                <a href="${pageContext.request.contextPath}/KirjaaTunteja?name=${kayttajanProjekti}">${kayttajanProjekti}</a><br>      
+                <tr>
+                    <td><a href="${pageContext.request.contextPath}/KirjaaTunteja?name=${kayttajanProjekti}">${kayttajanProjekti}</a></td>
+                </tr>    
             </c:forEach>
+            </table>
         </c:if>
     </body>
 </html>

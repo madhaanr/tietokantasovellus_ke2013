@@ -64,11 +64,15 @@ public class KirjaaTuntejaServlet extends HttpServlet {
             db.lisaaTyotuntiKirjaus(kirjaus);
         }
         request.setAttribute("projektinNimi", projektinNimi);
+        float tehtyjenTuntienSumma=0;
         ArrayList<Kirjaus> kirjaukset = db.getKirjaukset(kayttajatunnus, projektinNimi);
+        for (Kirjaus kirjaus : kirjaukset) {
+            tehtyjenTuntienSumma += kirjaus.getTehdytTunnit();
+        }
+        request.setAttribute("tehtyjenTuntienSumma", tehtyjenTuntienSumma);
         request.setAttribute("kirjaukset", kirjaukset);
         List<String> tyotehtavat = db.getProjektinTyotehtavat(projektinNimi);
         request.setAttribute("tyotehtavat", tyotehtavat);
-
         dispatcher = request.getRequestDispatcher("kirjaatunteja.jsp");
         dispatcher.forward(request, response);
     }

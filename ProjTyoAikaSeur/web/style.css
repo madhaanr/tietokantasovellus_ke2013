@@ -17,11 +17,18 @@ body {
     width: 200px;
 }
 th,td {
-    text-align: left;  
+    text-align:left;  
     width: 200px;
+    border: 0.08em solid black;
+    
 }
 #projektitlista {
     width: 200px;
     text-align: left;
 }
-
+.viikkoraportti {
+    width: 150px;
+}
+.viikkoraporttiselitys {
+    width:200px;
+}

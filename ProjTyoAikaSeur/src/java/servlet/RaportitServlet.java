@@ -62,7 +62,12 @@ public class RaportitServlet extends HttpServlet {
         java.sql.Date loppumisPaivaDate = new java.sql.Date(loppumisPaivaCalender.getTime().getTime());
         
         request.setAttribute("projektinNimi", projektinNimi);
+        float tehtyjenTuntienSumma=0;
         ArrayList<Kirjaus> viikkoRaportti = db.viikkoRaportti(alkamisPaivaDate, loppumisPaivaDate);
+        for (Kirjaus kirjaus : viikkoRaportti) {
+            tehtyjenTuntienSumma += kirjaus.getTehdytTunnit();
+        }
+        request.setAttribute("tehtyjenTuntienSumma", tehtyjenTuntienSumma);
         request.setAttribute("viikkoraportti", viikkoRaportti);
         dispatcher = request.getRequestDispatcher("raportit.jsp");
         dispatcher.forward(request, response);

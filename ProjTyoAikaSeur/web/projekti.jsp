@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Lisää työtehtäviä projektiin: ${projektinNimi}</h1>
-        <h2>Olet kirjautunut sisään käyttäjänä ${knimi}</h2>
+        <h2>Olet kirjautuneena sisään käyttäjänä: ${knimi}</h2>
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
