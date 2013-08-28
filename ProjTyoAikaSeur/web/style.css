@@ -1,0 +1,18 @@
+/* 
+    Document   : style
+    Created on : 28-Aug-2013, 10:12:54
+    Author     : mhaanran
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+h1, h2, h3 {
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+#formfield {
+    width: 200px;
+}

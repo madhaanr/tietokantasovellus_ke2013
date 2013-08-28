@@ -10,10 +10,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="style.css" rel="stylesheet" type="text/css">
         <title>Projektin työaikaseuranta</title>
     </head>
     <body>
         <h1>Lisää työtehtäviä projektiin: ${projektinNimi}</h1>
+        <h2>Olet kirjautunut sisään käyttäjänä ${knimi}</h2>
+        <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
+            <input type="submit" value="Kirjaudu ulos" />
+        </form>
         <c:if test="${rooli}">
         <h2>Lisää työtehtävä</h2>
         <form name="projektin_lisaaminen" 
@@ -54,6 +59,6 @@
         </c:forEach>
         <h3>Kirjaa tunteja</h3>
         
-        <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
+        <a href="${pageContext.request.contextPath}/Projektit">Palaa projektien hallinta sivulle</a>
     </body>
 </html>

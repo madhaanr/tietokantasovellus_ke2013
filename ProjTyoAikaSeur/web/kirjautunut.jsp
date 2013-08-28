@@ -10,42 +10,57 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link href="style.css" rel="stylesheet" type="text/css">
+        <title>Projektin työaikaseuranta</title>
     </head>
     <body>
-        <h1>Projektit</h1>
-        <h2>Tervetuloa ${knimi}</h2>
+        <h1>Projektien hallinta</h1>
+        <h2>Olet kirjautunut sisään käyttäjänä ${knimi}</h2>
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
         <c:if test="${rooli}">
             <h3>Raportit</h3>
             <a href="${pageContext.request.contextPath}/Raportit">Raportit</a>
-               
+
             <h3>Lisää projekti</h3>
-            <form name="projektin_lisaaminen" 
-                  action="${pageContext.request.contextPath}/Projektit"
-                  method="post">
-                Projektin nimi: <input type="text" name="projektin_nimi" /> 
-                Työtunti budjetti: <input type="text" name="tyoTuntiBudjetti" />
-                Alkamispäivämäärä: <input type="text" name ="alkamisPaivaMaara" />
-                Loppumispäivämäärä: <input type="text" name ="loppumisPaivaMaara" />
-                <br><input type="submit" value="Lisää projekti" />
-
-                <h2>${viesti}</h2>
-            </form>
-
+            <table>
+                <form name="projektin_lisaaminen" 
+                      action="${pageContext.request.contextPath}/Projektit"
+                      method="post">           
+                    <tr>
+                        <td>Projektin nimi:</td> 
+                        <td><input type="text" name="projektin_nimi" id="formfield" /></td>
+                    </tr>
+                    <tr>
+                        <td>Työtunti budjetti:</td> 
+                        <td><input type="text" name="tyoTuntiBudjetti" id="formfield"/></td>
+                    </tr>
+                    <tr>
+                        <td>Alkamispäivämäärä:</td> 
+                        <td><input type="text" name ="alkamisPaivaMaara" id="formfield"/></td> 
+                    </tr>
+                    <tr>
+                        <td>Loppumispäivämäärä:</td> 
+                        <td><input type="text" name ="loppumisPaivaMaara" id="formfield"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Lisää projekti" /></td>
+                    </tr>                      
+                </form>         
+            </table>
+            <h2>${virhe}</h2>
             <h3>Projektit</h3>
             <c:forEach var="projekti" items="${projektit}">
                 <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäärä: <fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="dd-MM-yyyy"/> Loppumispäivämäärä: <fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="dd-MM-yyyy"/> <br>
             </c:forEach>
-                
+
             <h3>Poista projekti</h3>
             <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
                 <select name="projektin_nimi">
-                        <c:forEach var="projekti" items="${projektit}">
-                           <option> <c:out value="${projekti.projektinNimi}"/> </option>
-                        </c:forEach>          
+                    <c:forEach var="projekti" items="${projektit}">
+                        <option> <c:out value="${projekti.projektinNimi}"/> </option>
+                    </c:forEach>          
                 </select>
                 <br>
                 <input type="submit" value="Poista projekti" />

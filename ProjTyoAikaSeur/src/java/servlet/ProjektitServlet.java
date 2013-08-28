@@ -72,7 +72,7 @@ public class ProjektitServlet extends HttpServlet {
                     db.lisaaProjekti(lisattava);                
                 }
                 else {
-                    request.setAttribute("viesti", "Projekti nimellä "+projektinNimi+" on jo olemassa!");
+                    request.setAttribute("virhe", "Projekti nimellä "+projektinNimi+" on jo olemassa!");
                 }
             }
             List<Kayttaja> kayttajat = db.getKayttajat();

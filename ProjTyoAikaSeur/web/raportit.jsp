@@ -11,10 +11,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Raportointi</title>
+        <link href="style.css" rel="stylesheet" type="text/css">
+        <title>Projektin työaikaseuranta</title>
     </head>
     <body>
         <h1>Raportit</h1>
+        <h2>Olet kirjautunut sisään käyttäjänä ${knimi}</h2>
+        <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
+            <input type="submit" value="Kirjaudu ulos" />
+        </form>
         <c:if test="${rooli}">
             <h2>Projektipäällikön raportit</h2>
             <h3>Raportti viikon aikana tehdyistä tunneista</h3>
@@ -36,6 +41,6 @@
         <c:if test="${!rooli}">
             <h2>Työntekijän raportit</h2>
         </c:if>
-        <a href="${pageContext.request.contextPath}/Projektit">Palaa projektit sivulle</a>
+        <a href="${pageContext.request.contextPath}/Projektit">Palaa projektien hallinta sivulle</a>
     </body>
 </html>

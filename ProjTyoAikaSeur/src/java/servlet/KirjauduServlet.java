@@ -71,7 +71,7 @@ public class KirjauduServlet extends HttpServlet {
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");
         }
         else if(kayttaja!=null&&!db.onkoKayttajaJaSalasanaOikein(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
-            request.setAttribute("viesti", "Väärä käyttäjätunnus tai salasana!");
+            request.setAttribute("virhe", "Väärä käyttäjätunnus tai salasana!");
             dispatcher = request.getRequestDispatcher("kirjaudu.jsp");        
             dispatcher.forward(request, response);
         }
