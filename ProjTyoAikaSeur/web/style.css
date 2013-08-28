@@ -9,10 +9,19 @@
 root { 
     display: block;
 }
-
-h1, h2, h3 {
+body {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 }
+
 #formfield {
     width: 200px;
 }
+th,td {
+    text-align: left;  
+    width: 200px;
+}
+#projektitlista {
+    width: 200px;
+    text-align: left;
+}
+

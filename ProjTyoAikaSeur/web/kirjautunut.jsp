@@ -51,22 +51,29 @@
             </table>
             <h2>${virhe}</h2>
             <h3>Projektit</h3>
-            <c:forEach var="projekti" items="${projektit}">
-                <a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a> Tyotuntibudjetti: ${projekti.budjetoidutTyotunnit} Alkamispäivämäärä: <fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="dd-MM-yyyy"/> Loppumispäivämäärä: <fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="dd-MM-yyyy"/> <br>
+            <table>
+                <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>
+            <c:forEach var="projekti" items="${projektit}">  
+                <tr>
+                    <td id="projektitlista"><a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" id="${projekti.projektinNimi}">${projekti.projektinNimi}</a></td> 
+                    <td id="projektitlista">${projekti.budjetoidutTyotunnit}</td>  
+                    <td id="projektitlista"><fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="dd-MM-yyyy"/></td>
+                    <td id="projektitlista"><fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="dd-MM-yyyy"/></td>
+                </tr>
             </c:forEach>
-
+            </table>
             <h3>Poista projekti</h3>
             <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
+                Valitse poistettava projekti:
                 <select name="projektin_nimi">
                     <c:forEach var="projekti" items="${projektit}">
                         <option> <c:out value="${projekti.projektinNimi}"/> </option>
                     </c:forEach>          
                 </select>
-                <br>
                 <input type="submit" value="Poista projekti" />
             </form>
 
-            <h3>Kayttajat</h3>
+            <h3>Käyttäjät</h3>
             <c:forEach var="kayttaja" items="${kayttajat}">    
                 ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
             </c:forEach>

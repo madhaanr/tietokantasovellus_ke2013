@@ -36,6 +36,10 @@
         <servlet-name>RaportitServlet</servlet-name>
         <servlet-class>servlet.RaportitServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PoistaTyontekijaProjektistaServlet</servlet-name>
+        <servlet-class>servlet.PoistaTyontekijaProjektistaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>RaportitServlet</servlet-name>
         <url-pattern>/Raportit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PoistaTyontekijaProjektistaServlet</servlet-name>
+        <url-pattern>/PoistaTyontekijaProjektista</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

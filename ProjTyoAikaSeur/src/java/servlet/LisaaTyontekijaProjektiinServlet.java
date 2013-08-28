@@ -5,7 +5,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +32,11 @@ public class LisaaTyontekijaProjektiinServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
         if(session.getAttribute("ktunnus")!=null) {
             String projektinNimi = request.getParameter("projektinNimi");
-            String tyontekijanNimi = request.getParameter("tyontekijanNimi");
+            String tyontekijanNimi = request.getParameter("tyontekijanNimi");    
             if(projektinNimi!=null&db.onkoProjektiOlemassa(projektinNimi)&&db.onkoKayttajaOlemassa(tyontekijanNimi)) {
                   db.lisaaTyontekijaProjektiin(projektinNimi,tyontekijanNimi);
             }

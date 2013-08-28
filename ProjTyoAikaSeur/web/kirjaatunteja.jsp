@@ -20,11 +20,17 @@
             <input type="submit" value="Kirjaudu ulos" />
         </form>
         <h3>Käyttäjän ${knimi} kirjaukset projektiin ${projektinNimi}</h3>
+        <table>
+            <th>Työtehtävä</th><th>Tunnit</th><th>Päivämäärä</th>
         <c:forEach var="kirjaus" items="${kirjaukset}">
-            ${kirjaus.tyotehtavanNimi} ${kirjaus.tehdytTunnit} 
-            <fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /> 
-            ${kirjaus.selitys} <br>
+            <tr>
+                <td>${kirjaus.tyotehtavanNimi}</td> 
+                <td>${kirjaus.tehdytTunnit}</td> 
+                <td><fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /></td>
+                <td>${kirjaus.selitys}</td>
+            </tr> 
         </c:forEach>
+        </table>
         <h3>Kirjaa työtunteja</h3>
         <form name="tuntien_kirjaaminen" 
               action="${pageContext.request.contextPath}/KirjaaTunteja?name=${projektinNimi}"

@@ -20,45 +20,87 @@
             <input type="submit" value="Kirjaudu ulos" />
         </form>
         <c:if test="${rooli}">
-        <h2>Lisää työtehtävä</h2>
-        <form name="projektin_lisaaminen" 
-                  action="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projektinNimi}"
-                  method="post">
-                Työtehtävän nimi <input type="text" name="tyotehtavanNimi" /> 
-                Budjetoidut työtunnit <input type="text" name="budjetoidutTyotunnit" />
-                <br><input type="submit" value="Lisää työtehtävä" />
-                <h2>${viesti}</h2>
-        </form>
-        <h3>Poista työtehtävä</h3>
+            <h2>Lisää työtehtävä</h2>
+            <table>
+                <form name="projektin_lisaaminen" 
+                      action="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projektinNimi}"
+                      method="post">
+                    <tr>
+                        <td>Työtehtävän nimi:</td> 
+                        <td><input type="text" name="tyotehtavanNimi" /></td>
+                        <td>Budjetoidut työtunnit:</td> 
+                        <td><input type="text" name="budjetoidutTyotunnit" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Lisää työtehtävä" /></td>
+                    </tr>    
+                </form>
+                <h2>${virhe}</h2>
+            </table>
+
+        </c:if>
+
+        <h3>Projektin ${projektinNimi} työtehtävät</h3>
+        <table>
+            <c:forEach var="tyotehtava" items="${tyotehtavat}">    
+                <tr>
+                    <td>${tyotehtava.tyotehtavanNimi}</td> 
+                    <td>${tyotehtava.budjetoidutTyotunnit}</td>
+                </tr>      
+            </c:forEach>
+        </table>
+        <c:if test="${rooli}">
+            <h3>Poista työtehtävä</h3>
             <form action="${pageContext.request.contextPath}/PoistaTyotehtava?name=${projektinNimi}" method="post">
-                <input type="text" name="tyotehtavan_nimi" /> <br>
+                Valitse poistettava tyotehtava:
+                <select name="tyotehtavan_nimi">
+                    <c:forEach var="tyotehtava" items="${tyotehtavat}">
+                        <option> <c:out value="${tyotehtava.tyotehtavanNimi}"/> </option>
+                    </c:forEach>          
+                </select>
                 <input type="submit" value="Poista työtehtävä" />
             </form>
-        </c:if>
-        <h3>Projektin ${projektinNimi} työtehtävät</h3>
-        <c:forEach var="tyotehtava" items="${tyotehtavat}">    
-                ${tyotehtava.tyotehtavanNimi} ${tyotehtava.budjetoidutTyotunnit}<br>      
-        </c:forEach>
-        <c:if test="${rooli}">
-        <h3>Lisää työntekijä projektiin</h3>
-        <form name="tyontekijan_lisaaminen_projektiin" action="${pageContext.request.contextPath}/LisaaTyontekijaProjektiin"
-              method="post">
-            <input type="text" name="tyontekijanNimi"/> <br>
-            <input type="hidden" name="projektinNimi" value="${projektinNimi}"/> <br>
-            <input type="submit" value="Lisää työntekijä projektiin"/>
-        </form>
-        <h3>Kaikki työntekijät</h3>
-        <c:forEach var="kayttaja" items="${kayttajat}">    
-                ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
-        </c:forEach>
-        </c:if>
-        
-        <h3>Projektin ${projektinNimi} työntekijät</h3>
-        <c:forEach var="tyontekija" items="${tyontekijat}">    
+            <h3>Kaikki työntekijät</h3>
+            <table>
+                <th>Käyttäjän nimi</th><th>Käyttäjätunnus</th><th>Rooli</th>
+                    <c:forEach var="kayttaja" items="${kayttajat}">    
+                    <tr>
+                        <td>${kayttaja.nimi}</td> <td>${kayttaja.kayttajatunnus}</td> <td>${kayttaja.rooli}</td>
+                    </tr>     
+                </c:forEach>
+            </table>
+            <h3>Lisää työntekijä projektiin</h3>
+            <form name="tyontekijan_lisaaminen_projektiin" action="${pageContext.request.contextPath}/LisaaTyontekijaProjektiin?name=${projektinNimi}" method="post">
+                <select name="tyontekijanNimi">
+                    <c:forEach var="kayttaja" items="${kayttajat}">
+                        <option> <c:out value="${kayttaja.kayttajatunnus}"/> </option>
+                    </c:forEach>          
+                </select>
+                <input type="hidden" name="tyontekijanNimi" value="${kayttaja.kayttajatunnus}" />
+                <input type="hidden" name="projektinNimi" value="${projektinNimi}" />
+                <input type="submit" value="Lisää työntekijä projektiin"/>
+            </form>
+
+            <h3>Projektin ${projektinNimi} työntekijät</h3>
+            <c:forEach var="tyontekija" items="${tyontekijat}">    
                 ${tyontekija} <br>      
-        </c:forEach>
-        <h3>Kirjaa tunteja</h3>
-        
+            </c:forEach>
+
+            <h3>Poista työntekijä projektista</h3>
+            <form name="tyontekijan_poistaminen_projektista" action="${pageContext.request.contextPath}/PoistaTyontekijaProjektista?name=${projektinNimi}" method="post">
+                <select name="tyontekijanNimi">
+                    <c:forEach var="kayttaja" items="${kayttajat}">
+                        <option> <c:out value="${kayttaja.kayttajatunnus}"/> </option>
+                    </c:forEach>          
+                </select>
+                <input type="hidden" name="tyontekijanNimi" value="${kayttaja.kayttajatunnus}" />
+                <input type="hidden" name="projektinNimi" value="${projektinNimi}" />
+                <input type="submit" value="Poista työntekijä projektista"/>
+            </form>
+
+        </c:if>
+
+
         <a href="${pageContext.request.contextPath}/Projektit">Palaa projektien hallinta sivulle</a>
     </body>
 </html>

@@ -16,7 +16,7 @@ import tietokanta.TietokantaYhteys;
  *
  * @author mhaanran
  */
-public class PoistaTyotehtavaServlet extends HttpServlet {
+public class PoistaTyontekijaProjektistaServlet extends HttpServlet {
 
     private TietokantaYhteys db = new TietokantaYhteys();
     /**
@@ -34,14 +34,15 @@ public class PoistaTyotehtavaServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
-        String projektinNimi =  request.getParameter("name");
-        request.setAttribute("projektinNimi", projektinNimi);
         if(session.getAttribute("ktunnus")!=null) {
-            String tyotehtavanNimi = request.getParameter("tyotehtavan_nimi");
-            db.poistaTyotehtava(tyotehtavanNimi);       
-                                  
+            String projektinNimi = request.getParameter("projektinNimi");
+            String tyontekijanNimi = request.getParameter("tyontekijanNimi");
+            System.out.println(projektinNimi+tyontekijanNimi);
+            if(projektinNimi!=null&db.onkoProjektiOlemassa(projektinNimi)&&db.onkoKayttajaOlemassa(tyontekijanNimi)) {
+                  db.poistaTyontekijaProjektista(projektinNimi,tyontekijanNimi);
+            }
+            response.sendRedirect("/ProjTyoAikaSeur/LisaaTyotehtava?name="+projektinNimi); 
         }
-        response.sendRedirect("/ProjTyoAikaSeur/LisaaTyotehtava?name="+projektinNimi); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
