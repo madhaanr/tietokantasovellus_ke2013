@@ -26,7 +26,7 @@
             <tr>
                 <td>${kirjaus.tyotehtavanNimi}</td> 
                 <td>${kirjaus.tehdytTunnit}</td> 
-                <td><fmt:formatDate value="${kirjaus.paivamaara}" pattern="dd-MM-yyyy" /></td>
+                <td><fmt:formatDate value="${kirjaus.paivamaara}" pattern="ddMMyyyy" /></td>
                 <td>${kirjaus.selitys}</td>
             </tr> 
         </c:forEach>        
@@ -47,10 +47,35 @@
             Tehdyt työtunnit <input type="text" name="tehdytTunnit" />
             Päivämäärä <input type="text" name ="paivamaara" />
             Selitys <input type="text" name="selitys"/>
-            <br><input type="submit" value="Kirjaa työtunnit" />
-
-            <h2>${viesti}</h2>
-
+            <br><input type="submit" value="Kirjaa työtunnit" />    
+        </form>
+        <h3>Muokkaa kirjausta</h3>
+         <form name="muokkaa_kirjausta" 
+              action="${pageContext.request.contextPath}/MuokkaaKirjausta?name=${projektinNimi}"
+              method="post">
+            <input type="hidden" name="projektin_nimi" /> 
+            <select name="tyotehtavanNimi">
+                <c:forEach var="tyotehtava" items="${tyotehtavat}" >
+                    <option><c:out value="${tyotehtava}"/></option>
+                </c:forEach>
+            </select>
+            Tehdyt työtunnit <input type="text" name="tehdytTunnit" />
+            Päivämäärä <input type="text" name ="paivamaara" />
+            Selitys <input type="text" name="selitys"/>
+            <br><input type="submit" value="Poista kirjaus" />    
+        </form>
+        <h3>Poista kirjaus</h3>
+        <form name="poista_kirjaus" 
+              action="${pageContext.request.contextPath}/PoistaKirjaus?name=${projektinNimi}"
+              method="post">
+            <input type="hidden" name="projektin_nimi" /> 
+            <select name="tyotehtavanNimi">
+                <c:forEach var="tyotehtava" items="${tyotehtavat}" >
+                    <option><c:out value="${tyotehtava}"/></option>
+                </c:forEach>
+            </select>
+            Päivämäärä <input type="text" name ="paivamaara" />
+            <br><input type="submit" value="Poista kirjaus" />    
         </form>
         <a href="${pageContext.request.contextPath}/Projektit">Palaa projektien hallinta sivulle</a>
     </body>

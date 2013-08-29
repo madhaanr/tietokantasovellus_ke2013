@@ -303,7 +303,7 @@ public class TietokantaYhteys {
 
     public void lisaaProjekti(Projekti projekti) {
         Connection conn = luoTietokantaYhteys();
-        PreparedStatement prep = null;
+        PreparedStatement prep;
         try {
             prep = conn.prepareStatement("INSERT INTO PROJEKTI (PROJEKTIN_NIMI,"
                     + "TYOTUNTIBUDJETTI,ALKAMISPAIVAMAARA,LOPPUMISPAIVAMAARA) "
@@ -320,8 +320,8 @@ public class TietokantaYhteys {
         }
     }
     public void muokkaaProjektia(Projekti projekti) {
-         Connection conn = luoTietokantaYhteys();
-        PreparedStatement prep = null;
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep;
         try {
             prep = conn.prepareStatement("UPDATE PROJEKTI SET TYOTUNTIBUDJETTI=?, ALKAMISPAIVAMAARA=?, LOPPUMISPAIVAMAARA=? WHERE PROJEKTIN_NIMI=?");
             prep.setFloat(1, projekti.getBudjetoidutTyotunnit());
@@ -467,6 +467,24 @@ public class TietokantaYhteys {
             prep.setString(4, kirjaus.getKayttajatunnus());
             prep.setString(5, kirjaus.getProjektinNimi());
             prep.setString(6, kirjaus.getTyotehtavanNimi());
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void poistaTyotuntiKirjaus(Kirjaus kirjaus) {
+        Connection conn = luoTietokantaYhteys();
+        try {
+            PreparedStatement prep = conn.prepareStatement("DELETE FROM KIRJAUS WHERE PAIVAMAARA=? "
+                    + "AND KAYTTAJATUNNUS=? AND PROJEKTIN_NIMI=? AND TYOTEHTAVAN_NIMI=?");
+            prep.setDate(1, kirjaus.getPaivamaara());
+            prep.setString(2, kirjaus.getKayttajatunnus());
+            prep.setString(3, kirjaus.getProjektinNimi());
+            prep.setString(4, kirjaus.getTyotehtavanNimi());
             prep.executeUpdate();
             prep.close();
             conn.close();

@@ -42,7 +42,11 @@
     </servlet>
     <servlet>
         <servlet-name>ProjektinMuokkausServlet</servlet-name>
-        <servlet-class>servlet.ProjektinMuokkausServlet</servlet-class>
+        <servlet-class>servlet.MuokkaaProjektiaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PoistaKirjausServlet</servlet-name>
+        <servlet-class>servlet.PoistaKirjausServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>ProjektinMuokkausServlet</servlet-name>
         <url-pattern>/ProjektinMuokkaus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PoistaKirjausServlet</servlet-name>
+        <url-pattern>/PoistaKirjaus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

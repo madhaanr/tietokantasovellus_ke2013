@@ -6,24 +6,25 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import tietokanta.Projekti;
+import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
 
 /**
  *
  * @author mhaanran
  */
-public class ProjektinMuokkausServlet extends HttpServlet {
+public class PoistaKirjausServlet extends HttpServlet {
 
     private TietokantaYhteys db = new TietokantaYhteys();
-
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -39,36 +40,24 @@ public class ProjektinMuokkausServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher dispatcher;
-        String projektinNimi="";
         HttpSession session = request.getSession(false);
-        if (request.getParameter("projektin_nimi") != null) {
-            projektinNimi = request.getParameter("projektin_nimi");
-            float tyoTuntiBudjetti = Float.parseFloat(request.getParameter("tyoTuntiBudjetti"));
-            String alkamisPaivaMaara = request.getParameter("alkamisPaivaMaara");
-            Calendar aCalendar = Calendar.getInstance();
-            if (!alkamisPaivaMaara.isEmpty()) {
-                aCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(alkamisPaivaMaara.substring(0, alkamisPaivaMaara.length() - 6)));
-                aCalendar.set(Calendar.MONTH, Integer.parseInt(alkamisPaivaMaara.substring(2, alkamisPaivaMaara.length() - 4)) - 1);
-                aCalendar.set(Calendar.YEAR, Integer.parseInt(alkamisPaivaMaara.substring(4, alkamisPaivaMaara.length())));
-            }
-            java.sql.Date dateA = new java.sql.Date(aCalendar.getTime().getTime());
-            String loppumisPaivaMaara = request.getParameter("loppumisPaivaMaara");
-            Calendar lCalendar = Calendar.getInstance();
-            System.out.println(loppumisPaivaMaara);
-            if (!loppumisPaivaMaara.isEmpty()) {
-                lCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(loppumisPaivaMaara.substring(0, loppumisPaivaMaara.length() - 6)));
-                lCalendar.set(Calendar.MONTH, Integer.parseInt(loppumisPaivaMaara.substring(2, loppumisPaivaMaara.length() - 4)) - 1);
-                lCalendar.set(Calendar.YEAR, Integer.parseInt(loppumisPaivaMaara.substring(4, loppumisPaivaMaara.length())));
-            }
-            java.sql.Date dateB = new java.sql.Date(lCalendar.getTime().getTime());
-            System.out.println("täällä myös");
-            if (db.onkoProjektiOlemassa(projektinNimi)) {
-                System.out.println("ja lopulta täällä");
-                Projekti muokattava = new Projekti(projektinNimi, tyoTuntiBudjetti, dateA, dateB);
-                db.muokkaaProjektia(muokattava);
-            }
+        if(session.getAttribute("ktunnus")==null) {
+            response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
         }
-        response.sendRedirect("/ProjTyoAikaSeur/LisaaTyotehtava?name="+projektinNimi);
+        String projektinNimi = request.getParameter("name");
+        String kayttajatunnus = (String) session.getAttribute("ktunnus");
+        String paivamaara = request.getParameter("paivamaara");  
+        String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
+        Calendar paivamaaraCalender = Calendar.getInstance();
+        if (!paivamaara.isEmpty()) {
+            paivamaaraCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(paivamaara.substring(0, paivamaara.length() - 6)));
+            paivamaaraCalender.set(Calendar.MONTH, Integer.parseInt(paivamaara.substring(2, paivamaara.length() - 4)) - 1);
+            paivamaaraCalender.set(Calendar.YEAR, Integer.parseInt(paivamaara.substring(4, paivamaara.length())));
+        }
+        java.sql.Date paivamaaraDate = new java.sql.Date(paivamaaraCalender.getTime().getTime());
+        Kirjaus kirjaus = new Kirjaus(paivamaaraDate, kayttajatunnus, projektinNimi, tyotehtavanNimi);
+        db.poistaTyotuntiKirjaus(kirjaus);
+        response.sendRedirect("/ProjTyoAikaSeur/KirjaaTunteja?name="+projektinNimi);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -20,7 +20,7 @@
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
-        <h3>Projektin tiedot</h3>
+        <h2>Projektin ${projektinNimi} tiedot</h2>
         <table>
             <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>
             <form name="projektin_tietojen_muokkaus" 
@@ -39,7 +39,7 @@
             </form>
         </table>
         <c:if test="${rooli}">
-            <h2>Lisää työtehtävä</h2>
+            <h3>Lisää työtehtävä</h3>
             <table>
                 <form name="projektin_lisaaminen" 
                       action="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projektinNimi}"
@@ -88,12 +88,15 @@
                 </select>
                 <input type="submit" value="Poista työtehtävä" />
             </form>
-            <h3>Kaikki työntekijät</h3>
+            <h2>Kaikki työntekijät</h2>
             <table>
-                <th>Käyttäjän nimi</th><th>Käyttäjätunnus</th><th>Rooli</th>
+                <th>Käyttäjä</th><th>Käyttäjätunnus</th>
                     <c:forEach var="kayttaja" items="${kayttajat}">    
                     <tr>
-                        <td>${kayttaja.nimi}</td> <td>${kayttaja.kayttajatunnus}</td> <td>${kayttaja.rooli}</td>
+                        <c:if test="${!kayttaja.rooli}">
+                            <td>${kayttaja.nimi}</td> 
+                            <td>${kayttaja.kayttajatunnus}</td>            
+                        </c:if>
                     </tr>     
                 </c:forEach>
             </table>
@@ -101,7 +104,9 @@
             <form name="tyontekijan_lisaaminen_projektiin" action="${pageContext.request.contextPath}/LisaaTyontekijaProjektiin?name=${projektinNimi}" method="post">
                 <select name="tyontekijanNimi">
                     <c:forEach var="kayttaja" items="${kayttajat}">
-                        <option> <c:out value="${kayttaja.kayttajatunnus}"/> </option>
+                        <c:if test="${!kayttaja.rooli}">
+                            <option> <c:out value="${kayttaja.kayttajatunnus}"/> </option>
+                        </c:if>
                     </c:forEach>          
                 </select>
                 <input type="hidden" name="tyontekijanNimi" value="${kayttaja.kayttajatunnus}" />
@@ -118,7 +123,9 @@
             <form name="tyontekijan_poistaminen_projektista" action="${pageContext.request.contextPath}/PoistaTyontekijaProjektista?name=${projektinNimi}" method="post">
                 <select name="tyontekijanNimi">
                     <c:forEach var="kayttaja" items="${kayttajat}">
+                        <c:if test="${kayttaja.kayttajatunnus}">
                         <option> <c:out value="${kayttaja.kayttajatunnus}"/> </option>
+                        </c:if>
                     </c:forEach>          
                 </select>
                 <input type="hidden" name="tyontekijanNimi" value="${kayttaja.kayttajatunnus}" />
@@ -128,7 +135,7 @@
 
         </c:if>
 
-
+        <br>
         <a href="${pageContext.request.contextPath}/Projektit">Palaa projektien hallinta sivulle</a>
     </body>
 </html>

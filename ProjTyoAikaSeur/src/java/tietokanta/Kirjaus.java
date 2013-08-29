@@ -15,6 +15,13 @@ public class Kirjaus {
     public Kirjaus() {
     }
 
+    public Kirjaus(Date paivamaara, String kayttajatunnus, String projektinNimi, String tyotehtavanNimi) {
+        this.paivamaara = paivamaara;
+        this.kayttajatunnus = kayttajatunnus;
+        this.projektinNimi = projektinNimi;
+        this.tyotehtavanNimi = tyotehtavanNimi;
+    }
+
     public Kirjaus(Date paivamaara, float tehdytTunnit, String selitys, String kayttajatunnus, String projektinNimi, String tyotehtavanNimi) {
         
         this.selitys = selitys;

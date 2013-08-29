@@ -73,9 +73,21 @@
             </form>
 
             <h3>Käyttäjät</h3>
+            <table>
+                <th>Käyttäjä</th><th>Käyttäjätunnus</th><th>Rooli</th>
             <c:forEach var="kayttaja" items="${kayttajat}">    
-                ${kayttaja.nimi} Kayttajatunnus: ${kayttaja.kayttajatunnus} Rooli: ${kayttaja.rooli}<br>      
+            <tr>
+                <td>${kayttaja.nimi}</td> 
+                <td>${kayttaja.kayttajatunnus}</td>  
+                <c:if test="${kayttaja.rooli}">
+                <td>Projektipäällikkö</td>
+                </c:if>
+                <c:if test="${!kayttaja.rooli}">
+                <td>Työntekijä</td>
+                </c:if>
+            </tr>     
             </c:forEach>
+            </table>
         </c:if> 
 
         <c:if test="${!rooli}">
