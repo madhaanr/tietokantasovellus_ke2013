@@ -40,6 +40,10 @@
         <servlet-name>PoistaTyontekijaProjektistaServlet</servlet-name>
         <servlet-class>servlet.PoistaTyontekijaProjektistaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProjektinMuokkausServlet</servlet-name>
+        <servlet-class>servlet.ProjektinMuokkausServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjauduServlet</servlet-name>
         <url-pattern>/Kirjaudu</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>PoistaTyontekijaProjektistaServlet</servlet-name>
         <url-pattern>/PoistaTyontekijaProjektista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProjektinMuokkausServlet</servlet-name>
+        <url-pattern>/ProjektinMuokkaus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

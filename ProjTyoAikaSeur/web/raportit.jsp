@@ -33,7 +33,7 @@
             <table>
                 <th>Projekti</th><th>Työtehtävä</th><th>Käyttäjätunnus</th>
                 <th>Tehdyt työtunnit</th><th>Päivämäärä</th><th>Selitys</th>
-                <c:forEach var="viikkor" items="${viikkoraportti}">
+                    <c:forEach var="viikkor" items="${viikkoraportti}">
                     <tr>
                         <td class="viikkoraportti">${viikkor.projektinNimi}</td> 
                         <td class="viikkoraportti">${viikkor.tyotehtavanNimi}</td>  
@@ -43,8 +43,10 @@
                         <td class="viikkoraporttiselitys">${viikkor.selitys}</td>
                     </tr>
                 </c:forEach>
+            </table>
+            <table id="summa">
                 <tr>         
-                    <td>Tehtyjen tuntien summa</td><td id="summa">${tehtyjenTuntienSumma}</td>
+                    <td>Kirjausten summa</td><td id="summa">${tehtyjenTuntienSumma}</td>
                 </tr>
             </table>
         </c:if>
@@ -61,7 +63,7 @@
             <table>
                 <th>Projekti</th><th>Työtehtävä</th><th>Käyttäjätunnus</th>
                 <th>Tehdyt työtunnit</th><th>Päivämäärä</th><th>Selitys</th>
-                <c:forEach var="viikkor" items="${viikkoraportti}">
+                    <c:forEach var="viikkor" items="${viikkoraportti}">
                     <tr>
                         <td class="viikkoraportti">${viikkor.projektinNimi}</td> 
                         <td class="viikkoraportti">${viikkor.tyotehtavanNimi}</td>  
@@ -71,8 +73,10 @@
                         <td class="viikkoraporttiselitys">${viikkor.selitys}</td>
                     </tr>
                 </c:forEach>
+            </table>
+            <table id="summa">
                 <tr>         
-                    <td>Tehtyjen tuntien summa</td><td id="summa">${tehtyjenTuntienSumma}</td>
+                    <td>Kirjausten summa</td><td id="summa">${tehtyjenTuntienSumma}</td>
                 </tr>
             </table>
         </c:if>

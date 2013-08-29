@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tietokanta.Kayttaja;
+import tietokanta.Projekti;
 import tietokanta.TietokantaYhteys;
 import tietokanta.Tyotehtava;
 
@@ -54,7 +55,15 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
                 request.setAttribute("viesti", "Tyotehtava nimellä " + tyotehtavanNimi + " on jo olemassa!");
             }
         }
+        Projekti projekti=db.getProjekti(projektinNimi);
+        float projTyotuntibudjetti = projekti.getBudjetoidutTyotunnit();
+        request.setAttribute("projTyotuntibudjetti", projTyotuntibudjetti);
+        float tyotehtavienTuntienSumma=0;
         List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
+        for (Tyotehtava tyotehtava : tyotehtavat) {
+            tyotehtavienTuntienSumma += tyotehtava.getBudjetoidutTyotunnit();
+        }
+        request.setAttribute("tyotehtavienTuntienSumma", tyotehtavienTuntienSumma);
         request.setAttribute("tyotehtavat", tyotehtavat);
         List<String> tyontekijat = db.getProjektinTyontekijat(projektinNimi);
         request.setAttribute("tyontekijat", tyontekijat);

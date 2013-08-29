@@ -125,9 +125,31 @@ public class TietokantaYhteys {
         return false;
     }
 
+    public Projekti getProjekti(String projektinNimi) {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep;
+        Projekti projekti=null;
+        try {
+            prep = conn.prepareStatement("SELECT * FROM PROJEKTI WHERE PROJEKTIN_NIMI=?");
+            prep.setString(1, projektinNimi);
+            ResultSet resultset = prep.executeQuery();
+            while (resultset.next()) {
+                String projektinnimi = resultset.getString("PROJEKTIN_NIMI");
+                Float budjetoidutTyotunnit = resultset.getFloat("TYOTUNTIBUDJETTI");
+                Date alkamisPaivaMaara = resultset.getDate("ALKAMISPAIVAMAARA");
+                Date loppumisPaivaMaara = resultset.getDate("LOPPUMISPAIVAMAARA");
+                projekti = new Projekti(projektinnimi, budjetoidutTyotunnit, alkamisPaivaMaara, loppumisPaivaMaara);
+            }
+            suljeYhteydet(resultset, prep, conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return projekti;
+    }
+
     public List<Projekti> getProjektit() {
         Connection conn = luoTietokantaYhteys();
-        PreparedStatement prep = null;
+        PreparedStatement prep;
         ArrayList<Projekti> lista = new ArrayList();
         try {
             prep = conn.prepareStatement("SELECT * FROM PROJEKTI");
@@ -244,7 +266,8 @@ public class TietokantaYhteys {
         }
         return lista;
     }
-    public ArrayList<Kirjaus> kausiRaportti(String kayttajatunnus,Date alkamisPaivamaara, Date loppumisPaivamaara) {
+
+    public ArrayList<Kirjaus> kausiRaportti(String kayttajatunnus, Date alkamisPaivamaara, Date loppumisPaivamaara) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         ArrayList<Kirjaus> lista = new ArrayList();
@@ -269,15 +292,15 @@ public class TietokantaYhteys {
         }
         return lista;
     }
-    
+
     public ArrayList<Kirjaus> tyontekijaRaportti() {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         ArrayList<Kirjaus> lista = new ArrayList();
-        
+
         return lista;
     }
-    
+
     public void lisaaProjekti(Projekti projekti) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep = null;
@@ -285,6 +308,22 @@ public class TietokantaYhteys {
             prep = conn.prepareStatement("INSERT INTO PROJEKTI (PROJEKTIN_NIMI,"
                     + "TYOTUNTIBUDJETTI,ALKAMISPAIVAMAARA,LOPPUMISPAIVAMAARA) "
                     + "VALUES (?,?,?,?)");
+            prep.setString(1, projekti.getProjektinNimi());
+            prep.setFloat(2, projekti.getBudjetoidutTyotunnit());
+            prep.setDate(3, projekti.getAlkamisPaivaMaara());
+            prep.setDate(4, projekti.getLoppumisPaivaMaara());
+            prep.executeUpdate();
+            prep.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void muokkaaProjektia(Projekti projekti) {
+         Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep = null;
+        try {
+            prep = conn.prepareStatement("UPDATE PROJEKTI SET TYOTUNTIBUDJETTI=? ");
             prep.setString(1, projekti.getProjektinNimi());
             prep.setFloat(2, projekti.getBudjetoidutTyotunnit());
             prep.setDate(3, projekti.getAlkamisPaivaMaara());
@@ -350,12 +389,13 @@ public class TietokantaYhteys {
         }
     }
 
-    public void poistaTyotehtava(String tyotehtavanNimi) {
+    public void poistaTyotehtava(String tyotehtavanNimi, String projektinNimi) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         try {
-            prep = conn.prepareStatement("DELETE FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=?");
+            prep = conn.prepareStatement("DELETE FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=? AND PROJEKTIN_NIMI=?");
             prep.setString(1, tyotehtavanNimi);
+            prep.setString(2, projektinNimi);
             prep.executeUpdate();
             prep.close();
             conn.close();

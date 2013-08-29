@@ -40,14 +40,20 @@
 
         </c:if>
 
-        <h3>Projektin ${projektinNimi} työtehtävät</h3>
+        <h3>Projektin ${projektinNimi} työtehtävät ja työtuntibudjetti ${projTyotuntibudjetti}</h3>
         <table>
             <c:forEach var="tyotehtava" items="${tyotehtavat}">    
                 <tr>
                     <td>${tyotehtava.tyotehtavanNimi}</td> 
                     <td>${tyotehtava.budjetoidutTyotunnit}</td>
-                </tr>      
+                </tr> 
             </c:forEach>
+        </table>
+        <table id="summa">
+                <tr>
+                    <td>Tuntien summa</td>
+                    <td>${tyotehtavienTuntienSumma}</td>
+                </tr>
         </table>
         <c:if test="${rooli}">
             <h3>Poista työtehtävä</h3>
