@@ -88,6 +88,8 @@
                 </tr>    
             </c:forEach>
             </table>
+            <h3>Raportit</h3>
+            <a href="${pageContext.request.contextPath}/Raportit">Raportit</a>
         </c:if>
     </body>
 </html>

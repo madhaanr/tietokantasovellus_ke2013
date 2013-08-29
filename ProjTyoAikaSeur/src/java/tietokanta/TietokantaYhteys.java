@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /* @author mhaanran */
 public class TietokantaYhteys {
@@ -218,7 +219,7 @@ public class TietokantaYhteys {
         return lista;
     }
 
-    public ArrayList<Kirjaus> viikkoRaportti(Date alkamisPaivamaara, Date loppumisPaivamaara) {
+    public ArrayList<Kirjaus> kausiRaportti(Date alkamisPaivamaara, Date loppumisPaivamaara) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         ArrayList<Kirjaus> lista = new ArrayList();
@@ -243,8 +244,33 @@ public class TietokantaYhteys {
         }
         return lista;
     }
+    public ArrayList<Kirjaus> kausiRaportti(String kayttajatunnus,Date alkamisPaivamaara, Date loppumisPaivamaara) {
+        Connection conn = luoTietokantaYhteys();
+        PreparedStatement prep;
+        ArrayList<Kirjaus> lista = new ArrayList();
+        try {
+            prep = conn.prepareStatement("SELECT * FROM KIRJAUS WHERE KAYTTAJATUNNUS=? and paivamaara between ? and ? ORDER BY PROJEKTIN_NIMI,PAIVAMAARA,TYOTEHTAVAN_NIMI");
+            prep.setString(1, kayttajatunnus);
+            prep.setDate(2, alkamisPaivamaara);
+            prep.setDate(3, loppumisPaivamaara);
+            ResultSet resultset = prep.executeQuery();
+            while (resultset.next()) {
+                String tyotehtavanNimi = resultset.getString("TYOTEHTAVAN_NIMI");
+                String selitys = resultset.getString("SELITYS");
+                float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
+                Date paivamaara = resultset.getDate("PAIVAMAARA");
+                String projektinNimi = resultset.getString("PROJEKTIN_NIMI");
+                Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
+                lista.add(kirjaus);
+            }
+            suljeYhteydet(resultset, prep, conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
     
-    public ArrayList<Kirjaus> yksityisKohtainenRaportti() {
+    public ArrayList<Kirjaus> tyontekijaRaportti() {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         ArrayList<Kirjaus> lista = new ArrayList();

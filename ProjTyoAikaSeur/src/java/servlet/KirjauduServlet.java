@@ -68,6 +68,9 @@ public class KirjauduServlet extends HttpServlet {
             if(db.mikaRooli(kayttajatunnus)) {
                 session.setAttribute("rooli", true);
             }
+            else {
+                session.setAttribute("rooli", false);
+            }
             response.sendRedirect("/ProjTyoAikaSeur/Projektit");
         }
         else if(kayttaja!=null&&!db.onkoKayttajaJaSalasanaOikein(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) {
