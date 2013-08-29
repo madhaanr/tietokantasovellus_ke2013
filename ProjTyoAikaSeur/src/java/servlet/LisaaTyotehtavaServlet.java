@@ -58,6 +58,7 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         Projekti projekti=db.getProjekti(projektinNimi);
         float projTyotuntibudjetti = projekti.getBudjetoidutTyotunnit();
         request.setAttribute("projTyotuntibudjetti", projTyotuntibudjetti);
+        request.setAttribute("projekti",projekti);
         float tyotehtavienTuntienSumma=0;
         List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
         for (Tyotehtava tyotehtava : tyotehtavat) {

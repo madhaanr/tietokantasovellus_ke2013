@@ -27,21 +27,19 @@
             <table>
                 <form name="projektin_lisaaminen" 
                       action="${pageContext.request.contextPath}/Projektit"
-                      method="post">           
+                      method="post">  
+                    <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>
                     <tr>
-                        <td>Projektin nimi:</td> 
+                        
                         <td><input type="text" name="projektin_nimi" id="formfield"/></td>
-                    </tr>
-                    <tr>
-                        <td>Työtunti budjetti:</td> 
+                    
+                        
                         <td><input type="text" name="tyoTuntiBudjetti" id="formfield"/></td>
-                    </tr>
-                    <tr>
-                        <td>Alkamispäivämäärä:</td> 
+                    
+                        
                         <td><input type="text" name ="alkamisPaivaMaara" id="formfield"/></td> 
-                    </tr>
-                    <tr>
-                        <td>Loppumispäivämäärä:</td> 
+                    
+                        
                         <td><input type="text" name ="loppumisPaivaMaara" id="formfield"/></td>
                     </tr>
                     <tr>
@@ -52,22 +50,16 @@
             <h2>${virhe}</h2>
             <h3>Projektit</h3>
             <table>
-                <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>
-                <form name="projektin_tietojen_muokkaus" 
-                      action="${pageContext.request.contextPath}/ProjektinMuokkaus"
-                      method="post">
+                <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>        
                     <c:forEach var="projekti" items="${projektit}">  
                         <tr>
                             <td id="projektitlista"><a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" 
                                                        id="${projekti.projektinNimi}">${projekti.projektinNimi}</a></td> 
-                            <td id="projektitlista"><input type="text" name="tyoTuntiBudjetti" value="${projekti.budjetoidutTyotunnit}"/></td>  
-                            <td id="projektitlista"><input type="text" name="alkamisPaivaMaara" value="<fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="ddMMyyyy"/>"/></td>
-                            <td id="projektitlista"><input type="text" name="loppumisPaivaMaara" value="<fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="ddMMyyyy"/>"/></td>
-                            <input type="hidden" name="projektin_nimi" value="${projekti.projektinNimi}">
-                            <td><input type="submit" value="Muokkaa projektia"/></td>
+                            <td id="projektitlista">${projekti.budjetoidutTyotunnit}</td>  
+                            <td id="projektitlista"><fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="ddMMyyyy"/></td>
+                            <td id="projektitlista"><fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="ddMMyyyy"/></td>
                         </tr>
                     </c:forEach>
-                </form>
             </table>
             <h3>Poista projekti</h3>
             <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">

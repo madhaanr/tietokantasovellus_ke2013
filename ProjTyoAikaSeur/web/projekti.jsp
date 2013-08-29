@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,24 @@
         <form action="${pageContext.request.contextPath}/KirjauduUlos" method="post">
             <input type="submit" value="Kirjaudu ulos" />
         </form>
+        <h3>Projektin tiedot</h3>
+        <table>
+            <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>
+            <form name="projektin_tietojen_muokkaus" 
+                  action="${pageContext.request.contextPath}/ProjektinMuokkaus"
+                  method="post">
+                <tr>
+                    <td id="projektitlista">${projekti.projektinNimi}</td> 
+                    <td id="projektitlista"><input type="text" name="tyoTuntiBudjetti" value="${projekti.budjetoidutTyotunnit}"/></td>  
+                    <td id="projektitlista"><input type="text" name="alkamisPaivaMaara" value="<fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="ddMMyyyy"/>"/></td>
+                    <td id="projektitlista"><input type="text" name="loppumisPaivaMaara" value="<fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="ddMMyyyy"/>"/></td>
+                <input type="hidden" name="projektin_nimi" value="${projekti.projektinNimi}">
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Muokkaa projektia"/></td>
+                </tr>
+            </form>
+        </table>
         <c:if test="${rooli}">
             <h2>Lisää työtehtävä</h2>
             <table>
@@ -50,15 +69,18 @@
             </c:forEach>
         </table>
         <table id="summa">
-                <tr>
-                    <td>Tuntien summa</td>
-                    <td>${tyotehtavienTuntienSumma}</td>
-                </tr>
+            <tr>
+                <td>Tuntien summa</td>
+                <td>${tyotehtavienTuntienSumma}</td>
+            </tr>              
         </table>
+        <c:if test="${tyotehtavienTuntienSumma>projTyotuntibudjetti}">
+            <h3>Projektin työtehtäville asetettu tuntimäärä ylittää projektille budjetoidun työtuntimäärän!</h3>
+        </c:if>
         <c:if test="${rooli}">
             <h3>Poista työtehtävä</h3>
             <form action="${pageContext.request.contextPath}/PoistaTyotehtava?name=${projektinNimi}" method="post">
-                Valitse poistettava tyotehtava:
+                Valitse poistettava työtehtävä:
                 <select name="tyotehtavan_nimi">
                     <c:forEach var="tyotehtava" items="${tyotehtavat}">
                         <option> <c:out value="${tyotehtava.tyotehtavanNimi}"/> </option>

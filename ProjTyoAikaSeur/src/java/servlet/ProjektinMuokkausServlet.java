@@ -39,9 +39,10 @@ public class ProjektinMuokkausServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher dispatcher;
+        String projektinNimi="";
         HttpSession session = request.getSession(false);
         if (request.getParameter("projektin_nimi") != null) {
-            String projektinNimi = request.getParameter("projektin_nimi");
+            projektinNimi = request.getParameter("projektin_nimi");
             float tyoTuntiBudjetti = Float.parseFloat(request.getParameter("tyoTuntiBudjetti"));
             String alkamisPaivaMaara = request.getParameter("alkamisPaivaMaara");
             Calendar aCalendar = Calendar.getInstance();
@@ -67,7 +68,7 @@ public class ProjektinMuokkausServlet extends HttpServlet {
                 db.muokkaaProjektia(muokattava);
             }
         }
-        response.sendRedirect("/ProjTyoAikaSeur/Projektit");
+        response.sendRedirect("/ProjTyoAikaSeur/LisaaTyotehtava?name="+projektinNimi);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

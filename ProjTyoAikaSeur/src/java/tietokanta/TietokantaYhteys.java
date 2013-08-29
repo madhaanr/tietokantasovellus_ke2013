@@ -152,7 +152,7 @@ public class TietokantaYhteys {
         PreparedStatement prep;
         ArrayList<Projekti> lista = new ArrayList();
         try {
-            prep = conn.prepareStatement("SELECT * FROM PROJEKTI");
+            prep = conn.prepareStatement("SELECT * FROM PROJEKTI ORDER BY PROJEKTIN_NIMI");
             ResultSet resultset = prep.executeQuery();
             while (resultset.next()) {
                 String projektinnimi = resultset.getString("PROJEKTIN_NIMI");
@@ -323,11 +323,11 @@ public class TietokantaYhteys {
          Connection conn = luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {
-            prep = conn.prepareStatement("UPDATE PROJEKTI SET TYOTUNTIBUDJETTI=? ");
-            prep.setString(1, projekti.getProjektinNimi());
-            prep.setFloat(2, projekti.getBudjetoidutTyotunnit());
-            prep.setDate(3, projekti.getAlkamisPaivaMaara());
-            prep.setDate(4, projekti.getLoppumisPaivaMaara());
+            prep = conn.prepareStatement("UPDATE PROJEKTI SET TYOTUNTIBUDJETTI=?, ALKAMISPAIVAMAARA=?, LOPPUMISPAIVAMAARA=? WHERE PROJEKTIN_NIMI=?");
+            prep.setFloat(1, projekti.getBudjetoidutTyotunnit());
+            prep.setDate(2, projekti.getAlkamisPaivaMaara());
+            prep.setDate(3, projekti.getLoppumisPaivaMaara());
+            prep.setString(4, projekti.getProjektinNimi());
             prep.executeUpdate();
             prep.close();
             conn.close();
