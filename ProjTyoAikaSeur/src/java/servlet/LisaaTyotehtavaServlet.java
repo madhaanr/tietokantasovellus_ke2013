@@ -56,8 +56,11 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
             }
         }
         Projekti projekti=db.getProjekti(projektinNimi);
-        float projTyotuntibudjetti = projekti.getBudjetoidutTyotunnit();
+        float projTyotuntibudjetti = 0;
+        if(projekti!=null) {
+        projTyotuntibudjetti = projekti.getBudjetoidutTyotunnit();
         request.setAttribute("projTyotuntibudjetti", projTyotuntibudjetti);
+       
         request.setAttribute("projekti",projekti);
         float tyotehtavienTuntienSumma=0;
         List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
@@ -67,9 +70,13 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         request.setAttribute("tyotehtavienTuntienSumma", tyotehtavienTuntienSumma);
         request.setAttribute("tyotehtavat", tyotehtavat);
         List<String> tyontekijat = db.getProjektinTyontekijat(projektinNimi);
+        for (String string : tyontekijat) {
+            System.out.println(string);
+        }
         request.setAttribute("tyontekijat", tyontekijat);
         List<Kayttaja> kayttajat = db.getKayttajat();
         request.setAttribute("kayttajat", kayttajat);
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("projekti.jsp");
         dispatcher.forward(request, response);
     }

@@ -122,13 +122,11 @@
             <h3>Poista työntekijä projektista</h3>
             <form name="tyontekijan_poistaminen_projektista" action="${pageContext.request.contextPath}/PoistaTyontekijaProjektista?name=${projektinNimi}" method="post">
                 <select name="tyontekijanNimi">
-                    <c:forEach var="kayttaja" items="${kayttajat}">
-                        <c:if test="${kayttaja.kayttajatunnus}">
-                        <option> <c:out value="${kayttaja.kayttajatunnus}"/> </option>
-                        </c:if>
+                    <c:forEach var="tyontekija" items="${tyontekijat}">          
+                        <option> <c:out value="${tyontekija}"/> </option>    
                     </c:forEach>          
                 </select>
-                <input type="hidden" name="tyontekijanNimi" value="${kayttaja.kayttajatunnus}" />
+                <input type="hidden" name="tyontekijanNimi" value="${tyontekija}" />
                 <input type="hidden" name="projektinNimi" value="${projektinNimi}" />
                 <input type="submit" value="Poista työntekijä projektista"/>
             </form>

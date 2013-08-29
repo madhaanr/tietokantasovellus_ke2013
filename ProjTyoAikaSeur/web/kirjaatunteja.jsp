@@ -49,29 +49,14 @@
             Selitys <input type="text" name="selitys"/>
             <br><input type="submit" value="Kirjaa työtunnit" />    
         </form>
-        <h3>Muokkaa kirjausta</h3>
-         <form name="muokkaa_kirjausta" 
-              action="${pageContext.request.contextPath}/MuokkaaKirjausta?name=${projektinNimi}"
-              method="post">
-            <input type="hidden" name="projektin_nimi" /> 
-            <select name="tyotehtavanNimi">
-                <c:forEach var="tyotehtava" items="${tyotehtavat}" >
-                    <option><c:out value="${tyotehtava}"/></option>
-                </c:forEach>
-            </select>
-            Tehdyt työtunnit <input type="text" name="tehdytTunnit" />
-            Päivämäärä <input type="text" name ="paivamaara" />
-            Selitys <input type="text" name="selitys"/>
-            <br><input type="submit" value="Poista kirjaus" />    
-        </form>
         <h3>Poista kirjaus</h3>
         <form name="poista_kirjaus" 
               action="${pageContext.request.contextPath}/PoistaKirjaus?name=${projektinNimi}"
               method="post">
             <input type="hidden" name="projektin_nimi" /> 
             <select name="tyotehtavanNimi">
-                <c:forEach var="tyotehtava" items="${tyotehtavat}" >
-                    <option><c:out value="${tyotehtava}"/></option>
+                <c:forEach var="kirjaus" items="${kirjaukset}" >
+                    <option><c:out value="${kirjaus.tyotehtavanNimi}"/></option>
                 </c:forEach>
             </select>
             Päivämäärä <input type="text" name ="paivamaara" />

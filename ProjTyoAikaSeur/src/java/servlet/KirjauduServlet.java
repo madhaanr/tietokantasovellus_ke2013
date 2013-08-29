@@ -59,8 +59,8 @@ public class KirjauduServlet extends HttpServlet {
         else {
             kayttaja=null;
         }
-        if(db.haeKayttajanNimi(kayttajatunnus)!=null) {
-            knimi=db.haeKayttajanNimi(kayttajatunnus);
+        if(db.getKayttajanNimi(kayttajatunnus)!=null) {
+            knimi=db.getKayttajanNimi(kayttajatunnus);
         }
         if(kayttaja!=null&&db.onkoKayttajaJaSalasanaOikein(kayttaja.getKayttajatunnus(),kayttaja.getSalasana())) { 
             session.setAttribute("ktunnus", kayttajatunnus);

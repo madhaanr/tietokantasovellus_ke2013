@@ -29,17 +29,10 @@
                       action="${pageContext.request.contextPath}/Projektit"
                       method="post">  
                     <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>
-                    <tr>
-                        
-                        <td><input type="text" name="projektin_nimi" id="formfield"/></td>
-                    
-                        
+                    <tr>                    
+                        <td><input type="text" name="projektin_nimi" id="formfield"/></td>                   
                         <td><input type="text" name="tyoTuntiBudjetti" id="formfield"/></td>
-                    
-                        
-                        <td><input type="text" name ="alkamisPaivaMaara" id="formfield"/></td> 
-                    
-                        
+                        <td><input type="text" name ="alkamisPaivaMaara" id="formfield"/></td>                       
                         <td><input type="text" name ="loppumisPaivaMaara" id="formfield"/></td>
                     </tr>
                     <tr>
@@ -52,14 +45,14 @@
             <table>
                 <th>Projektin nimi</th><th>Työtuntibudjetti</th><th>Alkamispäivämäärä</th><th>Loppumispäivämäärä</th>        
                     <c:forEach var="projekti" items="${projektit}">  
-                        <tr>
-                            <td id="projektitlista"><a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" 
-                                                       id="${projekti.projektinNimi}">${projekti.projektinNimi}</a></td> 
-                            <td id="projektitlista">${projekti.budjetoidutTyotunnit}</td>  
-                            <td id="projektitlista"><fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="ddMMyyyy"/></td>
-                            <td id="projektitlista"><fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="ddMMyyyy"/></td>
-                        </tr>
-                    </c:forEach>
+                    <tr>
+                        <td id="projektitlista"><a href="${pageContext.request.contextPath}/LisaaTyotehtava?name=${projekti.projektinNimi}" 
+                                                   id="${projekti.projektinNimi}">${projekti.projektinNimi}</a></td> 
+                        <td id="projektitlista">${projekti.budjetoidutTyotunnit}</td>  
+                        <td id="projektitlista"><fmt:formatDate value="${projekti.alkamisPaivaMaara}" pattern="ddMMyyyy"/></td>
+                        <td id="projektitlista"><fmt:formatDate value="${projekti.loppumisPaivaMaara}" pattern="ddMMyyyy"/></td>
+                    </tr>
+                </c:forEach>
             </table>
             <h3>Poista projekti</h3>
             <form action="${pageContext.request.contextPath}/PoistaProjekti" method="post">
@@ -75,18 +68,18 @@
             <h3>Käyttäjät</h3>
             <table>
                 <th>Käyttäjä</th><th>Käyttäjätunnus</th><th>Rooli</th>
-            <c:forEach var="kayttaja" items="${kayttajat}">    
-            <tr>
-                <td>${kayttaja.nimi}</td> 
-                <td>${kayttaja.kayttajatunnus}</td>  
-                <c:if test="${kayttaja.rooli}">
-                <td>Projektipäällikkö</td>
-                </c:if>
-                <c:if test="${!kayttaja.rooli}">
-                <td>Työntekijä</td>
-                </c:if>
-            </tr>     
-            </c:forEach>
+                    <c:forEach var="kayttaja" items="${kayttajat}">    
+                    <tr>
+                        <td>${kayttaja.nimi}</td> 
+                        <td>${kayttaja.kayttajatunnus}</td>  
+                        <c:if test="${kayttaja.rooli}">
+                            <td>Projektipäällikkö</td>
+                        </c:if>
+                        <c:if test="${!kayttaja.rooli}">
+                            <td>Työntekijä</td>
+                        </c:if>
+                    </tr>     
+                </c:forEach>
             </table>
         </c:if> 
 

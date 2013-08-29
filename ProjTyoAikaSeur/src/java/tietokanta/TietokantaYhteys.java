@@ -35,7 +35,7 @@ public class TietokantaYhteys {
         }
     }
 
-    public String haeKayttajanNimi(String kayttajatunnus) {
+    public String getKayttajanNimi(String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         try {
