@@ -2,10 +2,7 @@ package tietokanta;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import javax.servlet.http.HttpSession;
 
 /* @author mhaanran */
 public class TietokantaYhteys {
@@ -15,11 +12,6 @@ public class TietokantaYhteys {
     static final String DB_URL = "jdbc:postgresql://localhost:5432/mhaanran";
     static final String tietokantaKayttaja = "mhaanran";
     static final String tietokantaSalasana = "955ef66881899b2c";
-    //java db parametrit
-//    static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
-//    static final String DB_URL = "jdbc:derby://localhost:1527/projtyoaika;create=true";
-//    static final String tietokantaKayttaja = "marko";
-//    static final String tietokantaSalasana = "marko";
 
     public TietokantaYhteys() {
     }
