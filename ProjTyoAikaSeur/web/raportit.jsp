@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,6 +23,7 @@
         <c:if test="${rooli}">
             <h2>Projektipäällikön raportit</h2>
             <h3>Kausiraportti</h3>
+            <h4>Syötä päivämäärä kahdeksan merkin jonona muodossa "ddMMyyyy".</h4>
             <form name="viikko_raportti" 
                   action="${pageContext.request.contextPath}/Raportit"
                   method="post">

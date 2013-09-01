@@ -5,7 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,6 +24,7 @@
             <a href="${pageContext.request.contextPath}/Raportit">Raportit</a>
 
             <h3>Lisää projekti</h3>
+            <h4>Syötä päivämäärä kahdeksan merkin jonona muodossa "ddMMyyyy".</h4>
             <table>
                 <form name="projektin_lisaaminen" 
                       action="${pageContext.request.contextPath}/Projektit"
@@ -64,23 +65,6 @@
                 </select>
                 <input type="submit" value="Poista projekti" />
             </form>
-
-            <h3>Käyttäjät</h3>
-            <table>
-                <th>Käyttäjä</th><th>Käyttäjätunnus</th><th>Rooli</th>
-                    <c:forEach var="kayttaja" items="${kayttajat}">    
-                    <tr>
-                        <td>${kayttaja.nimi}</td> 
-                        <td>${kayttaja.kayttajatunnus}</td>  
-                        <c:if test="${kayttaja.rooli}">
-                            <td>Projektipäällikkö</td>
-                        </c:if>
-                        <c:if test="${!kayttaja.rooli}">
-                            <td>Työntekijä</td>
-                        </c:if>
-                    </tr>     
-                </c:forEach>
-            </table>
         </c:if> 
 
         <c:if test="${!rooli}">

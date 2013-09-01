@@ -50,7 +50,10 @@ public class ProjektitServlet extends HttpServlet {
         if (session.getAttribute("ktunnus")!=null) {
             if (request.getParameter("projektin_nimi") != null) {
                 String projektinNimi = request.getParameter("projektin_nimi");
-                float tyoTuntiBudjetti = Float.parseFloat(request.getParameter("tyoTuntiBudjetti"));      
+                float tyoTuntiBudjetti=0;
+                if(!request.getParameter("tyoTuntiBudjetti").isEmpty()) {
+                    tyoTuntiBudjetti = Float.parseFloat(request.getParameter("tyoTuntiBudjetti"));      
+                }
                 String alkamisPaivaMaara = request.getParameter("alkamisPaivaMaara");
                 Calendar aCalendar = Calendar.getInstance();
                 if(!alkamisPaivaMaara.isEmpty()) {

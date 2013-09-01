@@ -79,7 +79,7 @@ tyotunnit
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>-tyotehtavan nimi
+            <y:AttributeLabel>-(pk)tyotehtavan nimi
 -työtehtavalle budjetoi-
 dut tyotunnit
 -projektin_nimi
@@ -94,7 +94,7 @@ references projekti(projektin_nimi)</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="214.0" width="263.33333333333337" x="445.1666666666666" y="44.0"/>
+          <y:Geometry height="204.0" width="263.33333333333337" x="445.1666666666666" y="44.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="55.162109375" x="104.08561197916669" y="3.0">Kirjaus<y:LabelModel>
@@ -105,12 +105,12 @@ references projekti(projektin_nimi)</y:AttributeLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>-paivamaara
--tehdyt tyotunnit
+            <y:AttributeLabel>-tehdyt tyotunnit
 -selvitys
--kayttajatunnus
--projektin_nimi
--tyotehtavan_nimi
+-(pk)paivamaara
+-(pk)kayttajatunnus
+-(pk)projektin_nimi
+-(pk)tyotehtavan_nimi
 -foreign key (kayttajatunnus)
 references kayttaja (kayttajatunnus)
 -foreign key (projektin_nimi)
@@ -152,7 +152,6 @@ kayttaja (kayttajatunnus)</y:AttributeLabel>
       </data>
     </node>
     <edge id="e0" source="n4" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -171,7 +170,6 @@ kayttaja (kayttajatunnus)</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e1" source="n1" target="n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -193,7 +191,6 @@ kayttaja (kayttajatunnus)</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e2" source="n2" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-116.16666666666652" sy="20.80000000000001" tx="0.0" ty="0.0">
@@ -208,11 +205,10 @@ kayttaja (kayttajatunnus)</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e3" source="n3" target="n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="114.66666666666666" ty="-26.0">
-            <y:Point x="442.5" y="143.0"/>
+            <y:Point x="442.5" y="131.0"/>
             <y:Point x="351.5" y="125.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
@@ -222,11 +218,10 @@ kayttaja (kayttajatunnus)</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e4" source="n3" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="440.5" y="166.0"/>
+            <y:Point x="440.5" y="152.0"/>
             <y:Point x="440.5" y="285.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
