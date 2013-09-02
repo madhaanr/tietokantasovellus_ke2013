@@ -18,7 +18,7 @@ import tietokanta.TietokantaYhteys;
 import tietokanta.Tyotehtava;
 
 /**
- *
+ * Työtehtävien lisääminen. Työtehtävät ovat projekti kohtaisia.
  * @author mhaanran
  */
 public class LisaaTyotehtavaServlet extends HttpServlet {

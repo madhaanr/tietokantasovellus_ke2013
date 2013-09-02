@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
-import tietokanta.Tyotehtava;
 
 /**
- *
+ * Tuntien kirjaus tapahtuu tätä servletiä käyttäen.
  * @author mhaanran
  */
 public class KirjaaTuntejaServlet extends HttpServlet {

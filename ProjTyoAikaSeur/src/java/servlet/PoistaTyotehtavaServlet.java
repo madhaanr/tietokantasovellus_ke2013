@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import tietokanta.TietokantaYhteys;
 
 /**
- *
+ * Työtehtävän poistaminen.
  * @author mhaanran
  */
 public class PoistaTyotehtavaServlet extends HttpServlet {

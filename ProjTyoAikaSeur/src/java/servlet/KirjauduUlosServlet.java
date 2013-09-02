@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet hoitaa ulos kirjautumisen.
  * @author mhaanran
  */
 public class KirjauduUlosServlet extends HttpServlet {

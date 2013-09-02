@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Projektin poistaminen. Projektin poistaminen poistaa myös kaikki sille 
+ * tehdyt työtehtävät ja kirjaukset.
  * @author mhaanran
  */
 public class PoistaProjektiServlet extends HttpServlet {

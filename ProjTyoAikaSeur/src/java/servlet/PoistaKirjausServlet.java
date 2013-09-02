@@ -19,7 +19,7 @@ import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
 
 /**
- *
+ * Kirjauksen poistaminen. 
  * @author mhaanran
  */
 public class PoistaKirjausServlet extends HttpServlet {

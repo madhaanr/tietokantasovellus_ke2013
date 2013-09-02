@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Projektien lisääminen tapahtuu tätä servletiä käyttäen.
  * @author mhaanran
  */
 public class ProjektitServlet extends HttpServlet {

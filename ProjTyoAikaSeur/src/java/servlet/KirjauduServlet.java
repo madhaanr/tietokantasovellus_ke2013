@@ -18,12 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Sisään kirjautuminen eli käyttäjätunnuksen ja salasana varmistaminen
+ * tietokannasta.
  * @author mhaanran
  */
 public class KirjauduServlet extends HttpServlet {
 
-//    private Rekisteri db = new Rekisteri();
     private TietokantaYhteys db = new TietokantaYhteys();
     
     public KirjauduServlet() {

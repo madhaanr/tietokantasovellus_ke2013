@@ -15,7 +15,7 @@ import tietokanta.Projekti;
 import tietokanta.TietokantaYhteys;
 
 /**
- *
+ * Projektien muokkaaminen. Projektin nimeä ei voi muokata.
  * @author mhaanran
  */
 public class MuokkaaProjektiaServlet extends HttpServlet {

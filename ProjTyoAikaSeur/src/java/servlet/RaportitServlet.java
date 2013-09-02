@@ -17,7 +17,7 @@ import tietokanta.Kirjaus;
 import tietokanta.TietokantaYhteys;
 
 /**
- *
+ * Raportti saadaan tulostettua tätä servletiä käyttäen.
  * @author mhaanran
  */
 public class RaportitServlet extends HttpServlet {

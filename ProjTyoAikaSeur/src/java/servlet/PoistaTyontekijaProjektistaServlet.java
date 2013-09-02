@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import tietokanta.TietokantaYhteys;
 
 /**
- *
+ * Työntekijän poistaminen projektista.
  * @author mhaanran
  */
 public class PoistaTyontekijaProjektistaServlet extends HttpServlet {

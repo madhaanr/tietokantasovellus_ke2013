@@ -4,7 +4,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/* @author mhaanran */
+/**
+ * Tieokantayhteyden luominen ja tietokanta kyselyt tapahtuvat tämän
+ * luokan metodeilla.
+ * @author mhaanran
+ */
 public class TietokantaYhteys {
 
     //users postgresql parametrit
@@ -16,6 +20,11 @@ public class TietokantaYhteys {
     public TietokantaYhteys() {
     }
 
+    
+    /**
+     * Luo tietokanta yhteyden.
+     * @return Palauttaa tiekantayhteyden kysyjälle.
+     */
     public Connection luoTietokantaYhteys() {
 
         try {
@@ -66,6 +75,11 @@ public class TietokantaYhteys {
 
     }
 
+    /**
+     * Tarkistaa onko käyttäjä olemassa tiekannassa.
+     * @param kayttajatunnus Etsii käyttäjää primary keyn kayttajatunnus avulla.
+     * @return palauttaa true jos käyttäjätunnus löytyy.
+     */
     public boolean onkoKayttajaOlemassa(String kayttajatunnus) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
@@ -85,10 +99,10 @@ public class TietokantaYhteys {
     }
 
     /**
-     * Tarkistetaan onko käyttäjällä rooli projektipäällikkö vai työnte- kijä.
+     * Tarkistetaan onko käyttäjällä rooli projektipäällikkö vai työntekijä.
      * Vain projektipäällikkö voi lisätä projekteja ja työtehtäviä.
-     *
-     * @param kayttajatunnus
+     * @param kayttajatunnus Etsii käyttäjätunnuksella käyttäjän ja sitten 
+     * tarkistaa roolin.
      * @return palautetaan true jos rooli on projektipäällikkö muuten false.
      */
     public boolean mikaRooli(String kayttajatunnus) {

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import tietokanta.TietokantaYhteys;
 
 /**
- *
+ * Työntekijän lisääminen projektiin tapahtuu tämän servletin avulla.
  * @author mhaanran
  */
 public class LisaaTyontekijaProjektiinServlet extends HttpServlet {
