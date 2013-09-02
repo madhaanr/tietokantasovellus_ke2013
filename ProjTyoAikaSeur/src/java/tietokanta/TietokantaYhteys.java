@@ -40,7 +40,7 @@ public class TietokantaYhteys {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         try {
-            prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
+            prep = conn.prepareStatement("SELECT NIMI FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
             prep.setString(1, kayttajatunnus);
             ResultSet resultset = prep.executeQuery();
             if (resultset.next()) {
@@ -59,7 +59,7 @@ public class TietokantaYhteys {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         try {
-            prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=? AND SALASANA=?");
+            prep = conn.prepareStatement("SELECT KAYTTAJATUNNUS, SALASANA FROM KAYTTAJA WHERE KAYTTAJATUNNUS=? AND SALASANA=?");
             prep.setString(1, kayttajatunnus);
             prep.setString(2, salasana);
             ResultSet resultset = prep.executeQuery();
@@ -84,7 +84,7 @@ public class TietokantaYhteys {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
         try {
-            prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
+            prep = conn.prepareStatement("SELECT KAYTTAJATUNNUS FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
             prep.setString(1, kayttajatunnus);
             ResultSet resultset = prep.executeQuery();
             if (resultset.next()) {
@@ -109,7 +109,7 @@ public class TietokantaYhteys {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep = null;
         try {
-            prep = conn.prepareStatement("SELECT * FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
+            prep = conn.prepareStatement("SELECT ROOLI FROM KAYTTAJA WHERE KAYTTAJATUNNUS=?");
             prep.setString(1, kayttajatunnus);
             ResultSet resultset = prep.executeQuery();
 
@@ -206,7 +206,7 @@ public class TietokantaYhteys {
         PreparedStatement prep = null;
         ArrayList<Tyotehtava> lista = new ArrayList();
         try {
-            prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE PROJEKTIN_NIMI=?");
+            prep = conn.prepareStatement("SELECT TYOTEHTAVAN_NIMI,BUDJETOIDUT_TYOTUNNIT FROM TYOTEHTAVA WHERE PROJEKTIN_NIMI=?");
             prep.setString(1, projektinNimi);
             ResultSet resultset = prep.executeQuery();
             while (resultset.next()) {
@@ -227,7 +227,7 @@ public class TietokantaYhteys {
         PreparedStatement prep = null;
         ArrayList<Kirjaus> lista = new ArrayList();
         try {
-            prep = conn.prepareStatement("SELECT * FROM KIRJAUS WHERE KAYTTAJATUNNUS=? AND PROJEKTIN_NIMI=? ORDER BY PAIVAMAARA,TYOTEHTAVAN_NIMI");
+            prep = conn.prepareStatement("SELECT TYOTEHTAVAN_NIMI,SELITYS,TEHDYT_TYOTUNNIT,PAIVAMAARA FROM KIRJAUS WHERE KAYTTAJATUNNUS=? AND PROJEKTIN_NIMI=? ORDER BY PAIVAMAARA,TYOTEHTAVAN_NIMI");
             prep.setString(1, kayttajatunnus);
             prep.setString(2, projektinNimi);
             ResultSet resultset = prep.executeQuery();
@@ -236,7 +236,6 @@ public class TietokantaYhteys {
                 String selitys = resultset.getString("SELITYS");
                 float tehdytTunnit = resultset.getFloat("TEHDYT_TYOTUNNIT");
                 Date paivamaara = resultset.getDate("PAIVAMAARA");
-                System.out.println(tyotehtavanNimi);
                 Kirjaus kirjaus = new Kirjaus(paivamaara, tehdytTunnit, selitys, kayttajatunnus, projektinNimi, tyotehtavanNimi);
                 lista.add(kirjaus);
             }
@@ -299,14 +298,6 @@ public class TietokantaYhteys {
         return lista;
     }
 
-    public ArrayList<Kirjaus> tyontekijaRaportti() {
-        Connection conn = luoTietokantaYhteys();
-        PreparedStatement prep;
-        ArrayList<Kirjaus> lista = new ArrayList();
-
-        return lista;
-    }
-
     public void lisaaProjekti(Projekti projekti) {
         Connection conn = luoTietokantaYhteys();
         PreparedStatement prep;
@@ -347,7 +338,7 @@ public class TietokantaYhteys {
         PreparedStatement prep;
         if (!projektinNimi.isEmpty()) {
             try {
-                prep = conn.prepareStatement("SELECT * FROM PROJEKTI WHERE PROJEKTIN_NIMI=?");
+                prep = conn.prepareStatement("SELECT PROJEKTIN_NIMI FROM PROJEKTI WHERE PROJEKTIN_NIMI=?");
                 prep.setString(1, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 if (resultset.next()) {
@@ -414,7 +405,7 @@ public class TietokantaYhteys {
         Connection conn = luoTietokantaYhteys();
         if (tyotehtavanNimi != null) {
             try {
-                PreparedStatement prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=? AND PROJEKTIN_NIMI=?");
+                PreparedStatement prep = conn.prepareStatement("SELECT TYOTEHTAVAN_NIMI,PROJEKTIN_NIMI FROM TYOTEHTAVA WHERE TYOTEHTAVAN_NIMI=? AND PROJEKTIN_NIMI=?");
                 prep.setString(1, tyotehtavanNimi);
                 prep.setString(2, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
@@ -505,7 +496,7 @@ public class TietokantaYhteys {
         ArrayList<String> lista = new ArrayList();
         try {
             if (onkoProjektiOlemassa(projektinNimi)) {
-                PreparedStatement prep = conn.prepareStatement("SELECT * FROM KAYTTAJAN_PROJEKTIT WHERE PROJEKTIN_NIMI=?");
+                PreparedStatement prep = conn.prepareStatement("SELECT KAYTTAJATUNNUS FROM KAYTTAJAN_PROJEKTIT WHERE PROJEKTIN_NIMI=?");
                 prep.setString(1, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {
@@ -525,7 +516,7 @@ public class TietokantaYhteys {
         ArrayList<String> lista = new ArrayList();
         try {
             if (onkoProjektiOlemassa(projektinNimi)) {
-                PreparedStatement prep = conn.prepareStatement("SELECT * FROM TYOTEHTAVA WHERE PROJEKTIN_NIMI=?");
+                PreparedStatement prep = conn.prepareStatement("SELECT TYOTEHTAVAN_NIMI FROM TYOTEHTAVA WHERE PROJEKTIN_NIMI=?");
                 prep.setString(1, projektinNimi);
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {
@@ -545,7 +536,7 @@ public class TietokantaYhteys {
         ArrayList<String> lista = new ArrayList();
         try {
             if (onkoKayttajaOlemassa(kayttajatunnus)) {
-                PreparedStatement prep = conn.prepareStatement("SELECT * FROM KAYTTAJAN_PROJEKTIT WHERE KAYTTAJATUNNUS=?");
+                PreparedStatement prep = conn.prepareStatement("SELECT PROJEKTIN_NIMI FROM KAYTTAJAN_PROJEKTIT WHERE KAYTTAJATUNNUS=?");
                 prep.setString(1, kayttajatunnus);
                 ResultSet resultset = prep.executeQuery();
                 while (resultset.next()) {

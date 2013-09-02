@@ -19,6 +19,7 @@ import tietokanta.Tyotehtava;
 
 /**
  * Työtehtävien lisääminen. Työtehtävät ovat projekti kohtaisia.
+ *
  * @author mhaanran
  */
 public class LisaaTyotehtavaServlet extends HttpServlet {
@@ -40,46 +41,42 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
-        if(session.getAttribute("ktunnus")==null) {
+        if (session.getAttribute("ktunnus") == null) {
             response.sendRedirect("/ProjTyoAikaSeur/Kirjaudu");
         }
         String projektinNimi = request.getParameter("name");
         request.setAttribute("projektinNimi", projektinNimi);
         String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
-        if (tyotehtavanNimi != null 
-        && !request.getParameter("tyotehtavanNimi").isEmpty()) {
-            float budjetoidutTyotunnit =0;
-            if(!request.getParameter("budjetoidutTyotunnit").isEmpty()) {
-                budjetoidutTyotunnit=Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
+        if (tyotehtavanNimi != null
+                && !request.getParameter("tyotehtavanNimi").isEmpty()) {
+            float budjetoidutTyotunnit = 0;
+            if (!request.getParameter("budjetoidutTyotunnit").isEmpty()) {
+                budjetoidutTyotunnit = Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
             }
-            if (!db.onkoTyotehtavaOlemassa(tyotehtavanNimi,projektinNimi)) {
+            if (!db.onkoTyotehtavaOlemassa(tyotehtavanNimi, projektinNimi)) {
                 Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi, budjetoidutTyotunnit, projektinNimi);
                 db.lisaaTyotehtava(tyotehtava);
             } else {
                 request.setAttribute("viesti", "Tyotehtava nimellä " + tyotehtavanNimi + " on jo olemassa!");
             }
         }
-        Projekti projekti=db.getProjekti(projektinNimi);
+        Projekti projekti = db.getProjekti(projektinNimi);
         float projTyotuntibudjetti = 0;
-        if(projekti!=null) {
-        projTyotuntibudjetti = projekti.getBudjetoidutTyotunnit();
-        request.setAttribute("projTyotuntibudjetti", projTyotuntibudjetti);
-       
-        request.setAttribute("projekti",projekti);
-        float tyotehtavienTuntienSumma=0;
-        List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
-        for (Tyotehtava tyotehtava : tyotehtavat) {
-            tyotehtavienTuntienSumma += tyotehtava.getBudjetoidutTyotunnit();
-        }
-        request.setAttribute("tyotehtavienTuntienSumma", tyotehtavienTuntienSumma);
-        request.setAttribute("tyotehtavat", tyotehtavat);
-        List<String> tyontekijat = db.getProjektinTyontekijat(projektinNimi);
-        for (String string : tyontekijat) {
-            System.out.println(string);
-        }
-        request.setAttribute("tyontekijat", tyontekijat);
-        List<Kayttaja> kayttajat = db.getKayttajat();
-        request.setAttribute("kayttajat", kayttajat);
+        if (projekti != null) {
+            projTyotuntibudjetti = projekti.getBudjetoidutTyotunnit();
+            request.setAttribute("projTyotuntibudjetti", projTyotuntibudjetti);
+            request.setAttribute("projekti", projekti);
+            float tyotehtavienTuntienSumma = 0;
+            List<Tyotehtava> tyotehtavat = db.getTyotehtavat(projektinNimi);
+            for (Tyotehtava tyotehtava : tyotehtavat) {
+                tyotehtavienTuntienSumma += tyotehtava.getBudjetoidutTyotunnit();
+            }
+            request.setAttribute("tyotehtavienTuntienSumma", tyotehtavienTuntienSumma);
+            request.setAttribute("tyotehtavat", tyotehtavat);
+            List<String> tyontekijat = db.getProjektinTyontekijat(projektinNimi);
+            request.setAttribute("tyontekijat", tyontekijat);
+            List<Kayttaja> kayttajat = db.getKayttajat();
+            request.setAttribute("kayttajat", kayttajat);
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("projekti.jsp");
         dispatcher.forward(request, response);

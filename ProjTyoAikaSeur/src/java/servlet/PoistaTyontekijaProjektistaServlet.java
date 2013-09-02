@@ -37,7 +37,6 @@ public class PoistaTyontekijaProjektistaServlet extends HttpServlet {
         if(session.getAttribute("ktunnus")!=null) {
             String projektinNimi = request.getParameter("projektinNimi");
             String tyontekijanNimi = request.getParameter("tyontekijanNimi");
-            System.out.println(projektinNimi+tyontekijanNimi);
             if(projektinNimi!=null&db.onkoProjektiOlemassa(projektinNimi)&&db.onkoKayttajaOlemassa(tyontekijanNimi)) {
                   db.poistaTyontekijaProjektista(projektinNimi,tyontekijanNimi);
             }
