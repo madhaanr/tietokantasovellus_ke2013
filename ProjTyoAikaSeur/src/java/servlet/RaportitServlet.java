@@ -47,7 +47,7 @@ public class RaportitServlet extends HttpServlet {
         if (request.getParameter("alkamisPaiva") != null) {
             String alkamisPaiva = request.getParameter("alkamisPaiva");
             Calendar alkamisPaivaCalender = Calendar.getInstance();
-            if (!alkamisPaiva.isEmpty()) {
+            if (!alkamisPaiva.isEmpty()&&alkamisPaiva.length()==8) {
                 alkamisPaivaCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(alkamisPaiva.substring(0, alkamisPaiva.length() - 6)));
                 alkamisPaivaCalender.set(Calendar.MONTH, Integer.parseInt(alkamisPaiva.substring(2, alkamisPaiva.length() - 4)) - 1);
                 alkamisPaivaCalender.set(Calendar.YEAR, Integer.parseInt(alkamisPaiva.substring(4, alkamisPaiva.length())));
@@ -56,7 +56,7 @@ public class RaportitServlet extends HttpServlet {
 
             String loppumisPaiva = request.getParameter("loppumisPaiva");
             Calendar loppumisPaivaCalender = Calendar.getInstance();
-            if (!loppumisPaiva.isEmpty()) {
+            if (!loppumisPaiva.isEmpty()&&loppumisPaiva.length()==8) {
                 loppumisPaivaCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(loppumisPaiva.substring(0, loppumisPaiva.length() - 6)));
                 loppumisPaivaCalender.set(Calendar.MONTH, Integer.parseInt(loppumisPaiva.substring(2, loppumisPaiva.length() - 4)) - 1);
                 loppumisPaivaCalender.set(Calendar.YEAR, Integer.parseInt(loppumisPaiva.substring(4, loppumisPaiva.length())));

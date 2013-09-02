@@ -48,7 +48,8 @@ public class ProjektitServlet extends HttpServlet {
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession(false);
         if (session.getAttribute("ktunnus")!=null) {
-            if (request.getParameter("projektin_nimi") != null) {
+            if (request.getParameter("projektin_nimi") != null 
+            && !request.getParameter("projektin_nimi").isEmpty()) {
                 String projektinNimi = request.getParameter("projektin_nimi");
                 float tyoTuntiBudjetti=0;
                 if(!request.getParameter("tyoTuntiBudjetti").isEmpty()) {
@@ -56,7 +57,7 @@ public class ProjektitServlet extends HttpServlet {
                 }
                 String alkamisPaivaMaara = request.getParameter("alkamisPaivaMaara");
                 Calendar aCalendar = Calendar.getInstance();
-                if(!alkamisPaivaMaara.isEmpty()) {
+                if(!alkamisPaivaMaara.isEmpty()&&alkamisPaivaMaara.length()==8) {
                     aCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(alkamisPaivaMaara.substring(0, alkamisPaivaMaara.length()-6)));
                     aCalendar.set(Calendar.MONTH, Integer.parseInt(alkamisPaivaMaara.substring(2, alkamisPaivaMaara.length()-4))-1); 
                     aCalendar.set(Calendar.YEAR, Integer.parseInt(alkamisPaivaMaara.substring(4, alkamisPaivaMaara.length())));           
@@ -64,7 +65,7 @@ public class ProjektitServlet extends HttpServlet {
                 java.sql.Date dateA = new java.sql.Date(aCalendar.getTime().getTime());
                 String loppumisPaivaMaara = request.getParameter("loppumisPaivaMaara");
                 Calendar lCalendar = Calendar.getInstance();
-                if(!loppumisPaivaMaara.isEmpty()) {
+                if(!loppumisPaivaMaara.isEmpty()&&loppumisPaivaMaara.length()==8) {
                     lCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(loppumisPaivaMaara.substring(0, loppumisPaivaMaara.length()-6)));
                     lCalendar.set(Calendar.MONTH, Integer.parseInt(loppumisPaivaMaara.substring(2, loppumisPaivaMaara.length()-4))-1);
                     lCalendar.set(Calendar.YEAR, Integer.parseInt(loppumisPaivaMaara.substring(4, loppumisPaivaMaara.length())));

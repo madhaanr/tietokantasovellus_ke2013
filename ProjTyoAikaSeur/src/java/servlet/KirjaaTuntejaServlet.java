@@ -48,12 +48,13 @@ public class KirjaaTuntejaServlet extends HttpServlet {
         String kayttajatunnus = (String) session.getAttribute("ktunnus");
         String paivamaara = request.getParameter("paivamaara");
         float tehdytTunnit = 0;
-        if (request.getParameter("tehdytTunnit") != null) {
+        if (request.getParameter("tehdytTunnit") != null&&
+           !request.getParameter("tehdytTunnit").isEmpty()) {
             tehdytTunnit = Float.parseFloat(request.getParameter("tehdytTunnit"));
             String selitys = request.getParameter("selitys");
             String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
             Calendar paivamaaraCalender = Calendar.getInstance();
-            if (!paivamaara.isEmpty()) {
+            if (!paivamaara.isEmpty()&&paivamaara.length()==8) {
                 paivamaaraCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(paivamaara.substring(0, paivamaara.length() - 6)));
                 paivamaaraCalender.set(Calendar.MONTH, Integer.parseInt(paivamaara.substring(2, paivamaara.length() - 4)) - 1);
                 paivamaaraCalender.set(Calendar.YEAR, Integer.parseInt(paivamaara.substring(4, paivamaara.length())));

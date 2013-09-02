@@ -20,9 +20,6 @@
             <input type="submit" value="Kirjaudu ulos" />
         </form>
         <c:if test="${rooli}">
-            <h3>Raportit</h3>
-            <a href="${pageContext.request.contextPath}/Raportit">Raportit</a>
-
             <h3>Lisää projekti</h3>
             <h4>Syötä päivämäärä kahdeksan merkin jonona muodossa "ddMMyyyy".</h4>
             <table>
@@ -65,10 +62,12 @@
                 </select>
                 <input type="submit" value="Poista projekti" />
             </form>
+            <h3>Raportit</h3>
+            <a href="${pageContext.request.contextPath}/Raportit">Raportit</a>
         </c:if> 
 
         <c:if test="${!rooli}">
-            <h3>Kayttajan ${knimi} projektit: </h3>
+            <h3>Käyttäjän ${knimi} projektit: </h3>
             <table>
                 <c:forEach var="kayttajanProjekti" items="${kayttajanProjektit}">    
                     <tr>

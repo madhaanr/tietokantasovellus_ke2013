@@ -46,8 +46,12 @@ public class LisaaTyotehtavaServlet extends HttpServlet {
         String projektinNimi = request.getParameter("name");
         request.setAttribute("projektinNimi", projektinNimi);
         String tyotehtavanNimi = request.getParameter("tyotehtavanNimi");
-        if (tyotehtavanNimi != null) {
-            float budjetoidutTyotunnit = Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
+        if (tyotehtavanNimi != null 
+        && !request.getParameter("tyotehtavanNimi").isEmpty()) {
+            float budjetoidutTyotunnit =0;
+            if(!request.getParameter("budjetoidutTyotunnit").isEmpty()) {
+                budjetoidutTyotunnit=Float.parseFloat(request.getParameter("budjetoidutTyotunnit"));
+            }
             if (!db.onkoTyotehtavaOlemassa(tyotehtavanNimi,projektinNimi)) {
                 Tyotehtava tyotehtava = new Tyotehtava(tyotehtavanNimi, budjetoidutTyotunnit, projektinNimi);
                 db.lisaaTyotehtava(tyotehtava);
